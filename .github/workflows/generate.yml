@@ -1,19 +1,10 @@
 name: "Generate academic CV"
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 on:
   push:
     paths:
       - '*.Rmd'
-      - .github/workflows/R-stuff.yml
+      - .github/workflows/generate.yml
 
 jobs:
   generate-document:
