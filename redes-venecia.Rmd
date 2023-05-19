@@ -16,7 +16,7 @@ data("doges")
 ```
 
 Durante sus más de mil años de existencia, la república de Venecia fue gobernada
-por `r length(data.doges$year)`.
+por `r length(data.doges$Years)` dogos.
 
 
 
