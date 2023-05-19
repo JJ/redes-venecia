@@ -1,4 +1,4 @@
-name: "Generate academic CV"
+name: "Generate web page"
 
 on:
   push:
