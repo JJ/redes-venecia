@@ -1,0 +1,14 @@
+\documentclass{article}
+\usepackage[paperwidth=8cm,paperheight=8cm,margin=0.5cm]{geometry}
+\usepackage{tikz}
+
+\begin{document}
+\thispagestyle{empty}
+
+\usetikzlibrary {folding}
+\begin{tikzpicture}[scale=3]
+\pic [folding line length=6mm, numbered faces, transform shape]
+  { cube folding };
+\end{tikzpicture}
+
+\end{document}
