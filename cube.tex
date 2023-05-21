@@ -1,21 +1,20 @@
 \documentclass{article}
-\usepackage[paperwidth=8cm,paperheight=8cm,margin=0.5cm]{geometry}
+\usepackage[margin=0.5cm]{geometry}
 \usepackage{tikz}
 
 \begin{document}
-\thispagestyle{empty}
 
 \usetikzlibrary {folding}
-\begin{tikzpicture}[scale=3.3]
+\begin{tikzpicture}[scale=10]
   \pic [
     folding line length=6mm,
     transform shape,
-    rotate=40,
     face 1= { \node{ Pax }; },
     face 2= { \node{ Tibi }; },
     face 3= { \node{\tiny Marce}; },
     face 4= { \node{\tiny Evangelista}; },
-    face 5= { \node{\tiny Meus}; }
+    face 5= { \node{\tiny Meus}; },
+    face 6= {  \node[anchor=center] {\includegraphics[width=0.9cm]{dogos} };}
   ]
   { cube folding };
 \end{tikzpicture}
