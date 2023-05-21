@@ -8,6 +8,7 @@ abstract: |
     de las redes para crear su imperio basado en el comercio marítimo. En este
     trabajo explicamos diferentes conclusiones que se han alcanzado estudiando
     diferentes conjuntos de datos de redes comerciales, y también redes matrimoniales.
+bibliography: venice.bib
 ---
 
 ```{r setup,echo=FALSE,message=FALSE}
@@ -17,6 +18,13 @@ data("doges")
 
 Durante sus más de mil años de existencia, la república de Venecia fue gobernada
 por `r length(data.doges$Years)` dogos.
+
+## Ciencia abierta
+
+Este trabajo se ha llevado a cabo con los principios de ciencia
+abierta y ciencia ágil [@mereloguervos2022agile]. Está disponible en
+[el repositorio de GitHub
+`https://github.com/JJ/redes-venecia`](https://github.com/JJ/redes-venecia).
 
 
 
