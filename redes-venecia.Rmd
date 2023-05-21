@@ -11,6 +11,8 @@ abstract: |
 bibliography: venice.bib
 ---
 
+> Esta página ha sido generada automáticamente a partir del [fuente](https://github.com/JJ/redes-venecia/blob/main/redes-venecia.Rmd), que tiene una licencia libre y, como tal, puedes examinarlo para ver cómo se analizan los datos y se obtienen los resultados y los gráficos, y por supuesto copiar, modificar y republicar si lo deseas, siempre que se respete la [licencia](https://github.com/JJ/redes-venecia/blob/main/LICENSE).
+
 ```{r setup,echo=FALSE,message=FALSE}
 library(dogesr)
 data("doges")
