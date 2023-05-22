@@ -1,5 +1,6 @@
 library(dogesr)
 library(igraph)
+
 doges.sn <- marriage.graph()
 E(doges.sn)$weight <- 1
 doges.sn <- simplify(doges.sn, edge.attr.comb=list(weight="sum"))

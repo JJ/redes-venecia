@@ -19,7 +19,7 @@ bibliography: venice.bib
 > [licencia](https://github.com/JJ/redes-venecia/blob/main/LICENSE).
 
 ```{r setup,echo=FALSE,message=FALSE}
-source("R/utils.R")
+source("R/utils.R") # Crea doges.sn, doges.sn.connected
 ```
 
 Durante sus más de mil años de existencia, la república de Venecia fue gobernada
@@ -49,6 +49,14 @@ su preponderancia comercial, y la Piazza San Marco y el Palacio de los Dogos y
 su papel político, analizando dos redes sociales de las cuales tenemos datos: la
 red de la *colleganza* o alianzas comerciales para fletar galeras, y la red
 matrimonial de los dogos, o presidentes vitalicios de la república.
+
+## La red matrimonial de los dogos
+
+```{r dogos, echo=F, message=F}
+E(doges.sn)$edge_betweenness <- edge_betweenness(doges.sn)
+
+
+```
 
 ## Ciencia abierta
 
