@@ -52,10 +52,14 @@ matrimonial de los dogos, o presidentes vitalicios de la república.
 
 ## La red matrimonial de los dogos
 
-```{r dogos, echo=F, message=F}
-E(doges.sn)$edge_betweenness <- edge_betweenness(doges.sn)
-
-
+```{r dogos, echo=F, message=F, fig.cap="Representación de la red de matrimonio de las familias de los dogos, con las aristas dimensionadas usando *edge betweenness*"}
+E(doges.sn.connected)$edge_betweenness <- edge_betweenness(doges.sn.connected)
+plot(doges.sn.connected,
+     vertex.size=V(doges.sn.connected)$degree,
+     layout=layout_nicely,
+     vertex.label.cex=V(doges.sn.connected)$EV,
+     vertex.label.dist=1,
+     edge.width=E(doges.sn.connected)$edge_betweenness/50)
 ```
 
 ## Ciencia abierta
