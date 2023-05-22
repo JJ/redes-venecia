@@ -55,7 +55,7 @@ matrimonial de los dogos, o presidentes vitalicios de la república.
 
 Esta red está includa como parte del paquete `dogesr` [@gooddoge] e incluye todos los matrimonios de los dogos y de los padres de los dogos, cuando se han encontrado. Es, por tanto, una muestra de la red social veneciana, con la ventaja de abarcar toda la historia de la República, desde el primer dogo hasta el último. Sólo los nobles podían ser dogos, y se convirtieron en nobles, a partir de la *Serrata*, sólo aquellos que habían tenido cierta notabilidad en el comercio y la guerra; pero entre las familias nobles, aquellas que llegaron a convertir a uno de ellos en dogo representan una estrato de la clase noble de alguna forma distinguido.
 
-En la figura inferior se representa esta red matrimonial de los dogos, con las siguientes salvedades
+En la figura inferior se representa esta red matrimonial de los dogos. Los nodos son familias que han dado dogos a la república, esposas o madres de dogos, o cualquier combinación de los tres. El gráfico sigue las siguientes convenciones
 
 * Se representa sólo el componente principal, eliminando aquellos enlaces que no están conectados al mismo.
 * El tamaño del nodo representa el grado del mismo, es decir, el número de conexiones.
@@ -77,6 +77,9 @@ plot(doges.sn.connected,
      edge.color=E(doges.sn.connected)$color,
      edge.width=E(doges.sn.connected)$edge_betweenness/50)
 ```
+Es interesante notar, justo en el centro, a la familia Dandolo, pero también como las familias Contarini, Loredan y Mocenigo tienen la centralidad de valor propio (EV) más alto. La familia Contarini cuenta, igual que la Morosini, no sólo con un mayor número de dogos, sino también esposas de dogos.
+
+Pero lo más interesante es notar que, a pesar de las diferencias evidentes en centralidad y otras medidas a nivel de actor de todas las familias, no se trata de una ley de potencias con una sola familia acumulando la mayoría de los enlaces, y en definitiva el poder, y otras familias quedando como "oposición"; esto favorece la estabilidad, incluyendo efectos secundarios como el hecho de que se nominen a dogos solamente personas con una edad avanzada que no van a durar mucho en el poder [@histories3010003].
 
 ## Ciencia abierta
 
