@@ -2,12 +2,13 @@
 title: "Cayendo en las redes de Venecia"
 author: "JJ Merelo"
 date: "`r Sys.Date()`"
-output: html_document
+output:
+  html_document: default
 abstract: |
-    La República de Venecia se benefició de una comprensión intuitiva del poder
-    de las redes para crear su imperio basado en el comercio marítimo. En este
-    trabajo explicamos diferentes conclusiones que se han alcanzado estudiando
-    diferentes conjuntos de datos de redes comerciales, y también redes matrimoniales.
+  La República de Venecia se benefició de una comprensión intuitiva del poder
+  de las redes para crear su imperio basado en el comercio marítimo. En este
+  trabajo explicamos diferentes conclusiones que se han alcanzado estudiando
+  diferentes conjuntos de datos de redes comerciales, y también redes matrimoniales.
 bibliography: venice.bib
 ---
 
@@ -54,11 +55,15 @@ matrimonial de los dogos, o presidentes vitalicios de la república.
 
 ```{r dogos, echo=F, message=F, fig.cap="Representación de la red de matrimonio de las familias de los dogos, con las aristas dimensionadas usando *edge betweenness*"}
 E(doges.sn.connected)$edge_betweenness <- edge_betweenness(doges.sn.connected)
+max.EW <- max( E(doges.sn.connected)$edge_betweenness)
+E(doges.sn.connected)$color <- "gray"
+E(doges.sn.connected)[ E(doges.sn.connected)$edge_betweenness == max.EW ]$color <- "blue"
 plot(doges.sn.connected,
      vertex.size=V(doges.sn.connected)$degree,
      layout=layout_nicely,
      vertex.label.cex=V(doges.sn.connected)$EV,
      vertex.label.dist=1,
+     edge.color=E(doges.sn.connected)$color,
      edge.width=E(doges.sn.connected)$edge_betweenness/50)
 ```
 
