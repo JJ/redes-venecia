@@ -55,9 +55,16 @@ matrimonial de los dogos, o presidentes vitalicios de la república.
 
 ![Banco Giro, uno de los bancos en la zona comercial de Rialto, ahora un bar](img/rialto.jpg)
 
-## La red matrimonial de los dogos
+## La longevidad de los dogos una vez asumido el cargo
+
+La *piazza* de San Marco en general, y el palacio de los dogos en particular, eran las sedes del poder político; a pesar de llamársele palacio "de los dogos" se trataba en realidad de la sede administrativa del gobierno de la República, incluyendo las principales instituciones: Maggior Consiglio, el Senado, las *procuratie* o fiscalías, incluyendo la más importante, la de San Marco; la misma capilla de San Marco era una capilla instucional y "de palacio", sirviendo antes al gobierno que a la Iglesia.
 
 ![Panorámica del interior del palacio de los Dogos, con la escalera de los Gigantes](img/palacio-dogos.jpg)
+Los dogos, extraídos siempre de los nobles reconocidos a partir de la *Serrata*, solían pasar por una o más de esos puestos, siempre por designación o elección, antes de alcanzar el dogado. 
+
+## La red matrimonial de los dogos
+
+
 
 Esta red está includa como parte del paquete `dogesr` [@gooddoge] e incluye todos los matrimonios de los dogos y de los padres de los dogos, cuando se han encontrado. Es, por tanto, una muestra de la red social veneciana, con la ventaja de abarcar toda la historia de la República, desde el primer dogo hasta el último. Sólo los nobles podían ser dogos, y se convirtieron en nobles, a partir de la *Serrata*, sólo aquellos que habían tenido cierta notabilidad en el comercio y la guerra; pero entre las familias nobles, aquellas que llegaron a convertir a uno de ellos en dogo representan una estrato de la clase noble de alguna forma distinguido.
 
