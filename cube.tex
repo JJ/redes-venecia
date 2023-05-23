@@ -6,6 +6,8 @@
     text width={(#2-2*(\pgfkeysvalueof{/pgf/inner xsep}))/(#1)},
     scale={#1}}}
 
+\definecolor{amarillovenecia}{RGB}{255,200,10}
+
 \begin{document}
 \begin{tikzpicture}[scale=10]
   \pic [
@@ -13,12 +15,12 @@
     transform shape,
     inner sep=+.15em,
     face 1= {
-      \node[scale text width={.2}{6mm}] {
+      \node[fill={rgb:red,170}, text=amarillovenecia, scale text width={.2}{6mm}] {
         \textbf{Cayendo en las redes de Venecia}\\[1.3em]JJ Merelo
       };
     },
     face 2= {
-      \node[scale text width={.13}{6mm}]{
+      \node[fill={rgb:red,170}, text=amarillovenecia,scale text width={.13}{6mm}]{
         \textbf{Conclusiones} \\
         ~\\
         - Venecia es un mundo pequeño, \textbf{no} ley de potencias\\
