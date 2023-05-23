@@ -51,6 +51,10 @@ su papel político, analizando dos redes sociales de las cuales tenemos datos: l
 red de la *colleganza* o alianzas comerciales para fletar galeras, y la red
 matrimonial de los dogos, o presidentes vitalicios de la república.
 
+## Las redes comerciales de la *colleganza*
+
+![Banco Giro, uno de los bancos en la zona comercial de Rialto, ahora un bar](img/rialto.jpg)
+
 ## La red matrimonial de los dogos
 
 Esta red está includa como parte del paquete `dogesr` [@gooddoge] e incluye todos los matrimonios de los dogos y de los padres de los dogos, cuando se han encontrado. Es, por tanto, una muestra de la red social veneciana, con la ventaja de abarcar toda la historia de la República, desde el primer dogo hasta el último. Sólo los nobles podían ser dogos, y se convirtieron en nobles, a partir de la *Serrata*, sólo aquellos que habían tenido cierta notabilidad en el comercio y la guerra; pero entre las familias nobles, aquellas que llegaron a convertir a uno de ellos en dogo representan una estrato de la clase noble de alguna forma distinguido.

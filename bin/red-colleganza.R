@@ -17,13 +17,13 @@ main_ids <- V(colleganza.sn.connected)[degree(colleganza.sn.connected) > 1 ]
 colleganza.main.sn <- igraph::induced_subgraph(colleganza.sn.connected, main_ids)
 
 for (i in 1:3) {
-  main_ids <- V(doges.main.sn)[degree(doges.main.sn) > 1 ]
-  doges.main.sn <- igraph::induced_subgraph(doges.main.sn, main_ids)
+  main_ids <- V(colleganza.main.sn)[degree(colleganza.main.sn) > 1 ]
+  colleganza.main.sn <- igraph::induced_subgraph(colleganza.main.sn, main_ids)
 }
 
 plot(colleganza.main.sn,
-     vertex.size=V(colleganza.main.sn)$degree/5,
-     layout=layout_nicely,
-     vertex.label.cex=V(colleganza.main.sn)$betweenness,
+     vertex.size=V(colleganza.main.sn)$degree/2,
+     layout=layout_with_fr,
+     vertex.label.cex=V(colleganza.main.sn)$betweenness/400,
      vertex.label.dist=1,
-     edge.width=E(colleganza.main.sn)$weight)
+     edge.width=3*E(colleganza.main.sn)$weight)
