@@ -1,5 +1,6 @@
 library(dogesr)
 library(igraph)
+library(qgraph)
 
 doges.sn <- marriage.graph()
 E(doges.sn)$weight <- 1
@@ -12,11 +13,12 @@ vert_ids <- V(doges.sn)[components$membership == biggest_cluster_id]
 
 doges.sn.connected <- igraph::induced_subgraph(doges.sn, vert_ids)
 
-doges.layout <- layout_with_fr(doges.sn.connected, niter=1000)
+edges <- get.edgelist(doges.sn.connected,names=FALSE)
+doges.layout  <- qgraph.layout.fruchtermanreingold(edges,vcount=vcount(doges.sn.connected))
 plot(doges.sn.connected,
      vertex.size=V(doges.sn.connected)$degree,
      layout=doges.layout,
-     vertex.label.cex=1+V(doges.sn.connected)$EV*3,
+     vertex.label.cex=1+V(doges.sn.connected)$EV,
      vertex.label.color=rgb(0.7,0,0,0.6),
      vertex.label.dist=1,
      edge.width=3*E(doges.sn.connected)$weight)
