@@ -57,7 +57,7 @@ Aunque las primeras aventuras comerciales de Venecia, alrededor del año 1000, s
 
 ![Banco Giro, uno de los bancos en la zona comercial de Rialto, ahora un bar](img/rialto.jpg)
 
-Estos contratos fueron analizados por Puga y Treffler [@colleganza], que también analizaron la red de estos mismos contratos. 
+<!-- Estos contratos fueron analizados por Puga y Treffler [@colleganza], que también analizaron la red de estos mismos contratos.  -->
 
 ## La longevidad de los dogos una vez asumido el cargo
 
