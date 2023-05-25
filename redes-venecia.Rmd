@@ -57,7 +57,32 @@ Aunque las primeras aventuras comerciales de Venecia, alrededor del año 1000, s
 
 ![Banco Giro, uno de los bancos en la zona comercial de Rialto, ahora un bar](img/rialto.jpg)
 
-<!-- Estos contratos fueron analizados por Puga y Treffler [@colleganza], que también analizaron la red de estos mismos contratos.  -->
+Estos contratos fueron analizados por Puga y Treffler [@colleganza], que también analizaron las posiciones en la red de las diferentes familias usando la centralidad de vectores propios \cite{BONACICH2007555}, una medida que refleja no sólo cómo está conectada una familia, sino también si las conexiones están a su vez conectadas. Sin embargo, hay otras medidas como el *page rank* \cite{BRIN1998107} que ofrecen una medida más global de esta cantidad. El componente principal de la red resultante se muestra a continuación.
+
+```{r colleganza, echo=FALSE, message=F, fig.cap="Red *colleganza*, con el tamaño de los nombres de las familias reflejando su pagerank"}
+colleganza <- read.csv("data/colleganza-pairs.csv", header=F)
+colleganza.sn <- graph.data.frame(data.frame(colleganza$V1,colleganza$V2),directed=F)
+E(colleganza.sn)$weight <- 1
+colleganza.sn <- simplify(colleganza.sn, edge.attr.comb=list(weight="sum"))
+V(colleganza.sn)$degree <- degree(colleganza.sn)
+V(colleganza.sn)$pagerank <- unname(unlist(page_rank(colleganza.sn)$vector))
+
+
+components <- igraph::clusters(colleganza.sn, mode="weak")
+biggest_cluster_id <- which.max(components$csize)
+vert_ids <- V(colleganza.sn)[components$membership == biggest_cluster_id]
+
+colleganza.sn.connected <- igraph::induced_subgraph(colleganza.sn, vert_ids)
+
+plot(colleganza.sn.connected,
+     vertex.size=V(colleganza.sn.connected)$degree/2,
+     layout=layout_with_fr,
+     vertex.label.cex=0.5+V(colleganza.sn.connected)$pagerank*20,
+     vertex.label.dist=0.5,
+     edge.width=3*E(colleganza.sn.connected)$weight)
+```
+
+En la imagen se muestra solo el componente principal conectado. Este componente incluye el `r format(length(unique(V(colleganza.sn.connected)$name))/length(unique(V(colleganza.sn)$name)))`% de todas las familias, un total de `r length(unique(V(colleganza.sn)$name))`. La familia Viaro parece ser la principal en esta red, sobre todo por el número de conexiones, sin embargo se ve que hay otras familias, Morosini, Barbarigo, Giustinian e incluso empieza a apuntar la Contarini, no tanto por su pagerank, sino por la posición dentro de la red, que es bastante central. El grosor de la conexión indica el número de contratos entre esas familias; destacan la conexión Morosini-Bargarigo, pero también como hay un "cinturón" de familias fuertemente conectadas en torno al centro. Otras vamilias, como la Viaro, destacan por el número de conexiones, pero por la ausencia de conexión con familias a su vez muy conectadas.
 
 ## La longevidad de los dogos una vez asumido el cargo
 
