@@ -53,7 +53,11 @@ matrimonial de los dogos, o presidentes vitalicios de la república.
 
 ## Las redes comerciales de la *colleganza*
 
+Aunque las primeras aventuras comerciales de Venecia, alrededor del año 1000, se organizaron alrededor del monopolio de la sal [@sal], el comercio sobre todo con el Oriente Medio (inicialmente controlado principalmente por el Imperio Bizantino, los reinos cristianos de Tierra Santa y otros reinos en Egipto y el norte de África) tuvo una gran expansión, sobre todo por la garantía ofrecida por el estado, que fabricaba y alquilaba las naves y proporcionaba seguridad militar (y también jurídica) durante el viaje. Sin embargo, la capacidad de las naves pronto necesitó la colaboración de de varias personas para el flete de las mismas, en un sistema llamado *Colleganza* [@spufford2014provision] en las que, generalmente, uno de los socios proporcionaba la inversión para la compra de mercancía, y otro acompañaba a la mercancía, ejerciendo de capitán de barco. Estos contratos tenían lugar en el mercado de Rialto, que se ilustra a continuación.
+
 ![Banco Giro, uno de los bancos en la zona comercial de Rialto, ahora un bar](img/rialto.jpg)
+
+<!-- Estos contratos fueron analizados por Puga y Treffler [@colleganza], que también analizaron la red de estos mismos contratos.  -->
 
 ## La longevidad de los dogos una vez asumido el cargo
 
