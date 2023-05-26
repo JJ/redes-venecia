@@ -53,13 +53,41 @@ matrimonial de los dogos, o presidentes vitalicios de la república.
 
 ## Las redes comerciales de la *colleganza*
 
-Aunque las primeras aventuras comerciales de Venecia, alrededor del año 1000, se organizaron alrededor del monopolio de la sal [@sal], el comercio sobre todo con el Oriente Medio (inicialmente controlado principalmente por el Imperio Bizantino, los reinos cristianos de Tierra Santa y otros reinos en Egipto y el norte de África) tuvo una gran expansión, sobre todo por la garantía ofrecida por el estado, que fabricaba y alquilaba las naves y proporcionaba seguridad militar (y también jurídica) durante el viaje. Sin embargo, la capacidad de las naves pronto necesitó la colaboración de de varias personas para el flete de las mismas, en un sistema llamado *Colleganza* [@spufford2014provision] en las que, generalmente, uno de los socios proporcionaba la inversión para la compra de mercancía, y otro acompañaba a la mercancía, ejerciendo de capitán de barco.
+Aunque las primeras aventuras comerciales de Venecia, alrededor del año 1000, se
+organizaron alrededor del monopolio de la sal [@sal], el comercio sobre todo con
+el Oriente Medio (inicialmente controlado principalmente por el Imperio
+Bizantino, los reinos cristianos de Tierra Santa y otros reinos en Egipto y el
+norte de África) tuvo una gran expansión, sobre todo por la garantía ofrecida
+por el estado, que fabricaba y alquilaba las naves y proporcionaba seguridad
+militar (y también jurídica) durante el viaje. Sin embargo, la capacidad de las
+naves pronto necesitó la colaboración de de varias personas para el flete de las
+mismas, en un sistema llamado *Colleganza* [@spufford2014provision] en las que,
+generalmente, uno de los socios proporcionaba la inversión para la compra de
+mercancía, y otro acompañaba a la mercancía, ejerciendo de capitán de barco.
 
-Estos contratos tenían lugar en el mercado de Rialto, que se ilustra a continuación. Más allá del puente que conocemos hoy, el área de Rialto que incluye el *campo* (que no plaza) de San Giacomo di Rialto, y las zonas contiguas hasta el mercado del pescado, llamado  *Mercato di Rialto*, incluía mercados, comercios, pero también bancos y una "cárcel comercial" en los bajos del Palacio dei Camarlenghi, que se ve a la derecha del puente, según se llega desde San Marco. Toda esta zona, en realidad el asentamiento original en la isla, está en una de las dos islas principales que forman Venecia, separadas por el Gran Canal. Precisamente las primeras salinas que se explotaron en Venecia estaba en esa misma isla. Por supuesto Rialto es uno de los centros de la red urbana veneciana, y nos servirá para comenzar a mostrar la evolución de las redes en Venecia y cómo su comportamiento emergente acaba caracterizando y rigiendo la historia de Venecia tal como la conocemos.
+Estos contratos tenían lugar en el mercado de Rialto, que se ilustra a
+continuación. Más allá del puente que conocemos hoy, el área de Rialto que
+incluye el *campo* (que no plaza) de San Giacomo di Rialto, y las zonas
+contiguas hasta el mercado del pescado, llamado *Mercato di Rialto*, incluía
+mercados, comercios, pero también bancos y una "cárcel comercial" en los bajos
+del Palacio dei Camarlenghi, que se ve a la derecha del puente, según se llega
+desde San Marco. Toda esta zona, en realidad el asentamiento original en la
+isla, está en una de las dos islas principales que forman Venecia, separadas por
+el Gran Canal. Precisamente las primeras salinas que se explotaron en Venecia
+estaba en esa misma isla. Por supuesto Rialto es uno de los centros de la red
+urbana veneciana, y nos servirá para comenzar a mostrar la evolución de las
+redes en Venecia y cómo su comportamiento emergente acaba caracterizando y
+rigiendo la historia de Venecia tal como la conocemos.
 
 ![Banco Giro, uno de los bancos en la zona comercial de Rialto, ahora un bar](img/rialto.jpg)
 
-Estos contratos fueron analizados por Puga y Treffler [@colleganza], que también analizaron las posiciones en la red de las diferentes familias usando la centralidad de vectores propios \cite{BONACICH2007555}, una medida que refleja no sólo cómo está conectada una familia, sino también si las conexiones están a su vez conectadas. Sin embargo, hay otras medidas como el *page rank* \cite{BRIN1998107} que ofrecen una medida más global de esta cantidad. El componente principal de la red resultante se muestra a continuación.
+Estos contratos fueron analizados por Puga y Treffler [@colleganza], que también
+analizaron las posiciones en la red de las diferentes familias usando la
+centralidad de vectores propios \cite{BONACICH2007555}, una medida que refleja
+no sólo cómo está conectada una familia, sino también si las conexiones están a
+su vez conectadas. Sin embargo, hay otras medidas como el *page rank*
+\cite{BRIN1998107} que ofrecen una medida más global de esta cantidad. El
+componente principal de la red resultante se muestra a continuación.
 
 ```{r colleganza, echo=FALSE, message=F, fig.cap="Red *colleganza*, con el tamaño de los nombres de las familias reflejando su pagerank"}
 colleganza <- read.csv("data/colleganza-pairs.csv", header=F)
@@ -84,15 +112,45 @@ plot(colleganza.sn.connected,
      edge.width=3*E(colleganza.sn.connected)$weight)
 ```
 
-En la imagen se muestra solo el componente principal conectado. Este componente incluye el `r format(length(unique(V(colleganza.sn.connected)$name))/length(unique(V(colleganza.sn)$name)))`% de todas las familias, un total de `r length(unique(V(colleganza.sn)$name))`. La familia Viaro parece ser la principal en esta red, sobre todo por el número de conexiones, sin embargo se ve que hay otras familias, Morosini, Barbarigo, Giustinian e incluso empieza a apuntar la Contarini, no tanto por su pagerank, sino por la posición dentro de la red, que es bastante central. El grosor de la conexión indica el número de contratos entre esas familias; destacan la conexión Morosini-Bargarigo, pero también como hay un "cinturón" de familias fuertemente conectadas en torno al centro. Otras vamilias, como la Viaro, destacan por el número de conexiones, pero por la ausencia de conexión con familias a su vez muy conectadas.
+En la imagen se muestra solo el componente principal conectado. Este componente
+incluye el `r
+format(length(unique(V(colleganza.sn.connected)$name))/length(unique(V(colleganza.sn)$name)))`%
+de todas las familias, un total de `r length(unique(V(colleganza.sn)$name))`. La
+familia Viaro parece ser la principal en esta red, sobre todo por el número de
+conexiones, sin embargo se ve que hay otras familias, Morosini, Barbarigo,
+Giustinian e incluso empieza a apuntar la Contarini, no tanto por su pagerank,
+sino por la posición dentro de la red, que es bastante central. El grosor de la
+conexión indica el número de contratos entre esas familias; destacan la conexión
+Morosini-Bargarigo, pero también como hay un "cinturón" de familias fuertemente
+conectadas en torno al centro. Otras familias, como la Viaro, destacan por el
+número de conexiones, pero por la ausencia de conexión con familias a su vez muy
+conectadas.
 
-Los datos de los contratos de *colleganza* llegan hasta `r max(colleganza$V3)`. En esa época tenía lugar un proceso constitucional denominado *Serrata* o cierre [@serata]. Este proceso regulaba el acceso al *Maggior Consiglio*, la asamblea encargada, entre otras cosas, de nombrar al dogo; sin embargo, aparte de esos deberes constitucionales, ingresar en el Consiglio era la antesala de una carrera política que incluía las múltiples asambleas, consejos, cargos burocráticos y magistraturas que regían la vida. La serrata no fue una sola ley, sino un conjunto de leyes implantadas en los 30 años aproximados que comienzan a finales del siglo XIII, y en la práctica significaba que sólo unas pocas familias erigidas como "nobles" podían ocupar esos cargos, incluyendo la máxima magistratura, ser Dogo.
+Los datos de los contratos de *colleganza* llegan hasta `r
+max(colleganza$V3)`. En esa época tenía lugar un proceso constitucional
+denominado *Serrata* o cierre [@serata]. Este proceso regulaba el acceso al
+*Maggior Consiglio*, la asamblea encargada, entre otras cosas, de nombrar al
+dogo; sin embargo, aparte de esos deberes constitucionales, ingresar en el
+Consiglio era la antesala de una carrera política que incluía las múltiples
+asambleas, consejos, cargos burocráticos y magistraturas que regían la vida. La
+Serrata no fue una sola ley, sino un conjunto de leyes implantadas en los 30
+años aproximados que comienzan a finales del siglo XIII, y en la práctica
+significaba que sólo unas pocas familias erigidas como "nobles" podían ocupar
+esos cargos, incluyendo la máxima magistratura, ser Dogo.
 
-Sin embargo, los que se convirtieron en nobles fueron los que tenían una mejor reputación, y aquellos cuya familia había estado mejor relacionada y por tanto los que efectivamente aparecen en esta red social cerca del centro (que, en esta representación que usa Fruchterman-Rheingold, son los que tienen mayor centralidad). Salvo el caso de los Viaro (que, en realidad, dejaron de estar presentes en la red bastantes años antes), los que pasaron a ser nobles fueron aquellas familias con más centralidad. Y de nobles, pasaron a dogos. Analizaremos algunos efectos secundarios de esta *Serrata* en la sección siguiente.
+Sin embargo, los que se convirtieron en nobles fueron los que tenían una mejor
+reputación, y aquellos cuya familia había estado mejor relacionada y por tanto
+los que efectivamente aparecen en esta red social cerca del centro (que, en esta
+representación que usa Fruchterman-Rheingold, son los que tienen mayor
+centralidad). Salvo el caso de los Viaro (que, en realidad, dejaron de estar
+presentes en la red bastantes años antes), los que pasaron a ser nobles fueron
+aquellas familias con más centralidad. Y de nobles, pasaron a
+dogos. Analizaremos algunos efectos secundarios de esta *Serrata* en la sección
+siguiente.
 
 ## La longevidad de los dogos una vez asumido el cargo
 
-La *piazza* de San Marco en general, y el palacio de los dogos en particular, era la sede del poder político; a pesar de llamársele palacio "de los dogos" se trataba en realidad de la sede administrativa del gobierno de la República, incluyendo las principales instituciones: Maggior Consiglio, el Senado, las *procuratie* o fiscalías, incluyendo la más importante, la de San Marco; la misma capilla de San Marco era una capilla instucional y "de palacio", sirviendo antes al gobierno que a la Iglesia.
+La *piazza* de San Marco en general, y el palacio de los dogos en particular, era la sede del poder político; a pesar de llamársele palacio "de los dogos" se trataba en realidad de la sede administrativa del gobierno de la República, incluyendo las principales instituciones: Maggior Consiglio, el Senado, las *procuratie* o fiscalías, incluyendo la más importante, la de San Marco; la misma capilla de San Marco era una capilla institucional y "de palacio", sirviendo antes al gobierno que a la Iglesia.
 
 ![Panorámica del interior del palacio de los Dogos, con la escalera de los Gigantes](img/palacio-dogos.jpg)
 Los dogos, extraídos siempre de los nobles reconocidos a partir de la *Serrata*, solían pasar por una o más de esos puestos, siempre por designación o elección, antes de alcanzar el dogado. Sin embargo, la elección del dogo era una puesto *vitalicio*. ¿Cuanto duraban los dogos en el puesto? Lo presentamos en el siguiente gráfico
@@ -108,13 +166,13 @@ ggplot(doges.years, aes(x=start,y=idx))+geom_segment(aes(xend=start+years,yend=i
 
 Aparte de remarcar la longevidad de este régimen, y la ausencia de interrupciones, se puede ver que en general se trata de segmentos pequeños, salvo algunas excepciones: el segmento un poco más largo que se observa antes de 1500 fue el reinado de [Francesco Foscari](https://es.wikipedia.org/wiki/Francesco_Foscari), que fue obligado a dimitir. Este hecho fue observado por [@smith2021long], y se adujo que se debía tratar a una elección intencionada, más que a la casualidad. De hecho, analizando estadísticamente el punto de cambio en [@histories3010003] observamos que el punto de cambio corresponde aproximadamente a la mencionada *Serrata*.
 
-Se pueden incluir muchas explicaciones al mismo, incluyendo la más simple: con reinados más cortos, se disminuye la posibilidad de acumulación de poder por parte del dogo y su familia; pero una explicación adicional está en el efecto de la red social, y como esta influye en la forma de elección [@molinari2020republic], que a su vez favorece el reparto de poder. El sistema de elección, a partir del Maggior Consiglio incluyendo varias rondas de votos de comités electorales y de sorteos, favorecía la elección de dogos que o contaran con una super-mayoría o una minoría lo suficientemente cualificada. ¿Qué había que hacer para conseguir una de las dos? Primero, que la elección se repitiera con frecuencia, de forma que hubiera varias oportunidades en cada generación, como se ha visto. Pero segundo, una vez más, usar el poder de las redes: situar a tu familia en un punto de la red social de forma que tuviera una reputación suficiente para que recayera la elección en alguien de tu familia.
+Se pueden incluir muchas explicaciones al mismo, incluyendo la más simple: con reinados más cortos, se disminuye la posibilidad de acumulación de poder por parte del dogo y su familia; pero una explicación adicional está en el efecto de la red social, y como esta influye en la forma de elección [@molinari2020republic], que a su vez favorece el reparto de poder. El sistema de elección, a partir del Maggior Consiglio incluyendo varias rondas de votos de comités electorales y de sorteos, favorecía la elección de dogos que o contaran con una súper-mayoría o una minoría lo suficientemente cualificada. ¿Qué había que hacer para conseguir una de las dos? Primero, que la elección se repitiera con frecuencia, de forma que hubiera varias oportunidades en cada generación, como se ha visto. Pero segundo, una vez más, usar el poder de las redes: situar a tu familia en un punto de la red social de forma que tuviera una reputación suficiente para que recayera la elección en alguien de tu familia.
 
 Por eso, evidencia de este uso estratégico de la red social se encuentra en varios lugares, pero, sobre todo, en la red matrimonial de los mismos dogos, una muestra de la red marital de toda la ciudad, de la que también se tiene constancia.
 
 ## La red matrimonial de los dogos
 
-Esta red está includa como parte del paquete `dogesr` [@gooddoge] e incluye todos los matrimonios de los dogos y de los padres de los dogos, cuando se han encontrado. Es, por tanto, una muestra de la red social veneciana, con la ventaja de abarcar toda la historia de la República, desde el primer dogo hasta el último. Sólo los nobles podían ser dogos, y se convirtieron en nobles, a partir de la *Serrata*, sólo aquellos que habían tenido cierta notabilidad en el comercio y la guerra; pero entre las familias nobles, aquellas que llegaron a convertir a uno de ellos en dogo representan una estrato de la clase noble de alguna forma distinguido.
+Esta red está incluida como parte del paquete `dogesr` [@gooddoge] e incluye todos los matrimonios de los dogos y de los padres de los dogos, cuando se han encontrado. Es, por tanto, una muestra de la red social veneciana, con la ventaja de abarcar toda la historia de la República, desde el primer dogo hasta el último. Sólo los nobles podían ser dogos, y se convirtieron en nobles, a partir de la *Serrata*, sólo aquellos que habían tenido cierta notabilidad en el comercio y la guerra; pero entre las familias nobles, aquellas que llegaron a convertir a uno de ellos en dogo representan una estrato de la clase noble de alguna forma distinguido.
 
 En la figura inferior se representa esta red matrimonial de los dogos. Los nodos son familias que han dado dogos a la república, esposas o madres de dogos, o cualquier combinación de los tres. El gráfico sigue las siguientes convenciones
 
@@ -161,7 +219,7 @@ abierta y ciencia ágil [@mereloguervos2022agile]. Está disponible en
 
 ## Reconocimientos
 
-Es un material que acompaña al poster "Cayendo en las redes de Venecia" que se
+Es un material que acompaña al póster "Cayendo en las redes de Venecia" que se
 presentará en el CITICCoffee de mayo de 2023.
 
 ## Bibliografía
