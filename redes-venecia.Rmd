@@ -3,6 +3,7 @@ title: "Cayendo en las redes de Venecia"
 author: "JJ Merelo"
 date: "`r Sys.Date()`"
 output:
+  pdf_document: default
   html_document: default
 abstract: |
   La República de Venecia se benefició de una comprensión intuitiva del poder
@@ -128,7 +129,7 @@ conectadas.
 
 Los datos de los contratos de *colleganza* llegan hasta `r
 max(colleganza$V3)`. En esa época tenía lugar un proceso constitucional
-denominado *Serrata* o cierre [@serata]. Este proceso regulaba el acceso al
+denominado *Serrata* o cierre [@serrata]. Este proceso regulaba el acceso al
 *Maggior Consiglio*, la asamblea encargada, entre otras cosas, de nombrar al
 dogo; sin embargo, aparte de esos deberes constitucionales, ingresar en el
 Consiglio era la antesala de una carrera política que incluía las múltiples
@@ -178,7 +179,7 @@ En la figura inferior se representa esta red matrimonial de los dogos. Los nodos
 
 * Se representa sólo el componente principal, eliminando aquellos enlaces que no están conectados al mismo.
 * El tamaño del nodo representa el grado del mismo, es decir, el número de conexiones.
-* El tamaño del nombre de la familia representa la *eigenvalue centrality* [@BONACIDH2007555], usada generalmente para indicar la prominencia o fama de su familia, a través de sus conexiones a otras familias, también conectadas [@gooddoge]
+* El tamaño del nombre de la familia representa la *eigenvalue centrality* [@BONACICH2007555], usada generalmente para indicar la prominencia o fama de su familia, a través de sus conexiones a otras familias, también conectadas [@gooddoge]
 * El grosor de la aristas corresponde al *edge betweenness*, que equivale a la importancia de ese "camino" en la conexión entre diferentes familias.
 * Se indica con color \textcolor{blue}{azul} la arista con mayor valor del *edge betweenness*, la que conecta a la familia Dandolo con la familia Malipiero.
 
