@@ -95,7 +95,21 @@ Sin embargo, los que se convirtieron en nobles fueron los que tenían una mejor 
 La *piazza* de San Marco en general, y el palacio de los dogos en particular, era la sede del poder político; a pesar de llamársele palacio "de los dogos" se trataba en realidad de la sede administrativa del gobierno de la República, incluyendo las principales instituciones: Maggior Consiglio, el Senado, las *procuratie* o fiscalías, incluyendo la más importante, la de San Marco; la misma capilla de San Marco era una capilla instucional y "de palacio", sirviendo antes al gobierno que a la Iglesia.
 
 ![Panorámica del interior del palacio de los Dogos, con la escalera de los Gigantes](img/palacio-dogos.jpg)
-Los dogos, extraídos siempre de los nobles reconocidos a partir de la *Serrata*, solían pasar por una o más de esos puestos, siempre por designación o elección, antes de alcanzar el dogado. 
+Los dogos, extraídos siempre de los nobles reconocidos a partir de la *Serrata*, solían pasar por una o más de esos puestos, siempre por designación o elección, antes de alcanzar el dogado. Sin embargo, la elección del dogo era una puesto *vitalicio*. ¿Cuanto duraban los dogos en el puesto? Lo presentamos en el siguiente gráfico
+
+```{r longevidad, message=F, echo=F, fig.cap="Longevidad de los dogos frente al año de elección"}
+library(ggthemes)
+data("doges")
+doges.years <- unique( data.frame(doge=data.doges$Doge,start=data.doges$Start,years=data.doges$Years))
+doges.years$idx <- as.numeric(row.names(doges.years))
+ggplot(doges.years, aes(x=start,y=idx))+geom_segment(aes(xend=start+years,yend=idx))+xlab("Year")+ylab("")+theme_economist()
+```
+
+Aparte de remarcar la longevidad de este régimen, y la ausencia de interrupciones, se puede ver que en general se trata de segmentos pequeños, salvo algunas excepciones: el segmento un poco más largo que se observa antes de 1500 fue el reinado de [Francesco Foscari](https://es.wikipedia.org/wiki/Francesco_Foscari), que fue obligado a dimitir. Este hecho fue observado por [@smith2021long], y se adujo que se debía tratar a una elección intencionada, más que a la casualidad. De hecho, analizando estadísticamente el punto de cambio en [@histories3010003] observamos que el punto de cambio corresponde aproximadamente a la mencionada *Serrata*.
+
+Se pueden incluir muchas explicaciones al mismo, incluyendo la más simple: con reinados más cortos, se disminuye la posibilidad de acumulación de poder por parte del dogo y su familia; pero una explicación adicional está en el efecto de la red social, y como esta influye en la forma de elección [@molinari2020republic], que a su vez favorece el reparto de poder. El sistema de elección, a partir del Maggior Consiglio incluyendo varias rondas de votos de comités electorales y de sorteos, favorecía la elección de dogos que o contaran con una super-mayoría o una minoría lo suficientemente cualificada. ¿Qué había que hacer para conseguir una de las dos? Primero, que la elección se repitiera con frecuencia, de forma que hubiera varias oportunidades en cada generación, como se ha visto. Pero segundo, una vez más, usar el poder de las redes: situar a tu familia en un punto de la red social de forma que tuviera una reputación suficiente para que recayera la elección en alguien de tu familia.
+
+Por eso, evidencia de este uso estratégico de la red social se encuentra en varios lugares, pero, sobre todo, en la red matrimonial de los mismos dogos, una muestra de la red marital de toda la ciudad, de la que también se tiene constancia.
 
 ## La red matrimonial de los dogos
 
