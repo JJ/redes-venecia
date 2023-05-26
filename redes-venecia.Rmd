@@ -139,7 +139,9 @@ plot(doges.sn.connected,
 ```
 Es interesante notar, justo en el centro, a la familia Dandolo, pero también como las familias Contarini, Loredan y Mocenigo tienen la centralidad de valor propio (EV) más alto. La familia Contarini cuenta, igual que la Morosini, no sólo con un mayor número de dogos, sino también esposas de dogos.
 
-Pero lo más interesante es notar que, a pesar de las diferencias evidentes en centralidad y otras medidas a nivel de actor de todas las familias, no se trata de una ley de potencias con una sola familia acumulando la mayoría de los enlaces, y en definitiva el poder, y otras familias quedando como "oposición"; esto favorece la estabilidad, incluyendo efectos secundarios como el hecho de que se nominen a dogos solamente personas con una edad avanzada que no van a durar mucho en el poder [@histories3010003].
+Pero lo más interesante es notar que, a pesar de las diferencias evidentes en centralidad y otras medidas a nivel de actor de todas las familias, no se trata de una ley de potencias con una sola familia acumulando la mayoría de los enlaces, y en definitiva el poder, y otras familias quedando como "oposición"; esto favorece la estabilidad, incluyendo efectos secundarios como el hecho de que se nominen a dogos solamente personas con una edad avanzada que no van a durar mucho en el poder [@histories3010003], contado en el apartado anterior.
+
+## Conclusiones
 
 ## Ciencia abierta
 
@@ -147,8 +149,6 @@ Este trabajo se ha llevado a cabo con los principios de ciencia
 abierta y ciencia ágil [@mereloguervos2022agile]. Está disponible en
 [el repositorio de GitHub
 `https://github.com/JJ/redes-venecia`](https://github.com/JJ/redes-venecia).
-
-
 
 ## Reconocimientos
 
