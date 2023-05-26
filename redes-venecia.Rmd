@@ -207,7 +207,7 @@ Venecia es una ciudad fascinante, y no es complicado caer en sus redes, golpeado
 Por otro lado, este trabajo ha sido preparado exclusivamente para el CICITCoffe e incluye en su fuente todo el código en R necesario para llevar a cabo los análisis y gráficos que se muestran. Es ciencia reproducible por tanto. Como ejemplo, mostramos aquí el código necesario para hacer una tabla de los 10 dogos cuyo reino duró más (y el año en el que comenzó)
 
 ```{r tabla.reinado}
-knitr::kable(head(doges.years[order(-doges.years$years),],n=10),row.names=F,col.names=c("Dogo","Año de comienzo","Años reinado","Dogo nº"))
+knitr::kable(head(doges.years[order(-doges.years$years),],n=10),row.names=F,col.names=c("Nombre dogo","Año de comienzo","Años reinado","Dogo nº"))
 ```
 
 ## Ciencia abierta
