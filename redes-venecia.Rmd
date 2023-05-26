@@ -143,6 +143,14 @@ Pero lo más interesante es notar que, a pesar de las diferencias evidentes en c
 
 ## Conclusiones
 
+Venecia es una ciudad fascinante, y no es complicado caer en sus redes, golpeado por el síndrome de Stendhal. Pero lo es aún más cuando examinas su historia, y percibes que en su gobierno colectivo (no exactamente democrático) existía, quizás inspirado por su entendimiento de las redes marítimas comerciales que fueron la causa de la riqueza y poder de la Serenísima, un entendimiento intuitivo del sistema complejo del poder y una voluntad de tener una cierta medida de control sobre el comportamiento emergente de las diferentes redes sociales que existían en la ciudad. En este trabajo hemos mostrado cómo las redes comerciales en los primeros siglos de existencia del estado dieron lugar a la emergencia de una clase con un control exclusivo sobre el poder, los nobles venecianos. Sin embargo, a partir de la Serrata que cerró el acceso a esos puestos de poder, las expansiones sucesivas hicieron que, por diseño, se tratara de repartir el poder haciendo la duración del dogado lo más corta posible (en un porcentaje significativo, de un año o menos) y creando una red de alianzas donde no se buscaba la acumulación de poder sobre una sola familia, sino el "mundo pequeño" en el cual fuera fácil la alianza con una u otra familia, dependiendo de a quién le "tocaba" acceder al dogado en un momento determinado (es decir, qué familia tenía a una persona con la edad suficiente y la experiencia suficiente para poder ser elegible como dogo).
+
+Por otro lado, este trabajo ha sido preparado exclusivamente para el CICITCoffe e incluye en su fuente todo el código en R necesario para llevar a cabo los análisis y gráficos que se muestran. Es ciencia reproducible por tanto. Como ejemplo, mostramos aquí el código necesario para hacer una tabla de los 10 dogos cuyo reino duró más (y el año en el que comenzó)
+
+```{r tabla.reinado}
+knitr::kable(head(doges.years[order(-doges.years$years),],n=10),row.names=F)
+```
+
 ## Ciencia abierta
 
 Este trabajo se ha llevado a cabo con los principios de ciencia
