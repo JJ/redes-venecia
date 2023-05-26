@@ -98,6 +98,7 @@ La *piazza* de San Marco en general, y el palacio de los dogos en particular, er
 Los dogos, extraídos siempre de los nobles reconocidos a partir de la *Serrata*, solían pasar por una o más de esos puestos, siempre por designación o elección, antes de alcanzar el dogado. Sin embargo, la elección del dogo era una puesto *vitalicio*. ¿Cuanto duraban los dogos en el puesto? Lo presentamos en el siguiente gráfico
 
 ```{r longevidad, message=F, echo=F, fig.cap="Longevidad de los dogos frente al año de elección"}
+library(ggplot2)
 library(ggthemes)
 data("doges")
 doges.years <- unique( data.frame(doge=data.doges$Doge,start=data.doges$Start,years=data.doges$Years))
