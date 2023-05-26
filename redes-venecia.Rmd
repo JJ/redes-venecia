@@ -3,7 +3,8 @@ title: "Cayendo en las redes de Venecia"
 author: "JJ Merelo"
 date: "`r Sys.Date()`"
 output:
-  pdf_document: default
+  pdf_document:
+    keep_tex: true
   html_document: default
 abstract: |
   La República de Venecia se benefició de una comprensión intuitiva del poder

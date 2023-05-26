@@ -314,3 +314,5 @@ TSWLatexianTemp*
 *.Rproj
 .Rproj.user
 
+# tex
+*.tex
