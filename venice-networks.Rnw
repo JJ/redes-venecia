@@ -79,6 +79,17 @@ plot(colleganza.sn.connected,
 @
 
 
+<<longevity, echo=F, fig.height=6>>=
+library(ggplot2)
+library(ggthemes)
+library(viridis)
+data("doges")
+doges.years <- unique( data.frame(doge=data.doges$Doge,start=data.doges$Start,years=data.doges$Years))
+doges.years$idx <- as.numeric(row.names(doges.years))
+ggplot(doges.years, aes(x=start,y=idx))+geom_segment(aes(xend=start+years,yend=idx,color=years,size=1+years))+ scale_color_viridis(option = "D")+xlab("Year")+ylab("")+theme_economist()+theme(axis.ticks.y=element_blank(),axis.text.y=element_blank())
+@
+
+
 \bibliographystyle{splncs04}
 \bibliography{venice}
 
