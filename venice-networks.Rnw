@@ -83,6 +83,8 @@ plot(colleganza.sn.connected,
 library(ggplot2)
 library(ggthemes)
 library(viridis)
+library(devtools)
+install_github("JJ/dogesr")
 data("doges")
 doges.years <- unique( data.frame(doge=data.doges$Doge,start=data.doges$Start,years=data.doges$Years))
 doges.years$idx <- as.numeric(row.names(doges.years))
