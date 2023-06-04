@@ -47,8 +47,37 @@ The historic Republic of Venice seemed to leverage an intuitive understanding of
 \end{abstract}
 %
 %
+<<setup, echo=F, message=F>>=
+source("R/utils.R") # Creates doges.sn, doges.sn.connected
+@
+
 %
-\section{Inroduction}
+\section{Introduction}
+
+<<colleganza,  fig.pos="h!tbp", echo=FALSE, message=F, warning=F, fig.cap="\\protect\\emph{Colleganza} network. \\protect\\label{fig:collganza} ">>=
+colleganza <- read.csv("data/colleganza-pairs.csv", header=F)
+colleganza.sn <- graph.data.frame(data.frame(colleganza$V1,colleganza$V2),directed=F)
+E(colleganza.sn)$weight <- 1
+colleganza.sn <- simplify(colleganza.sn, edge.attr.comb=list(weight="sum"))
+V(colleganza.sn)$degree <- degree(colleganza.sn)
+V(colleganza.sn)$pagerank <- unname(unlist(page_rank(colleganza.sn)$vector))
+
+
+components <- igraph::clusters(colleganza.sn, mode="weak")
+biggest_cluster_id <- which.max(components$csize)
+vert_ids <- V(colleganza.sn)[components$membership == biggest_cluster_id]
+
+colleganza.sn.connected <- igraph::induced_subgraph(colleganza.sn, vert_ids)
+
+plot(colleganza.sn.connected,
+     vertex.size=V(colleganza.sn.connected)$degree/2,
+     layout=layout_with_fr,
+     vertex.label.cex=0.5+V(colleganza.sn.connected)$pagerank*20,
+     vertex.label.dist=0.5,
+     edge.width=3*E(colleganza.sn.connected)$weight)
+
+@
+
 
 \bibliographystyle{splncs04}
 \bibliography{venice}
