@@ -316,3 +316,6 @@ TSWLatexianTemp*
 
 # tex
 *.tex
+
+# Other generated files
+*.html
