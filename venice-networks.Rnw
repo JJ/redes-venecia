@@ -41,6 +41,8 @@ PID2020-115570GB-C22 (DemocratAI::UGR).}}
 %
 \begin{abstract}
 
+The historic Republic of Venice seemed to leverage an intuitive understanding of complex networks to achieve long-term stability, as well as to grow and maintain its empire based on maritime trade. In this extended abstract we summarize published work, as well as advance results of ongoing research on the influence of complex networks in historic events in the republic of Venice, and evidence of tactical use of social links for social, political and commercial advance, as well as top-down attempts to curb that use in order to preserve stability and avoid accumulation of power.
+
 \keywords{Complex networks  \and Digital humanities \and History \and Republic of Venice.}
 \end{abstract}
 %
