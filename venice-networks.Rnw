@@ -79,7 +79,7 @@ plot(colleganza.sn.connected,
 @
 
 
-<<longevity, echo=F, fig.height=6>>=
+<<longevity, echo=F, message=F, fig.height=6>>=
 library(ggplot2)
 library(ggthemes)
 library(viridis)
