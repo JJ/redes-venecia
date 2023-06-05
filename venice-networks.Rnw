@@ -81,24 +81,26 @@ plot(colleganza.sn.connected,
 
 <<longevity, echo=F, fig.height=6>>=
 library(ggplot2)
-# library(ggthemes)
+library(ggthemes)
 library(viridis)
 library(devtools)
 install_github("JJ/dogesr")
+library(dogesr)
 doges.years <- doges.years()
 doges.years$idx <- as.numeric(row.names(doges.years))
-ggplot(doges.years, aes(x=start,y=idx))+geom_segment(aes(xend=start+years,yend=idx,color=years,size=1+years))+ scale_color_viridis(option = "D")+xlab("Year")+ylab("")+theme_economist()+theme(axis.ticks.y=element_blank(),axis.text.y=element_blank())
+ggplot(doges.years, aes(x=Start,y=idx))+geom_segment(aes(xend=Start+Years,yend=idx,color=Years,linewidth=1+Years))+ scale_color_viridis(option = "D")+xlab("Year")+ylab("")+theme_economist()+theme(axis.ticks.y=element_blank(),axis.text.y=element_blank())
 @
 
 <<doges, echo=F>>=
 E(doges.sn.connected)$edge_betweenness <- edge_betweenness(doges.sn.connected) # Comes from utils
+V(doges.sn.connected)$pagerank <- unname(unlist(page_rank(doges.sn.connected)$vector))
 max.EW <- max( E(doges.sn.connected)$edge_betweenness)
 E(doges.sn.connected)$color <- "gray"
 E(doges.sn.connected)[ E(doges.sn.connected)$edge_betweenness == max.EW ]$color <- "blue"
 plot(doges.sn.connected,
      vertex.size=V(doges.sn.connected)$degree,
      layout=layout_as_tree(doges.sn.connected,circular=T),
-     vertex.label.cex=V(doges.sn.connected)$EV*1.5,
+     vertex.label.cex=V(doges.sn.connected)$pagerank*40,
      vertex.label.dist=1,
      edge.color=E(doges.sn.connected)$color,
      edge.width=E(doges.sn.connected)$edge_betweenness/50)
