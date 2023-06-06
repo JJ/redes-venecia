@@ -72,7 +72,6 @@ colleganza.sn <- simplify(colleganza.sn, edge.attr.comb=list(weight="sum"))
 V(colleganza.sn)$degree <- degree(colleganza.sn)
 V(colleganza.sn)$pagerank <- unname(unlist(page_rank(colleganza.sn)$vector))
 
-
 components <- igraph::clusters(colleganza.sn, mode="weak")
 biggest_cluster_id <- which.max(components$csize)
 vert_ids <- V(colleganza.sn)[components$membership == biggest_cluster_id]
@@ -93,9 +92,9 @@ plot(colleganza.sn.connected,
 
 @
 
-We can observe several interesting features in this graph already; despite being the biggest component, it includes the vast majority of all the families in Venice. Unlike other states in the same era, there is a good amount of "big" (that is, high page rank) names. Since size reflects pagerank and this, in turn, is related to how reachable from the rest of the network are; besides, some families show, through their edges, how difficult it is to isolate them. A bit more subtle is the division in "parties" \cite{maranini1927costituzione} that led to the \emph{serrata}: The Querinis, Badoers, Tiepolos (the "popular" party, shown in Green) are loosely and indirectly linked, while the Morosini, Contarini, Barbarigo (the "aristocratic" party, in red) are on one hand, in a better position in the network, and on the other better connected to each other. 
+We can observe several interesting features in this graph already; despite being the biggest component, it includes the vast majority of all the families in Venice. Unlike other states in the same era, there is a good amount of "big" (that is, high page rank) names. Since size reflects pagerank and this, in turn, is related to how reachable from the rest of the network are; besides, some families show, through their edges, how difficult it is to isolate them. A bit more subtle is the division in "parties" \cite{maranini1927costituzione} that led to the \emph{serrata}: The Querinis, Badoers, Tiepolos (the "popular" party, shown in Green) are loosely and indirectly linked, while the Morosini, Contarini, Barbarigo (the "aristocratic" party, in red) are on one hand, in a better position in the network, and on the other better connected to each other. That placed them in a better position to get the \emph{serrata} legislation approved, and then, since it closed the admission to the Maggior Consiglio, to become part of that nobility.
 
-<<longevity, echo=F, message=F, fig.height=6>>=
+<<longevity, echo=F, message=F, fig.height=3, fig.cap="A timeline of the time every doge spent in office. Time in office is represented as segment height and width, as well as with color for highlighting.\\protect\\label{fig:terms}">>=
 library(ggplot2)
 library(ggthemes)
 library(viridis)
@@ -107,7 +106,10 @@ doges.years$idx <- as.numeric(row.names(doges.years))
 ggplot(doges.years, aes(x=Start,y=idx))+geom_segment(aes(xend=Start+Years,yend=idx,color=Years,linewidth=1+Years))+ scale_color_viridis(option = "D")+xlab("Year")+ylab("")+theme_economist()+theme(axis.ticks.y=element_blank(),axis.text.y=element_blank())
 @
 
-<<doges, echo=F>>=
+The set of laws that comprised the \emph{serrata} were, on one hand, approved to freeze a extractive minority (according to \cite{colleganza}) or to simply make into law what was already an accepted custom (according to \cite{maranini1927costituzione}). It did have the desired stability as effect, but in a rather roundabout way: through the informal limitation of doges' years in office, shown in Figure \ref{fig:terms}. Looking at that figure, it looks like there is a point in time, right around 1300, when except for a few exceptions, terms are very short. In \cite{histories3010003} we performed an analysis that showed the \emph{serrata} to be that point; there is a difference in averages of more than 4 years after and before the \emph{Serrata}, with no other point having a more significant difference. So the effect of the \emph{Serrata}, closing the set of families that could become doge, was to reduce uncertainty about when anyone in your family could become doge: it was only a matter of waiting a few rounds, and it would be the turn; in order to decrease uncertainty even more, only persons with a certain age were chosen in office; not only ostensibly to avoid accumulation of power in them and their families, but simply so that the next round of election, that could fall on your family, would arrive sooner.
+
+
+<<doges, echo=F, fig.height=4>>=
 E(doges.sn.connected)$edge_betweenness <- edge_betweenness(doges.sn.connected) # Comes from utils
 V(doges.sn.connected)$pagerank <- unname(unlist(page_rank(doges.sn.connected)$vector))
 max.EW <- max( E(doges.sn.connected)$edge_betweenness)
