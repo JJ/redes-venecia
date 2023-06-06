@@ -64,7 +64,7 @@ In Venice, the main actors were extended families under a single surname; this i
 
 We will first study the \emph{colleganza} network, published by Puga and Treffler \cite{colleganza}. A \emph{colleganza} is essentially a joint commercial shipping contract; since these contracts were registered, there is a rather good amount of them, allowing us to trace the network as found in Figure \ref{fig:colleganza}.
 
-<<colleganza,  fig.pos="h!tbp", echo=FALSE, message=F, warning=F, fig.height=5, fig.cap="The \\protect\\emph{Biggest component of the colleganza} network. Family names are sized according to the pagerank centrality, nodes according to the degree, edges according to edge betweenness \\protect\\label{fig:colleganza} ">>=
+<<colleganza,  fig.pos="h!tbp", echo=FALSE, message=F, warning=F, fig.height=4, fig.cap="The \\protect\\emph{Biggest component of the colleganza} network. Family names are sized according to the pagerank centrality, nodes according to degree, edges to edge betweenness. In green, nodes for the \"popular\" party families; red for the \"aristocratic\" party families.\\protect\\label{fig:colleganza}">>=
 colleganza <- read.csv("data/colleganza-pairs.csv", header=F)
 colleganza.sn <- graph.data.frame(data.frame(colleganza$V1,colleganza$V2),directed=F)
 E(colleganza.sn)$weight <- 1
@@ -79,6 +79,11 @@ vert_ids <- V(colleganza.sn)[components$membership == biggest_cluster_id]
 
 colleganza.sn.connected <- igraph::induced_subgraph(colleganza.sn, vert_ids)
 par(mar=c(1,0,1,0)+.1)
+V(colleganza.sn.connected)$color=rgb(0,0,1,0.5)
+rojo.dogo <- rgb(0.7,0,0,0.8)
+
+V(colleganza.sn.connected)[ V(colleganza.sn.connected)$name %in% c("Contarini","Foscari", "Gradenigo","Giustiniani","Steno", "Ziani","Morosini","Moro","Grimani","Memmo") ]$color <- rojo.dogo
+V(colleganza.sn.connected)[ V(colleganza.sn.connected)$name %in% c("Querini","Tiepolo", "Badoer","Dauro","Barozzi", "Lombardo","Pedoni") ]$color <- rgb(0,1,0,0.5)
 plot(colleganza.sn.connected,
      vertex.size=V(colleganza.sn.connected)$degree/2,
      layout=layout_with_fr,
@@ -88,7 +93,7 @@ plot(colleganza.sn.connected,
 
 @
 
-We can observe several interesting features in this graph already; despite being the biggest component, it includes the vast majority of all the families in Venice. Unlike other states in the same era, there is a good amount of "big" (that is, high page rank) names. Since size reflects pagerank and this, in turn, is related to how reachable from the rest of the network are; besides, some families show, through their edges, how difficult it is to isolate them. A bit more subtle is the division in "parties" \cite{maranini1927costituzione} that led to the \emph{serrata}: The Querinis, Badoers, Tiepolos (the "popular" party) are loosely linked, while the Morosini, Contarini, Barbarigo (the "aristocratic" party) are on one hand, in a better position in the network, and then better connected to each other. 
+We can observe several interesting features in this graph already; despite being the biggest component, it includes the vast majority of all the families in Venice. Unlike other states in the same era, there is a good amount of "big" (that is, high page rank) names. Since size reflects pagerank and this, in turn, is related to how reachable from the rest of the network are; besides, some families show, through their edges, how difficult it is to isolate them. A bit more subtle is the division in "parties" \cite{maranini1927costituzione} that led to the \emph{serrata}: The Querinis, Badoers, Tiepolos (the "popular" party, shown in Green) are loosely and indirectly linked, while the Morosini, Contarini, Barbarigo (the "aristocratic" party, in red) are on one hand, in a better position in the network, and on the other better connected to each other. 
 
 <<longevity, echo=F, message=F, fig.height=6>>=
 library(ggplot2)
