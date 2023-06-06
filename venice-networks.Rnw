@@ -58,6 +58,8 @@ The characterization of complex networks is a relatively recent endeavor; howeve
 
 In this extended abstract we will summarize published and ongoing research on the history of the Republic of Venice through the analysis of social networks in historical records, starting with commercial networks, following by a consequence of these top-down strategies to harness the power of individual actors, and eventually an analysis of the longest recorded social network, the doges (government heads of the republic of Venice) marriage network, looking for evidence of those tactics and strategies.
 
+The Republic of Venice existed as an independent state for more than a millenium, and it featured an unique form of government: the head of the state, called teh {\em doge}, was elected for life among the city notables. This was done initially by a popular assembly, but election procedures evolved up to a point that, after the so-called \emph{Serrata} \cite{serrata} or closure by the end of the XIII century, only members of a (roughly) closed list of noble families were elected, and the procedure involved several stages in such a way that only those supported by a vast majority or a significant minority had any chance to become doges \cite{molinari2020republic}.
+
 <<colleganza,  fig.pos="h!tbp", echo=FALSE, message=F, warning=F, fig.cap="\\protect\\emph{Colleganza} network. \\protect\\label{fig:collganza} ">>=
 colleganza <- read.csv("data/colleganza-pairs.csv", header=F)
 colleganza.sn <- graph.data.frame(data.frame(colleganza$V1,colleganza$V2),directed=F)
