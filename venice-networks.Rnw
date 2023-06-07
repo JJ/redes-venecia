@@ -112,13 +112,22 @@ The set of laws that comprised the \emph{serrata} were, on one hand, approved to
 <<doges, echo=F, fig.height=4>>=
 E(doges.sn.connected)$edge_betweenness <- edge_betweenness(doges.sn.connected) # Comes from utils
 V(doges.sn.connected)$pagerank <- unname(unlist(page_rank(doges.sn.connected)$vector))
+
+rojo.dogo <- rgb(0.7,0,0,0.8)
+V(doges.sn.connected)$color=rgb(1,0.78125,0.0390625,0.8)
+V(doges.sn.connected)[ V(doges.sn.connected)$name %in% c("Contarini","Foscari", "Gradenigo","Giustiniani","Steno", "Ziani","Morosini","Moro","Grimani","Memmo") ]$color <- rojo.dogo
+V(doges.sn.connected)[ V(doges.sn.connected)$name %in% c("Querini","Tiepolo", "Badoer","Dauro","Barozzi", "Lombardo","Pedoni") ]$color <- rgb(0,1,0,0.5)
+
 max.EW <- max( E(doges.sn.connected)$edge_betweenness)
 E(doges.sn.connected)$color <- "gray"
 E(doges.sn.connected)[ E(doges.sn.connected)$edge_betweenness == max.EW ]$color <- "blue"
+par(mar=c(1,0,1,0)+.1)
+
 plot(doges.sn.connected,
      vertex.size=V(doges.sn.connected)$degree,
      layout=layout_as_tree(doges.sn.connected,circular=T),
-     vertex.label.cex=V(doges.sn.connected)$pagerank*40,
+     vertex.frame.color=V(doges.sn.connected)$color,
+     vertex.label.cex=V(doges.sn.connected)$pagerank*20,
      vertex.label.dist=1,
      edge.color=E(doges.sn.connected)$color,
      edge.width=E(doges.sn.connected)$edge_betweenness/50)
