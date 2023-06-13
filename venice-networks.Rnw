@@ -28,14 +28,14 @@ PID2020-115570GB-C22 (DemocratAI::UGR).}}
 % If the paper title is too long for the running head, you can set
 % an abbreviated paper title here
 %
-\author{JJ Merelo\inst{1}\orcidID{0000-0002-1385-9741}}
+\author{JJ Merelo\inst{1}\orcidID{0000-0002-1385-9741}, M. Cristina Molinari \inst{2}\orcidID{0000-0002-6380-6795}}
 %
-\authorrunning{JJ Merelo}
+\authorrunning{JJ Merelo, M. C. Molinari}
 % First names are abbreviated in the running head.
 % If there are more than two authors, 'et al.' is used.
 %
 \institute{Department of Computer Engineering, Automatics and Robotics and CITIC University of Granada, Granada, Spain
-\email{jmerelo@ugr.es}}
+\email{jmerelo@ugr.es} \and Department of Economics, University Ca' Foscari, Venice, Italy \email{cmolinar@unive.it}}
 %
 \maketitle              % typeset the header of the contribution
 %
@@ -94,14 +94,14 @@ plot(colleganza.sn.connected,
 
 We can observe several interesting features in this graph already; despite being the biggest component, it includes the vast majority of all the families in Venice. Unlike other states in the same era, there is a good amount of "big" (that is, high page rank) names. Since size reflects pagerank and this, in turn, is related to how reachable from the rest of the network are; besides, some families show, through their edges, how difficult it is to isolate them. A bit more subtle is the division in "parties" \cite{maranini1927costituzione} that led to the \emph{serrata}: The Querinis, Badoers, Tiepolos (the "popular" party, shown in green) are loosely and indirectly linked, while the Morosini, Contarini, Barbarigo (the "aristocratic" party, in red) are on one hand, in a better position in the network, and on the other better connected to each other. That placed them in a better position to get the \emph{serrata} legislation approved, and then, since it closed the admission to the Maggior Consiglio, to become part of that nobility.
 
-<<longevity, echo=F, message=F, fig.height=3, fig.cap="A timeline of the time every doge spent in office. Time in office is represented as segment height and width, as well as with color for highlighting.\\protect\\label{fig:terms}">>=
+<<longevity, echo=F, message=F, warning=FALSE, fig.height=3, fig.cap="A timeline of the time every doge spent in office. Time in office is represented as segment height and width, as well as with color for highlighting.\\protect\\label{fig:terms}">>=
 library(ggplot2)
 library(ggthemes)
 library(viridis)
 library(devtools)
 install_github("JJ/dogesr")
 library(dogesr)
-doges.years <- doges.years()
+data("doges.years")
 doges.years$idx <- as.numeric(row.names(doges.years))
 ggplot(doges.years, aes(x=Start,y=idx))+geom_segment(aes(xend=Start+Years,yend=idx,color=Years,linewidth=1+Years))+ scale_color_viridis(option = "D")+xlab("Year")+ylab("")+theme_economist()+theme(axis.ticks.y=element_blank(),axis.text.y=element_blank())
 @
