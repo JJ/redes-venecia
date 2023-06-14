@@ -124,7 +124,7 @@ plot(doges.sn.connected,
 
 Figure \ref{fig:doges} shows the main connected component of the doges' marital networks \cite{gooddoge}, whose nodes are the families of doges, \emph{dogaresse} or doges' mothers. We highlight those families that formed the two "parties" before the \emph{serrata}; the green of the "popular party" has almost disappeared, and many families of the other party are there. But what is remarkable here is that they are not the only ones there, and that other families, like the Loredan or Gradenigo family, have a higher pagerank (bigger label size) than any of the aristocratic ones; the network is still mainly, despite accumulation of offices in families like the Morosinis and Contarinis, a small world.
 
-As a conclusion, we can see here how positions in the social network explain at least one event in the history of Venice, the \emph{serrata}, and how it, in turn, resulted in a government strategy that helped avoid accumulation of power through rotation of the main families in the head office, with all families (or at least a good amount of them) having a sizable probability of reaching the head office through their tactical position in the social network.
+As a conclusion, we can see here how positions in the social network explain at least the consequences of one event in the history of Venice, the \emph{serrata}, and how it, in turn, resulted in a government strategy that helped avoid accumulation of power through rotation of the main families in the head office, with all families (or at least a good amount of them) having a sizable probability of reaching the head office through their tactical position in the social network.
 
 \bibliographystyle{splncs04}
 \bibliography{venice}
