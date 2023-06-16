@@ -36,6 +36,12 @@ Many complex networks, including social networks, include links from one actor t
 \keywords{Complex networks  \and Social  networks \and Graph Theory}
 \end{abstract}
 %
+
+Many social networks include self-loops; matrimonial networks, for instance, may include marriages between members of the same family \cite{10.1093/qje/qju006}; commuting networks will include trips within the same city or state, and commercial networks will include, in the case of cartels or big corporations, financial transactions between different divisions of the same company. When analysis is performed on these networks, however, most centrality measures cannot work with them, so in most cases they are dropped. Even in the case of measurements that work on the connection matrix, like eigenvector centrality, self-loops are dropped mainly to work on an uniform set of data.
+
+These intra-links can, however, help better understand the dynamics of a social network, and should probably be taken into account. So far, however, there has been little analysis on what is the actual effect of intra-links on the eigenvector centrality in social networks. This paper will try, using a well-chosen example, what is that effect and how it will help beter undesrstand social systems.
+
+
 %
 <<setup, echo=F, message=F>>=
 library(igraph)
