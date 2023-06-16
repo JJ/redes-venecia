@@ -1,0 +1,107 @@
+\documentclass[runningheads]{llncs}
+%
+\usepackage[T1]{fontenc}
+
+\usepackage{graphicx}
+%
+% If you use the hyperref package, please uncomment the following two lines
+% to display URLs in blue roman font according to Springer's eBook style:
+%\usepackage{color}
+%\renewcommand\UrlFont{\color{blue}\rmfamily}
+%
+\begin{document}
+%
+\title{Self-loops in social networks: behavior of eigenvector centrality\thanks{This work is supported by the Ministerio espa\~{n}ol de Econom\'{\i}a y
+Competitividad (Spanish Ministry of Competitivity and Economy) under project
+PID2020-115570GB-C22 (DemocratAI::UGR).}}
+%
+%\titlerunning{Abbreviated paper title}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
+%
+\author{JJ Merelo\inst{1}\orcidID{0000-0002-1385-9741}}
+%
+\authorrunning{JJ Merelo}
+% First names are abbreviated in the running head.
+% If there are more than two authors, 'et al.' is used.
+%
+\institute{Department of Computer Engineering, Automatics and Robotics and CITIC University of Granada, Granada, Spain
+\email{jmerelo@ugr.es}}
+%
+\maketitle              % typeset the header of the contribution
+%
+\begin{abstract}
+
+Many complex networks, including social networks, include links from one actor to itself; often, these links are dropped to perform analysis of centrality measures. Some centrality measures, like eigenvector centrality, can work with these self-loops, however. In this paper, we will be looking at the difference of the results in the analysis of a social network using eigenvector centrality when these self loops are considered, and what additional insights we can gather from this inclusion, including possible recommendations for the incorporation of these self-loops in more general social network analysis.
+\keywords{Complex networks  \and Social  networks \and Graph Theory}
+\end{abstract}
+%
+%
+<<setup, echo=F, message=F>>=
+library(igraph)
+library(knitr)
+library(stringr)
+tablify <- function( graph, column ) {
+  m.table <- data.frame( Family=V(graph)$name, degree=vertex_attr(graph,column) )
+  names(m.table)[names(m.table) == "degree"] <- column
+  return( m.table[ order(m.table[[column]],decreasing = T),] )
+}
+
+show.table <- function( table, name, title ) {
+  kable(table %>% head(.,10),
+      col.names=c("Family", str_to_title(title) ),
+      caption=paste0("Top 10 families according to ", title , " \\protect\\label{tab:top:", name, "}"),
+      row.names = F)
+}
+
+load("data/venice-marriages.Rda")
+marriages <- marriages.raw[ marriages.raw$wife_familyname_std != '',] # Eliminates those that are not noble
+
+# Use self-loops
+all.marriages <- marriages                                    # Keep marriages with intra-family ties
+all.marriages.sn <- graph.data.frame(data.frame(all.marriages$husband_familyname_std,all.marriages$wife_familyname_std),directed=F)
+V(all.marriages.sn)$eigen <-  unname(unlist(eigen_centrality(all.marriages.sn)$vector))
+all.m.eigen <- tablify( all.marriages.sn, "eigen")
+# show.table(all.m.eigen, "EV with self loops", "eigenvector centrality")
+
+# Eliminate self-loops
+marriages <- marriages[ marriages$husband_familyname_std != marriages$wife_familyname_std,]
+marriages.sn <- graph.data.frame(data.frame(marriages$husband_familyname_std,marriages$wife_familyname_std),directed=F)
+V(marriages.sn)$eigen <-  unname(unlist(eigen_centrality(marriages.sn)$vector))
+m.eigen <- tablify( marriages.sn, "eigen")
+show.table(m.eigen, "EV", "eigenvector centrality")
+show.table(all.m.eigen, "EV", "EV +  self-loops")
+
+@
+
+<<self.marriages, echo=F, message=F>>=
+library(dplyr)
+library(tidyr)
+library(tibble)
+library(ggplot2)
+library(ggthemes)
+marriages.self <- marriages.raw[ marriages.raw$husband_familyname_std == marriages.raw$wife_familyname_std,]
+sorted.marriages.self <- marriages.self %>% count(wife_familyname_std, sort=T)
+intra.marriages <- unique(marriages.self$wife_familyname_std)
+kable(sorted.marriages.self %>% head(.,10),
+      row.names = F,
+      col.names= c("Family","# Intra-family marriages"),
+      caption="Top 10 families by number of intra-family marriages.\\protect\\label{tab:intra}")
+all.names <- unique( c( marriages.raw$wife_familyname_std, marriages.raw$husband_familyname_std))
+all.marriages <- marriages.raw %>% select(husband_familyname_std,wife_familyname_std) %>% rowid_to_column() %>% pivot_longer(-rowid) %>% group_by(value) %>% summarise(n = n_distinct(rowid)) %>% arrange(desc(n))
+marriages.table <- left_join(all.marriages,sorted.marriages.self,by=c("value" = "wife_familyname_std"))
+marriages.table$intra.marriages.rate <- marriages.table$n.y / marriages.table$n.x
+
+marriages.summary <- data.frame(family=intra.marriages, EV.with.self=sapply( intra.marriages, function(x) V(all.marriages.sn)[[x]]$eigen ), EV.no.self=sapply( intra.marriages, function(x) V(marriages.sn)[[x]]$eigen ), intra.marriages=sapply( intra.marriages, function(x) sorted.marriages.self[sorted.marriages.self$wife_familyname_std ==x,]$n ))
+ggplot(marriages.summary, aes(x=EV.with.self,y=EV.no.self, color=intra.marriages, size=intra.marriages))+geom_point()+geom_abline(intercept=0,slope=1,linetype="dashed",color="red")+scale_x_log10()+scale_y_log10()
+marriages.summary$diff <- (marriages.summary$EV.no.self - marriages.summary$EV.with.self)/marriages.summary$EV.no.self
+ggplot(marriages.summary, aes(x=intra.marriages,y=diff))+geom_point()+theme_fivethirtyeight()
+@
+
+%
+\section{Introduction}
+
+\bibliographystyle{splncs04}
+\bibliography{venice}
+
+\end{document}
