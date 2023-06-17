@@ -91,6 +91,10 @@ kable(tabled.top.eigen,
       row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped")) %>% column_spec(2, border_right=T) %>% column_spec(3, border_left = T ) %>% column_spec(4, border_right=T) %>% column_spec(5, border_left = T )
 @
 
+This dataset has been transformed into a graph by eliminating self-loops (as usual), or leaving them; eigenvector centrality has then been computed for the two resulting graphs. A ranking of the top families according to their EV centrality is shown in Table \ref{tab:top:ev} (center and rightmost columns).
+
+Looking at the leftmost and center group of columns, we can wee that there seems to be certain correlation between the number of intra-family matrimonies and the EV centrality, even if we do not include it in the computation. Six out of then families are the same, and the first three: Contarini, Morosini, Corner also appear in the same order. This might indicate either a common cause (size of the family, for instance) or a cause-effect. Including self-loops in the computation we see that there are small, but significant, variations: The Dolfins and Giustinians change their order in the ranking, plus the Loredan family is dropped and substituted by the Pisani family. We can also see that the difference between the first and second has doubled, and that, in general, the value of the normalized EV centrality has also decreased.
+
 <<charts, echo=F, fig.show="hold", out.width="50%",message=F, fig.cap="(Left) EV centrality considering self-loops (x axis) or not (y axis). The size of the plot and color signal the number of intra-family marriages. (Right) Number of intra-family marriabes vs. percentual increment of EV when self-loops are not computed. \\protect\\label{fig:plots}">>=
 all.names <- unique( c( marriages.raw$wife_familyname_std, marriages.raw$husband_familyname_std))
 all.marriages <- marriages.raw %>% select(husband_familyname_std,wife_familyname_std) %>% rowid_to_column() %>% pivot_longer(-rowid) %>% group_by(value) %>% summarise(n = n_distinct(rowid)) %>% arrange(desc(n))
