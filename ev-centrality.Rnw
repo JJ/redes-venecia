@@ -38,9 +38,10 @@ Many complex networks, including social networks, include links from one actor t
 
 Many social networks include self-loops; matrimonial networks, for instance, may include marriages between members of the same family \cite{colleganza}; commuting networks will include trips within the same city or state, and commercial networks will include, in the case of cartels or big corporations, financial transactions between different divisions of the same company. When analysis is performed on these networks, however, most centrality measures cannot work with them, so in most cases they are dropped. Even in the case of measurements that work on the connection matrix, like eigenvector centrality, self-loops are dropped mainly to work on an uniform set of data.
 
-These intra-links can, however, help better understand the dynamics of a social network, and should probably be taken into account. So far, however, there has been little analysis on what is the actual effect of intra-links on the eigenvector centrality in social networks. This paper will try, using a well-chosen example, what is that effect and how it will help beter undesrstand social systems.
+These intra-links can, however, give us better insights on the dynamics of a social network, and should probably be taken into account. So far, however, there has been little analysis on what is the actual effect of intra-links on the eigenvector centrality \cite{BONACICH2007555} in social networks. This paper will try, using a well-chosen example, what is that effect and how it will help beter undesrstand social systems.
 
-
+We will be using the marital network of the Republic of Venice, data published by Puga and Treffler for their paper \cite{colleganza}. This network includes matrimonies where the groom is a noble, registered with the Avvogaria del Comune of the republic. From this dataset, those that included a non-noble member have been eliminated. The dataset is normalized to include only the family bride and groom belong to.
+This dataset has been chosen because it includes many intra-family matrimonies; a ranking of the families according to the number of matrimonies is shown in Table \ref{tab:top:ev} (left).
 %
 <<setup, echo=F,message=F>>=
 library(igraph)
@@ -86,7 +87,7 @@ top.intra.marriages <-  sorted.marriages.self %>% head(.,10)
 tabled.top.eigen <- data.frame(Family.Intra = top.intra.marriages$wife_familyname_std, Marriages=top.intra.marriages$n, Family = top.ev.eigen$Family, EV = top.ev.eigen$eigen, Family.Self=top.ev.all.eigen$Family, EV.self = top.ev.all.eigen$eigen)
 kable(tabled.top.eigen,
       col.names=c("Family", "#Intra-family matrimonies", "Family", "EV","Family","EV + self-loops" ),
-      caption="Ranking of families according to EV, with (right) or without (left) self-loops \\protect\\label{tab:top:ev}",
+      caption="Ranking of families according to number of intra-family matrimonies (left) and EV, with (right) or without (center) self-loops \\protect\\label{tab:top:ev}",
       row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped")) %>% column_spec(2, border_right=T) %>% column_spec(3, border_left = T ) %>% column_spec(4, border_right=T) %>% column_spec(5, border_left = T )
 @
 
@@ -103,7 +104,6 @@ ggplot(marriages.summary, aes(x=intra.marriages,y=diff))+geom_point()+theme_five
 @
 
 %
-\section{Introduction}
 
 \bibliographystyle{splncs04}
 \bibliography{venice}
