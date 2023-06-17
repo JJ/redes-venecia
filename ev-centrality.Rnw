@@ -14,11 +14,7 @@
 \title{Self-loops in social networks: behavior of eigenvector centrality\thanks{This work is supported by the Ministerio espa\~{n}ol de Econom\'{\i}a y
 Competitividad (Spanish Ministry of Competitivity and Economy) under project
 PID2020-115570GB-C22 (DemocratAI::UGR).}}
-%
-%\titlerunning{Abbreviated paper title}
-% If the paper title is too long for the running head, you can set
-% an abbreviated paper title here
-%
+
 \author{JJ Merelo\inst{1}\orcidID{0000-0002-1385-9741}}
 %
 \authorrunning{JJ Merelo}
