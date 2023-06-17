@@ -53,12 +53,6 @@ tablify <- function( graph, column ) {
   return( m.table[ order(m.table[[column]],decreasing = T),] )
 }
 
-show.table <- function( table, name, title ) {
-  kable(table %>% head(.,10),
-      col.names=c("Family", str_to_title(title) ),
-      caption=paste0("Top 10 families according to ", title , " \\protect\\label{tab:top:", name, "}"),
-      row.names = F)
-}
 
 load("data/venice-marriages.Rda")
 marriages <- marriages.raw[ marriages.raw$wife_familyname_std != '',] # Eliminates those that are not noble
@@ -69,7 +63,6 @@ all.marriages.sn <- graph.data.frame(data.frame(all.marriages$husband_familyname
 V(all.marriages.sn)$eigen <-  unname(unlist(eigen_centrality(all.marriages.sn)$vector))
 all.m.eigen <- tablify( all.marriages.sn, "eigen")
 top.ev.all.eigen <- all.m.eigen %>% head(.,10)
-# show.table(all.m.eigen, "EV with self loops", "eigenvector centrality")
 
 # Eliminate self-loops
 marriages <- marriages[ marriages$husband_familyname_std != marriages$wife_familyname_std,]
@@ -78,26 +71,24 @@ V(marriages.sn)$eigen <-  unname(unlist(eigen_centrality(marriages.sn)$vector))
 m.eigen <- tablify( marriages.sn, "eigen")
 top.ev.eigen <- m.eigen %>% head(.,10)
 
-tabled.top.eigen <- data.frame(Family = top.ev.eigen$Family, EV = top.ev.eigen$eigen, Family.Self=top.ev.all.eigen$Family, EV.self = top.ev.all.eigen$eigen)
-kable(tabled.top.eigen,
-      col.names=c("Family", "EV","Family","EV + self-loops" ),
-      caption="Ranking of families according to EV, with (right) or without (left) self-loops \\protect\\label{tab:top:ev}",
-      row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped")) %>% column_spec(2, border_right=T) %>% column_spec(3, border_left = T )
-@
-
-<<self.marriages, echo=F, message=F>>=
 library(dplyr)
 library(tidyr)
 library(tibble)
 library(ggplot2)
 library(ggthemes)
+
 marriages.self <- marriages.raw[ marriages.raw$husband_familyname_std == marriages.raw$wife_familyname_std,]
 sorted.marriages.self <- marriages.self %>% count(wife_familyname_std, sort=T)
 intra.marriages <- unique(marriages.self$wife_familyname_std)
-kable(sorted.marriages.self %>% head(.,10),
-      row.names = F,
-      col.names= c("Family","# Intra-family marriages"),
-      caption="Top 10 families by number of intra-family marriages.\\protect\\label{tab:intra}")
+
+top.intra.marriages <-  sorted.marriages.self %>% head(.,10)
+
+tabled.top.eigen <- data.frame(Family.Intra = top.intra.marriages$wife_familyname_std, Marriages=top.intra.marriages$n, Family = top.ev.eigen$Family, EV = top.ev.eigen$eigen, Family.Self=top.ev.all.eigen$Family, EV.self = top.ev.all.eigen$eigen)
+kable(tabled.top.eigen,
+      col.names=c("Family", "#Intra-family matrimonies", "Family", "EV","Family","EV + self-loops" ),
+      caption="Ranking of families according to EV, with (right) or without (left) self-loops \\protect\\label{tab:top:ev}",
+      row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped")) %>% column_spec(2, border_right=T) %>% column_spec(3, border_left = T ) %>% column_spec(4, border_right=T) %>% column_spec(5, border_left = T )
+
 all.names <- unique( c( marriages.raw$wife_familyname_std, marriages.raw$husband_familyname_std))
 all.marriages <- marriages.raw %>% select(husband_familyname_std,wife_familyname_std) %>% rowid_to_column() %>% pivot_longer(-rowid) %>% group_by(value) %>% summarise(n = n_distinct(rowid)) %>% arrange(desc(n))
 marriages.table <- left_join(all.marriages,sorted.marriages.self,by=c("value" = "wife_familyname_std"))
