@@ -1,8 +1,11 @@
 \documentclass[runningheads]{llncs}
 %
 \usepackage[T1]{fontenc}
-
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{booktabs}
 \usepackage{graphicx}
+
 %
 % If you use the hyperref package, please uncomment the following two lines
 % to display URLs in blue roman font according to Springer's eBook style:
@@ -39,10 +42,11 @@ These intra-links can, however, help better understand the dynamics of a social 
 
 
 %
-<<setup, echo=F, message=F>>=
+<<setup, echo=F, fig.show="hold", out.width="50%",message=F>>=
 library(igraph)
 library(knitr)
 library(stringr)
+library(kableExtra)
 tablify <- function( graph, column ) {
   m.table <- data.frame( Family=V(graph)$name, degree=vertex_attr(graph,column) )
   names(m.table)[names(m.table) == "degree"] <- column
@@ -64,6 +68,7 @@ all.marriages <- marriages                                    # Keep marriages w
 all.marriages.sn <- graph.data.frame(data.frame(all.marriages$husband_familyname_std,all.marriages$wife_familyname_std),directed=F)
 V(all.marriages.sn)$eigen <-  unname(unlist(eigen_centrality(all.marriages.sn)$vector))
 all.m.eigen <- tablify( all.marriages.sn, "eigen")
+top.ev.all.eigen <- all.m.eigen %>% head(.,10)
 # show.table(all.m.eigen, "EV with self loops", "eigenvector centrality")
 
 # Eliminate self-loops
@@ -71,9 +76,13 @@ marriages <- marriages[ marriages$husband_familyname_std != marriages$wife_famil
 marriages.sn <- graph.data.frame(data.frame(marriages$husband_familyname_std,marriages$wife_familyname_std),directed=F)
 V(marriages.sn)$eigen <-  unname(unlist(eigen_centrality(marriages.sn)$vector))
 m.eigen <- tablify( marriages.sn, "eigen")
-show.table(m.eigen, "EV", "eigenvector centrality")
-show.table(all.m.eigen, "EV", "EV +  self-loops")
+top.ev.eigen <- m.eigen %>% head(.,10)
 
+tabled.top.eigen <- data.frame(Family = top.ev.eigen$Family, EV = top.ev.eigen$eigen, Family.Self=top.ev.all.eigen$Family, EV.self = top.ev.all.eigen$eigen)
+kable(tabled.top.eigen,
+      col.names=c("Family", "EV","Family","EV + self-loops" ),
+      caption="Ranking of families according to EV, with (right) or without (left) self-loops \\protect\\label{tab:top:ev}",
+      row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped")) %>% column_spec(2, border_right=T) %>% column_spec(3, border_left = T )
 @
 
 <<self.marriages, echo=F, message=F>>=
