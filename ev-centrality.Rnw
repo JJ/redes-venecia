@@ -31,7 +31,7 @@ PID2020-115570GB-C22 (DemocratAI::UGR).}}
 %
 \begin{abstract}
 
-Many complex networks, including social networks, include links from one actor to itself; often, these links are dropped to perform analysis of centrality measures. Some centrality measures, like eigenvector centrality, can work with these self-loops, however. In this paper, we will be looking at the difference of the results in the analysis of a social network using eigenvector centrality when these self loops are considered, and what additional insights we can gather from this inclusion, including possible recommendations for the incorporation of these self-loops in more general social network analysis.
+Many complex networks, including social networks, include links from one actor to itself; these links are often dropped to perform analysis of centrality measures, despite the fact that some centrality measures, like eigenvector centrality, can work with these self-loops. In this paper, we will be looking at the difference of the results in the analysis of a social network using eigenvector centrality when these self loops are considered, and what additional insights we can gather from this inclusion, including possible recommendations for the incorporation of these self-loops in more general social network analysis.
 \keywords{Complex networks  \and Social  networks \and Graph Theory}
 \end{abstract}
 %
