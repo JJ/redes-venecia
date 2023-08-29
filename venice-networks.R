@@ -16,13 +16,8 @@ vert_ids <- V(colleganza.sn)[components$membership == biggest_cluster_id]
 
 colleganza.sn.connected <- igraph::induced_subgraph(colleganza.sn, vert_ids)
 par(mar=c(1,0,1,0)+.1)
-V(colleganza.sn.connected)$color=rgb(0,0,1,0.5)
-rojo.dogo <- rgb(0.7,0,0,0.8)
 
-V(colleganza.sn.connected)[ V(colleganza.sn.connected)$name %in% c("Contarini","Foscari", "Gradenigo","Giustiniani","Steno", "Ziani","Morosini","Moro","Grimani","Memmo") ]$color <- rojo.dogo
-V(colleganza.sn.connected)[ V(colleganza.sn.connected)$name %in% c("Querini","Tiepolo", "Badoer","Dauro","Barozzi", "Lombardo","Pedoni") ]$color <- rgb(0,1,0,0.5)
-V(colleganza.sn.connected)$shape <- "circle"
-V(colleganza.sn.connected)$font.size <- V(colleganza.sn.connected)$pagerank*2000
+png("preso/img/fig1-colleganza.png",width=2400,height=1600)
 plot(colleganza.sn.connected,
      vertex.size=V(colleganza.sn.connected)$degree/2,
      layout=layout_with_fr,
@@ -30,6 +25,37 @@ plot(colleganza.sn.connected,
      vertex.label.dist=0.5,
      vertex.frame.width=0,
      edge.width=3*E(colleganza.sn.connected)$weight)
+dev.off()
+
+# Main component
+V(colleganza.sn.connected)$color=rgb(0,0,1,0.5)
+rojo.dogo <- rgb(0.7,0,0,0.8)
+
+hanging <- which(degree(colleganza.sn.connected)==1)
+
+colleganza.sn.main <- delete.vertices(colleganza.sn.connected,hanging)
+
+V(colleganza.sn.main)[ V(colleganza.sn.main)$name %in% c("Contarini","Foscari", "Gradenigo","Giustiniani","Steno", "Ziani","Morosini","Moro","Grimani","Memmo") ]$color <- rojo.dogo
+V(colleganza.sn.main)[ V(colleganza.sn.main)$name %in% c("Querini","Tiepolo", "Badoer","Dauro","Barozzi", "Lombardo","Pedoni") ]$color <- rgb(0,1,0,0.5)
+V(colleganza.sn.main)$shape <- "circle"
+V(colleganza.sn.main)$font.size <- V(colleganza.sn.main)$pagerank*2000
+
+png("preso/img/fig1-colleganza-main.png",width=2400,height=1600)
+plot(colleganza.sn.main,
+     vertex.size=V(colleganza.sn.main)$degree/2,
+     layout=layout_with_fr,
+     vertex.label.cex=0.5+V(colleganza.sn.main)$pagerank*60,
+     vertex.label.dist=0.5,
+     vertex.frame.width=0,
+     edge.width=3*E(colleganza.sn.main)$weight)
+dev.off()
+
+library(visNetwork)
+library(htmlwidgets)
+V(colleganza.sn.main)$shape <- "circle"
+V(colleganza.sn.main)$font.size <- V(colleganza.sn.main)$pagerank*1000
+E(colleganza.sn.main)$width <- E(colleganza.sn.main)$edge_betweenness/5
+saveWidget(visIgraph(colleganza.sn.main) %>% visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE), file = "colleganza-2.html")
 
 ## ----longevity, echo=F, message=F, warning=FALSE, fig.height=3, fig.cap="A timeline of the time every doge spent in office. Time in office is represented as segment height and width, as well as with color for highlighting.\\protect\\label{fig:terms}"----
 library(ggthemes)
@@ -56,8 +82,7 @@ E(doges.sn.connected)$color <- "gray"
 E(doges.sn.connected)[ E(doges.sn.connected)$edge_betweenness == max.EW ]$color <- "blue"
 par(mar=c(1,0,1,0)+.1)
 
-library(visNetwork)
-library(htmlwidgets)
+
 V(doges.sn.connected)$shape <- "circle"
 V(doges.sn.connected)$font.size <- V(doges.sn.connected)$pagerank*1000
 E(doges.sn.connected)$width <- E(doges.sn.connected)$edge_betweenness/5
@@ -67,7 +92,7 @@ plot(doges.sn.connected,
      vertex.size=V(doges.sn.connected)$degree,
      layout=layout_as_tree(doges.sn.connected,circular=T),
      vertex.frame.color=V(doges.sn.connected)$color,
-     vertex.label.cex=V(doges.sn.connected)$pagerank*20,
+     vertex.label.cex=V(doges.sn.connected)$pagerank*60,
      vertex.label.dist=1,
      edge.color=E(doges.sn.connected)$color,
      edge.width=E(doges.sn.connected)$edge_betweenness/50)

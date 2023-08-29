@@ -52,10 +52,15 @@ section[data-background] h3 {
 }
 
 section[data-background] blockquote {
-       background-color:rgba(31,11,211,0.7);
+    background-color:rgba(231,11,211,0.7);
+    color:blue;
        padding: 20px;
        margin: 10px;
        border-radius: 15px
+}
+
+section[data-background] blockquote a,a:visited {
+    color:darkblue; 
 }
 
 section[data-background] h4,p {
@@ -65,7 +70,7 @@ section[data-background] h4,p {
        border-radius: 10px
 }
 
-.pink { 
+.pink {
        background-color:rgba(255, 192, 203,0.7);
        padding: 5px;
        margin: 10px;
