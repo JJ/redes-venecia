@@ -60,6 +60,7 @@ library(visNetwork)
 library(htmlwidgets)
 V(doges.sn.connected)$shape <- "circle"
 V(doges.sn.connected)$font.size <- V(doges.sn.connected)$pagerank*1000
+E(doges.sn.connected)$width <- E(doges.sn.connected)$edge_betweenness/5
 saveWidget(visIgraph(doges.sn.connected) %>% visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE), file = "doges-marriages.html")
 
 plot(doges.sn.connected,
