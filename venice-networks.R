@@ -1,6 +1,6 @@
 ## ----setup, echo=F, message=F----------------------------------------------------------------------------
 source("R/utils.R") # Creates doges.sn, doges.sn.connected
-
+library(ggplot2)
 
 ## ----colleganza,  fig.pos="h!tbp", echo=FALSE, message=F, warning=F, fig.height=4, fig.cap="The \\protect\\emph{Biggest component of the colleganza} network. Family names are sized according to the pagerank centrality, nodes according to degree, edges to edge betweenness. In green, nodes for the \"popular\" party (opposed to the Serrata) families; red for the \"aristocratic\" party (supporting the Serrata) families.\\protect\\label{fig:colleganza}"----
 colleganza <- read.csv("data/colleganza-pairs.csv", header=F)
@@ -21,6 +21,8 @@ rojo.dogo <- rgb(0.7,0,0,0.8)
 
 V(colleganza.sn.connected)[ V(colleganza.sn.connected)$name %in% c("Contarini","Foscari", "Gradenigo","Giustiniani","Steno", "Ziani","Morosini","Moro","Grimani","Memmo") ]$color <- rojo.dogo
 V(colleganza.sn.connected)[ V(colleganza.sn.connected)$name %in% c("Querini","Tiepolo", "Badoer","Dauro","Barozzi", "Lombardo","Pedoni") ]$color <- rgb(0,1,0,0.5)
+V(colleganza.sn.connected)$shape <- "circle"
+V(colleganza.sn.connected)$font.size <- V(colleganza.sn.connected)$pagerank*1000
 plot(colleganza.sn.connected,
      vertex.size=V(colleganza.sn.connected)$degree/2,
      layout=layout_with_fr,
@@ -28,9 +30,7 @@ plot(colleganza.sn.connected,
      vertex.label.dist=0.5,
      edge.width=3*E(colleganza.sn.connected)$weight)
 
-
 ## ----longevity, echo=F, message=F, warning=FALSE, fig.height=3, fig.cap="A timeline of the time every doge spent in office. Time in office is represented as segment height and width, as well as with color for highlighting.\\protect\\label{fig:terms}"----
-library(ggplot2)
 library(ggthemes)
 library(viridis)
 library(devtools)
