@@ -40,8 +40,8 @@ Many social networks include self-loops in its original form; matrimonial networ
 
 These intra-links can, however, give us better insights on the dynamics of a social network, and should probably be taken into account. So far, however, there has been little analysis on what is the actual effect of intra-links on the eigenvector centrality \cite{BONACICH2007555} in social networks. This paper will try, using a well-chosen example, what is that effect and how it will help better understand social systems.
 
-We will be using the marital network of the Republic of Venice, data published by Puga and Treffler for their paper \cite{colleganza}. This network includes marriages where the groom is a noble, registered with the Avvogaria del Comune of the republic. From this dataset, those that included a non-noble member have been eliminated. The dataset is normalized to include only the family bride and groom belong to.
-This dataset has been chosen because it includes many intra-family marriages; a ranking of the families according to the number of marriages is shown in Table \ref{tab:top:ev} (left).
+We will be using the marital network of the Republic of Venice, data published by Puga and Treffler for their paper \cite{colleganza}. This dataset has been chosen because it includes many intra-family marriages; a ranking of the families according to the number of marriages is shown in Table \ref{tab:top:ev} (left). This dataset is composed of marriages where the groom is a noble, registered with the {\em Avvogaria del Comune} of the republic. From this dataset, those where the bride did not belong to a patrician family have been eliminated\footnote{There were many restrictions to this kind of marriage, but they occurred with regularity, at least until the so-called "Second Serrata", during the XV century; in this case, however, we eliminate them because they are irrelevant to the main point of the paper}. The dataset is normalized to include only the family bride and groom belong to.
+
 %
 <<setup, echo=F,message=F>>=
 library(igraph)
