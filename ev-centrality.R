@@ -22,14 +22,21 @@ all.m.eigen <- tablify( all.marriages.sn, "eigen")
 marriages.plot <- marriages[ marriages$wife_familyname_std == marriages$wife_familyname_std,]
 plot.marriages.sn <- graph.data.frame(data.frame(marriages.plot$husband_familyname_std,marriages.plot$wife_familyname_std),directed=F)
 V(plot.marriages.sn)$eigen <-  unname(unlist(eigen_centrality(plot.marriages.sn)$vector))
-hanging <- which(degree(plot.marriages.sn)==1)
+hanging <- V(plot.marriages.sn)$eigen < 0.1
 marriages.sn.main <- delete.vertices(marriages.sn,hanging)
 
 
 plot(marriages.sn.main,
-     vertex.size=V(marriages.sn.main)$eigen*6,
+     vertex.size=V(marriages.sn.main)$eigen*10,
      vertex.label.cex=V(marriages.sn.main)$eigen*2,
      vertex.label.dist=1)
+
+library(visNetwork)
+library(htmlwidgets)
+
+V(marriages.sn.main)$font.size <- V(marriages.sn.main)$eigen*10
+saveWidget(visIgraph(marriages.sn.main) %>% visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE), file = "marriages.html")
+
 top.ev.all.eigen <- all.m.eigen %>% head(.,10)
 
 # Eliminate self-loops
