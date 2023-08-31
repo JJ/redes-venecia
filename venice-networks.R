@@ -90,7 +90,7 @@ V(doges.sn.connected)$font.size <- V(doges.sn.connected)$pagerank*1000
 E(doges.sn.connected)$width <- E(doges.sn.connected)$edge_betweenness/5
 saveWidget(visIgraph(doges.sn.connected) %>% visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE), file = "doges-marriages.html")
 
-png("preso/img/fig3-marriae-network.png",width=2400,height=1600)
+png("preso/img/fig3-marriage-network.png",width=2400,height=1600)
 plot(doges.sn.connected,
      vertex.size=V(doges.sn.connected)$degree,
      layout=layout_as_tree(doges.sn.connected,circular=T),

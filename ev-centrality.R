@@ -39,11 +39,10 @@ intra.marriages <- unique(marriages.self$wife_familyname_std)
 
 top.intra.marriages <-  sorted.marriages.self %>% head(.,10)
 
+kable(top.intra.marriages)
+
 tabled.top.eigen <- data.frame(Family.Intra = top.intra.marriages$wife_familyname_std, Marriages=top.intra.marriages$n, Family = top.ev.eigen$Family, EV = top.ev.eigen$eigen, Family.Self=top.ev.all.eigen$Family, EV.self = top.ev.all.eigen$eigen)
-kable(tabled.top.eigen,
-      col.names=c("Family", "#Intra-family matrimonies", "Family", "EV","Family","EV + self-loops" ),
-      caption="Ranking of families according to number of intra-family matrimonies (left) and EV, with (right) or without (center) self-loops. \\protect\\label{tab:top:ev}",
-      row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped")) %>% column_spec(2, border_right=T) %>% column_spec(3, border_left = T ) %>% column_spec(4, border_right=T) %>% column_spec(5, border_left = T )
+
 
 
 ## ----charts, echo=F, fig.show="hold", out.width="50%",message=F, fig.cap="(Left) EV centrality considering self-loops (x axis) or not (y axis). The size of the plot and color signal the number of intra-family marriages. (Right) Number of intra-family marriages vs. percent increment of EV when self-loops are not computed. \\protect\\label{fig:plots}"----
