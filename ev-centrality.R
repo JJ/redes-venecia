@@ -18,6 +18,18 @@ all.marriages <- marriages                                    # Keep marriages w
 all.marriages.sn <- graph.data.frame(data.frame(all.marriages$husband_familyname_std,all.marriages$wife_familyname_std),directed=F)
 V(all.marriages.sn)$eigen <-  unname(unlist(eigen_centrality(all.marriages.sn)$vector))
 all.m.eigen <- tablify( all.marriages.sn, "eigen")
+
+marriages.plot <- marriages[ marriages$wife_familyname_std == marriages$wife_familyname_std,]
+plot.marriages.sn <- graph.data.frame(data.frame(marriages.plot$husband_familyname_std,marriages.plot$wife_familyname_std),directed=F)
+V(plot.marriages.sn)$eigen <-  unname(unlist(eigen_centrality(plot.marriages.sn)$vector))
+hanging <- which(degree(plot.marriages.sn)==1)
+marriages.sn.main <- delete.vertices(marriages.sn,hanging)
+
+
+plot(marriages.sn.main,
+     vertex.size=V(marriages.sn.main)$eigen*6,
+     vertex.label.cex=V(marriages.sn.main)$eigen*2,
+     vertex.label.dist=1)
 top.ev.all.eigen <- all.m.eigen %>% head(.,10)
 
 # Eliminate self-loops
