@@ -41,9 +41,9 @@ top.intra.marriages <-  sorted.marriages.self %>% head(.,10)
 
 kable(top.intra.marriages)
 
-tabled.top.eigen <- data.frame(Family.Intra = top.intra.marriages$wife_familyname_std, Marriages=top.intra.marriages$n, Family = top.ev.eigen$Family, EV = top.ev.eigen$eigen, Family.Self=top.ev.all.eigen$Family, EV.self = top.ev.all.eigen$eigen)
+tabled.top.eigen <- data.frame(Family = top.ev.eigen$Family, EV = top.ev.eigen$eigen, Family.Self=top.ev.all.eigen$Family, EV.self = top.ev.all.eigen$eigen)
 
-
+kable(top.intra.marriages)
 
 ## ----charts, echo=F, fig.show="hold", out.width="50%",message=F, fig.cap="(Left) EV centrality considering self-loops (x axis) or not (y axis). The size of the plot and color signal the number of intra-family marriages. (Right) Number of intra-family marriages vs. percent increment of EV when self-loops are not computed. \\protect\\label{fig:plots}"----
 all.names <- unique( c( marriages.raw$wife_familyname_std, marriages.raw$husband_familyname_std))
@@ -53,6 +53,9 @@ marriages.table$intra.marriages.rate <- marriages.table$n.y / marriages.table$n.
 
 marriages.summary <- data.frame(family=intra.marriages, EV.with.self=sapply( intra.marriages, function(x) V(all.marriages.sn)[[x]]$eigen ), EV.no.self=sapply( intra.marriages, function(x) V(marriages.sn)[[x]]$eigen ), intra.marriages=sapply( intra.marriages, function(x) sorted.marriages.self[sorted.marriages.self$wife_familyname_std ==x,]$n ))
 ggplot(marriages.summary, aes(x=EV.with.self,y=EV.no.self, color=intra.marriages, size=intra.marriages))+geom_point()+geom_abline(intercept=0,slope=1,linetype="dashed",color="red")+scale_x_log10()+scale_y_log10()
+ggsave("preso/img/fig1-ev-self-vs-no.png", width=8, height=4.5)
+
 marriages.summary$diff <- (marriages.summary$EV.no.self - marriages.summary$EV.with.self)/marriages.summary$EV.no.self
 ggplot(marriages.summary, aes(x=intra.marriages,y=diff))+geom_point()+theme_fivethirtyeight()
+ggsave("preso/img/fig1-ev-change-vs-marriages.png", width=8, height=4.5)
 

@@ -65,8 +65,6 @@ library(dogesr)
 data("doges.years")
 doges.years$idx <- as.numeric(row.names(doges.years))
 ggplot(doges.years, aes(x=Start,y=idx))+geom_segment(aes(xend=Start+Years,yend=idx,color=Years,linewidth=1+Years))+ scale_color_viridis(option = "D")+xlab("Year")+ylab("")+geom_vline(xintercept=1300, color="red",size=4,alpha=0.4)+theme_economist()+theme(axis.ticks.y=element_blank(),axis.text.y=element_blank())
-ggsave("preso/img/fig2-years.png", width=12, height=8)
-
 
 ## ----doges, echo=F, fig.height=4, fig.cap="Doge's marital network. Red marks again the \"aristocratic\" party, green the \"popular\"; edge width corresponds to edge betweenness, name size to pagerank, and node size to degree.\\protect\\label{fig:doges}"----
 E(doges.sn.connected)$edge_betweenness <- edge_betweenness(doges.sn.connected) # Comes from utils
