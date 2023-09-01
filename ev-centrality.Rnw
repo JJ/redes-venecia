@@ -21,13 +21,11 @@ PID2020-115570GB-C22 (DemocratAI::UGR).}}
 \author{JJ Merelo\inst{1}\orcidID{0000-0002-1385-9741}}
 %
 \authorrunning{JJ Merelo}
-% First names are abbreviated in the running head.
-% If there are more than two authors, 'et al.' is used.
-%
+
 \institute{Department of Computer Engineering, Automatics and Robotics and CITIC University of Granada, Granada, Spain
 \email{jmerelo@ugr.es}}
 %
-\maketitle              % typeset the header of the contribution
+\maketitle
 %
 \begin{abstract}
 
