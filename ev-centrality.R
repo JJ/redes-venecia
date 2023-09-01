@@ -23,13 +23,16 @@ marriages.plot <- marriages[ marriages$wife_familyname_std == marriages$wife_fam
 plot.marriages.sn <- graph.data.frame(data.frame(marriages.plot$husband_familyname_std,marriages.plot$wife_familyname_std),directed=F)
 V(plot.marriages.sn)$eigen <-  unname(unlist(eigen_centrality(plot.marriages.sn)$vector))
 hanging <- V(plot.marriages.sn)$eigen < 0.1
-marriages.sn.main <- delete.vertices(marriages.sn,hanging)
+marriages.sn.main <- delete.vertices(plot.marriages.sn,hanging)
+E(marriages.sn.main)$weight <- 1
+marriages.sn.main <- simplify(marriages.sn.main,edge.attr.comb = list(weight="sum"))
 
-
+png("preso/img/high-ev-marriage-network.png")
 plot(marriages.sn.main,
-     vertex.size=V(marriages.sn.main)$eigen*10,
-     vertex.label.cex=V(marriages.sn.main)$eigen*2,
+     vertex.size=V(marriages.sn.main)$eigen*20,
+     vertex.label.cex=V(marriages.sn.main)$eigen*4,
      vertex.label.dist=1)
+dev.off()
 
 library(visNetwork)
 library(htmlwidgets)
