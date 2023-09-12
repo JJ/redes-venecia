@@ -27,17 +27,17 @@ marriages.sn.main <- delete.vertices(plot.marriages.sn,hanging)
 E(marriages.sn.main)$weight <- 1
 marriages.sn.main <- simplify(marriages.sn.main,edge.attr.comb = list(weight="sum"))
 
-png("preso/img/high-ev-marriage-network.png")
+png("preso/img/high-ev-marriage-network.png",width=1600,height=900)
 plot(marriages.sn.main,
      vertex.size=V(marriages.sn.main)$eigen*20,
      vertex.label.cex=V(marriages.sn.main)$eigen*4,
      vertex.label.dist=1)
 dev.off()
-
+ 
 library(visNetwork)
 library(htmlwidgets)
 
-V(marriages.sn.main)$font.size <- V(marriages.sn.main)$eigen*10
+V(marriages.sn.main)$font.size <- V(marriages.sn.main)$eigen*100
 saveWidget(visIgraph(marriages.sn.main) %>% visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE), file = "marriages.html")
 
 top.ev.all.eigen <- all.m.eigen %>% head(.,10)
