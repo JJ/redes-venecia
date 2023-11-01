@@ -73,11 +73,20 @@ top.ev.eigen <- m.eigen %>% head(.,10)
 # Ditto for US freight traffic
 load("data/freight-traffic-agg.RData")
 all.freight <- freight.traffic.agg[ freight.traffic.agg$Year == 2021,]
-all.freight.sn <- graph.data.frame(data.frame(all.freight$Origin.State,all.freight$Dest.State),directed=F)
-E(all.freight.sn)$weight <- all.freight$sum
+edgelist <- data.frame(V1=all.freight$Origin.State,V2=all.freight$Dest.State,weight=all.freight$sum)
+all.freight.sn <- graph_from_data_frame(edgelist)
 V(all.freight.sn)$eigen <-  unname(unlist(eigen_centrality(all.freight.sn)$vector))
 all.f.eigen <- tablify( all.freight.sn, "eigen")
 top.ev.all.f.eigen <- all.f.eigen %>% head(.,10)
+
+# Now without self-loops
+freight <- all.freight[ all.freight$Origin.State != all.freight$Dest.State,]
+edgelist.noselfloops <- data.frame(V1=freight$Origin.State,V2=freight$Dest.State,weight=freight$sum)
+freight.sn <- graph_from_data_frame(edgelist.noselfloops)
+V(freight.sn)$eigen <-  unname(unlist(eigen_centrality(freight.sn)$vector))
+f.eigen <- tablify( freight.sn, "eigen")
+top.ev.f.eigen <- f.eigen %>% head(.,10)
+
 
 library(dplyr)
 library(tidyr)
