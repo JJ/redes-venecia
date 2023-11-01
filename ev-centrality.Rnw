@@ -31,7 +31,7 @@ Dipartimento di Economia, Ca' Foscari University of Venice, Venice, ITALY
 %
 \begin{abstract}
 
-Many complex networks, including social networks, include links from one actor to itself; these links are often dropped to perform analysis of centrality measures, despite the fact that some centrality measures, like eigenvector centrality, can work with these self-loops. In this paper, we will be looking at the difference of the results in the analysis of a social network using eigenvector centrality when these self loops are considered, and what additional insights we can gather from this inclusion, including possible recommendations for the incorporation of these self-loops in more general social network analysis.
+Many complex networks, including social networks, include links from one actor to itself; these links are often dropped to perform analysis of centrality measures, despite the fact that some of them, like eigenvector centrality, can work with these self-loops. In this paper, we will be looking at the difference of the results in the analysis of a social network using eigenvector centrality when these self loops are considered, and what additional insights we can gather from it, including possible recommendations for the incorporation of these self-loops in more general social network analysis.
 \keywords{Complex networks  \and Social  networks \and Graph Theory}
 \end{abstract}
 %
@@ -41,8 +41,13 @@ Many social networks include self-loops in its original form; matrimonial networ
 
 These intra-links can, however, give us better insights on the dynamics of a social network, and should probably be taken into account. So far, however, there has been little analysis on what is the actual effect of intra-links on the eigenvector centrality \cite{BONACICH2007555} in social networks. This paper will try, using a well-chosen example, what is that effect and how it will help better understand social systems.
 
+The rest of the paper is organized as follows: next we will be describing the state of the art, to proceed to describe the datasets and the experiments performed in Section \ref{sec:exp}. We will then discuss the results and conclude with or conclusion and future lines of work.
+
+\section{State of the art}
+
 
 \section{Experiments}
+\label{sec:exp}
 
 We will be using the marital network of the Republic of Venice, data published by Puga and Treffler for their paper \cite{colleganza}. This dataset has been chosen because it includes many intra-family marriages; a ranking of the families according to the number of marriages is shown in Table \ref{tab:top:ev} (left). This dataset is composed of marriages where the groom is a noble, registered with the {\em Avvogaria del Comune} of the republic. From this dataset, those where the bride did not belong to a patrician family have been eliminated\footnote{There were many restrictions to this kind of marriage, but they occurred with regularity, at least until the so-called "Second Serrata", during the XV century; in this case, however, we eliminate them because they are irrelevant to the main point of the paper}. The dataset is normalized to include only the family bride and groom belong to.
 
