@@ -18,12 +18,14 @@
 Competitividad (Spanish Ministry of Competitivity and Economy) under project
 PID2020-115570GB-C22 (DemocratAI::UGR).}}
 
-\author{JJ Merelo\inst{1}\orcidID{0000-0002-1385-9741}}
+\author{JJ Merelo\inst{1}\orcidID{0000-0002-1385-9741} and M. Cristina Molinari\inst{2}}
 %
-\authorrunning{JJ Merelo}
+\authorrunning{Merelo, Molinari}
 
 \institute{Department of Computer Engineering, Automatics and Robotics and CITIC University of Granada, Granada, Spain
-\email{jmerelo@ugr.es}}
+\email{jmerelo@ugr.es} \and
+Dipartimento di Economia, Ca' Foscari University of Venice, Venice, ITALY
+}
 %
 \maketitle
 %
