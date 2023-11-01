@@ -70,6 +70,15 @@ V(marriages.sn)$eigen <-  unname(unlist(eigen_centrality(marriages.sn)$vector))
 m.eigen <- tablify( marriages.sn, "eigen")
 top.ev.eigen <- m.eigen %>% head(.,10)
 
+# Ditto for US freight traffic
+load("data/freight-traffic-agg.RData")
+all.freight <- freight.traffic.agg[ freight.traffic.agg$Year == 2021,]
+all.freight.sn <- graph.data.frame(data.frame(all.freight$Origin.State,all.freight$Dest.State),directed=F)
+E(all.freight.sn)$weight <- all.freight$sum
+V(all.freight.sn)$eigen <-  unname(unlist(eigen_centrality(all.freight.sn)$vector))
+all.f.eigen <- tablify( all.freight.sn, "eigen")
+top.ev.all.f.eigen <- all.f.eigen %>% head(.,10)
+
 library(dplyr)
 library(tidyr)
 library(tibble)
