@@ -31,13 +31,16 @@ Dipartimento di Economia, Ca' Foscari University of Venice, Venice, ITALY
 %
 \begin{abstract}
 
-Many complex networks, including social networks, include links from one actor to itself; these links are often dropped to perform analysis of centrality measures, despite the fact that some of them, like eigenvector centrality, can work with these self-loops. In this paper, we will be looking at the difference of the results in the analysis of a social network using eigenvector centrality when these self loops are considered, and what additional insights we can gather from it, including possible recommendations for the incorporation of these self-loops in more general social network analysis.
+% rewrite
 \keywords{Complex networks  \and Social  networks \and Graph Theory}
 \end{abstract}
 %
 
 \section{Introduction}
-Many social networks include self-loops in its original form; matrimonial networks, for instance, may include marriages between members of the same family \cite{colleganza}; opinion networks \cite{computation11050103} will include communication among members of the same group, commuting networks will include trips within the same city or state, and commercial networks will include, in the case of cartels or big corporations, financial transactions between different divisions of the same company. When analysis is performed on these networks, however, most centrality measures cannot work with them, so in most cases they are dropped \cite{computation11050103}. Even in the case of measurements that work on the connection matrix, like eigenvector centrality, self-loops are dropped mainly to work on an uniform set of data, that is, not use a connection matrix with diagonal values (for EV centrality) and other without (for other measures). At any rate, it is dropped in cases where it does not have a clear interpretation: betweenness centrality, for instance, models how one node is needed to transmit information to other parts of the network; how often it transmits information to itself cannot easily be accommodated within this framework.
+
+Many complex networks, including social networks, include links from one actor/agent to itself; we can find them in commuting networks \cite{he2020demarcating}, where self-loops would indicate trips that start and end in the same city, county or state; in family networks \cite{he2020demarcating}, with self-loops indicating marriage between members of the same (extended) family; opinion networks \cite{computation11050103}, where they would indicate interaction among members of the same group; sport teams transfer networks \cite{gursakal2020comparison}, indicating transfers between teams in the same country; commercial networks \cite{colleganza} where self-loops indicate a contract between members of the same family, or even biological networks \cite{horstmeyer2020predicting}, where self-loops could indicate auto-trophic (members of a species feeding on other members) or auto-catalytic (reactive agents catalyzing reactions where they participate).
+
+When analysis is performed on these networks, however, most centrality measures cannot work with them, so in most cases they are dropped \cite{computation11050103}. Even in the case of measurements that work on the connection matrix, like eigenvector centrality, self-loops are dropped mainly to work on an uniform set of data, that is, not use a connection matrix with diagonal values (for EV centrality) and other without (for other measures). At any rate, it is dropped in cases where it does not have a clear interpretation: betweenness centrality, for instance, models how one node is needed to transmit information to other parts of the network; how often it transmits information to itself cannot easily be accommodated within this framework.
 
 These intra-links can, however, give us better insights on the dynamics of a social network, and should probably be taken into account. So far, however, there has been little analysis on what is the actual effect of intra-links on the eigenvector centrality \cite{BONACICH2007555} in social networks. This paper will try, using a well-chosen example, what is that effect and how it will help better understand social systems.
 
@@ -143,6 +146,6 @@ We can conclude from this that, in general, the inclusion of self-loops in other
 The most important line of work, however, is to check against some external measurement (number and importance of positions reached by a family, for instance, in line with \cite{Telek2017MarryingTR}) which version of the EV centrality would be a better match, thus proving that self-loops/diagonal values in the connection matrix go beyond mere mathematical artifacts to have a precise and grounded interpretation; once that is proved, it would pave the way to an extension of the employment of self-loops in some way in other centrality values such as betweenness centrality.
 
 \bibliographystyle{splncs04}
-\bibliography{venice}
+\bibliography{venice,self-loops}
 
 \end{document}
