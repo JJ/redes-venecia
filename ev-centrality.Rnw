@@ -50,6 +50,9 @@ The rest of the paper is organized as follows: next we will be describing the st
 
 \section{State of the art}
 
+The main motivation behind this paper is to shed a bit of light on the use of self-loops in social network analysis, mainly because it has been used so rarely in the past. Some papers acknowledge its importance in the propagation of information in social networks \cite{9688320}, with self-loops representing simply re-posts of some content previously created by the same person; other papers, however \cite{computation11050103} dealing with the same subject, explicitly do not use them, thus missing a good amount of the dynamics created by these self loops. In other opinion formation papers \cite{salehi2014empathetic} self-loops represent the amount of attention a person pays to its own opinion as opposed to others.
+
+
 
 \section{Experiments}
 \label{sec:exp}
