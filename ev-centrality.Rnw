@@ -80,6 +80,8 @@ all.marriages <- marriages                                    # Keep marriages w
 all.marriages.sn <- graph.data.frame(data.frame(all.marriages$husband_familyname_std,all.marriages$wife_familyname_std),directed=F)
 V(all.marriages.sn)$eigen <-  unname(unlist(eigen_centrality(all.marriages.sn)$vector))
 all.m.eigen <- tablify( all.marriages.sn, "eigen")
+all.m.eigen$rank <- 1:nrow(all.m.eigen)
+
 top.ev.all.eigen <- all.m.eigen %>% head(.,10)
 
 # Eliminate self-loops
@@ -87,7 +89,12 @@ marriages <- marriages[ marriages$husband_familyname_std != marriages$wife_famil
 marriages.sn <- graph.data.frame(data.frame(marriages$husband_familyname_std,marriages$wife_familyname_std),directed=F)
 V(marriages.sn)$eigen <-  unname(unlist(eigen_centrality(marriages.sn)$vector))
 m.eigen <- tablify( marriages.sn, "eigen")
+m.eigen$rank <- 1:nrow(m.eigen)
 top.ev.eigen <- m.eigen %>% head(.,10)
+
+# merge m.eigen and all.m.eigen to get the rank of the families
+m.ranks <- merge( m.eigen, all.m.eigen, by="Family", suffixes=c(".no.selfloops",".all") )
+
 
 # Ditto for US freight traffic
 load("data/freight-traffic-agg.RData")
@@ -140,6 +147,8 @@ marriages.summary <- data.frame(family=intra.marriages, EV.with.self=sapply( int
 ggplot(marriages.summary, aes(x=EV.with.self,y=EV.no.self, color=intra.marriages, size=intra.marriages))+geom_point()+geom_abline(intercept=0,slope=1,linetype="dashed",color="red")+scale_x_log10()+scale_y_log10()
 marriages.summary$diff <- (marriages.summary$EV.no.self - marriages.summary$EV.with.self)/marriages.summary$EV.no.self
 ggplot(marriages.summary, aes(x=intra.marriages,y=diff))+geom_point()+theme_fivethirtyeight()
+
+ggplot(m.ranks, aes(x=rank.no.selfloops,y=rank.all))+geom_point()+geom_abline(intercept=0,slope=1,linetype="dashed",color="red")
 @
 
 This is why in Figure \ref{fig:plots} we have analyzed the differences between the EV values with or without loops for every node. The left hand side of that Figure plots the values with self-loops vs. those without in a log scale, showing all values over the $x=y$ line; all values are increased. Looking at the colors and sizes, we can see that the smaller the size (number of marriages), the bigger the increase in value; that is, more intra-family marriages make the inclusion of self-loops decrease \emph{less} the EV centrality. However, this is due in this case to the fact that what is actually increased is the difference between the family with EV 1 (the Contarinis) and the rest, so we can look at this result from the other side: the presence of a family with a high value in the diagonal of the connection matrix increases its EV centrality much more than that of the rest of the nodes/families. The right hand side of Figure \ref{fig:plots} certainly shows that there is a relationship between the number of intra-family weddings and the change, and that this relationship is systematic. At any rate, what this chart reveals is that, as should be expected, the value of intra-family marriages/self-loops in the computation of EV centrality certainly gives us better insights on the dynamics of the social network.
