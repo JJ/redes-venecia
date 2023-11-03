@@ -52,14 +52,15 @@ The rest of the paper is organized as follows: next we will be describing the st
 
 The main motivation behind this paper is to shed a bit of light on the use of self-loops in social network analysis, mainly because it has been used so rarely in the past. Some papers acknowledge its importance in the propagation of information in social networks \cite{9688320}, with self-loops representing simply re-posts of some content previously created by the same person; other papers, however \cite{computation11050103} dealing with the same subject, explicitly do not use them, thus missing a good amount of the dynamics created by these self loops. In other opinion formation papers \cite{salehi2014empathetic} self-loops represent the amount of attention a person pays to its own opinion as opposed to others. In general, even theoretical models of the spread of information in social networks \cite{CHIERICHETTI20112602} include self-loops.
 
-The main thing is that the application of self loops is mainly limited to models of the spread of information, and not to the analysis of the network itself. This why we have made it the main focus of this paper.
+The main issue is that the application of self loops is mainly limited to models of the spread of information, and not to the analysis of the network itself. This why we have made it the main focus of this paper.
 
 \section{Experiments}
 \label{sec:exp}
 
-We will be using the marital network of the Republic of Venice, data published by Puga and Treffler for their paper \cite{colleganza}. This dataset has been chosen because it includes many intra-family marriages; a ranking of the families according to the number of marriages is shown in Table \ref{tab:top:ev} (left). This dataset is composed of marriages where the groom is a noble, registered with the {\em Avvogaria del Comune} of the republic. From this dataset, those where the bride did not belong to a patrician family have been eliminated\footnote{There were many restrictions to this kind of marriage, but they occurred with regularity, at least until the so-called "Second Serrata", during the XV century; in this case, however, we eliminate them because they are irrelevant to the main point of the paper}. The dataset is normalized to include only the family bride and groom belong to.
+We will be using two datasets to perform the experiments. The first one is the {\em Venetian matrimonial} dataset \cite{colleganza}, a social network of the families of the Republic of Venice from the XIV to the XIX century\footnote{It also includes some marriages without a date}, as well as a dataset of freight traffic among the states of the United States of America extracted from their open data portal \cite{southworth2018freight}. These will be examined in turn in the next subsections.
 
-%
+\subsection{Analyzing the Venetian matrimonial dataset}
+
 <<setup, echo=F,message=F>>=
 library(igraph)
 library(knitr)
@@ -73,24 +74,87 @@ tablify <- function( graph, column ) {
 
 
 load("data/venice-marriages.Rda")
-marriages <- marriages.raw[ marriages.raw$wife_familyname_std != '',] # Eliminates those that are not noble
+all.marriages <- marriages.raw[ marriages.raw$wife_familyname_std != '',] # Eliminates those that are not noble
 
 # Use self-loops
-all.marriages <- marriages                                    # Keep marriages with intra-family ties
 all.marriages.sn <- graph.data.frame(data.frame(all.marriages$husband_familyname_std,all.marriages$wife_familyname_std),directed=F)
 V(all.marriages.sn)$eigen <-  unname(unlist(eigen_centrality(all.marriages.sn)$vector))
 all.m.eigen <- tablify( all.marriages.sn, "eigen")
 all.m.eigen$rank <- 1:nrow(all.m.eigen)
-
 top.ev.all.eigen <- all.m.eigen %>% head(.,10)
 
 # Eliminate self-loops
-marriages <- marriages[ marriages$husband_familyname_std != marriages$wife_familyname_std,]
+marriages <- all.marriages[ all.marriages$husband_familyname_std != all.marriages$wife_familyname_std,]
 marriages.sn <- graph.data.frame(data.frame(marriages$husband_familyname_std,marriages$wife_familyname_std),directed=F)
 V(marriages.sn)$eigen <-  unname(unlist(eigen_centrality(marriages.sn)$vector))
 m.eigen <- tablify( marriages.sn, "eigen")
 m.eigen$rank <- 1:nrow(m.eigen)
 top.ev.eigen <- m.eigen %>% head(.,10)
+@
+
+This dataset was published by Puga and Treffler as support for their paper \cite{colleganza}. This dataset is composed of marriages performed in the Republic of Venice (and successor polities during the late XVIII and XIX century) where the groom is a noble \footnote{Since the dataset includes some marriages that happened after the fall of the Republic in 1796, the concept of "noble" in this case corresponds to families that were considered noble {\em during the existence of said Republic}; during French and Austrian control, as well as during the brief period of the Republic of San Marco, those nobiliary titles no longer had any standing; however, the original dataset included them and there was no good reason to eliminate them}, registered with the {\em Avvogaria del Comune} of the Republic. Families (called {\em casate} in the original Venetian and Italian) were the political and social unit in the republic \cite{pullan1999three,romano2014limits}. which explains the interest these datasets have for insights into the history of the republic.
+
+From this dataset, those where the bride did not belong to a patrician family have been eliminated\footnote{There were many restrictions to this kind of marriage, but they occurred with regularity, at least until the so-called "Second Serrata" \cite{second:serrata}, during the XV century; in this case, however, we eliminate them because they are irrelevant to the main point of the paper}.
+
+This dataset has been chosen because it includes many intra-family marriages; a ranking of the families according to the number of marriages is shown in Table \ref{tab:top:ev} (left). . The dataset is normalized to include only the family bride and groom belong to.
+
+
+This dataset has been chosen because it includes a good number of intra-family marriages, as well as because it has been studied extensively by Puga and Treffler in their paper, providing a basis for the comparison of results.
+
+<<intra.marriages, echo=F,message=F>>=
+# Compute the number of marriages where wife_familyname_std == husband_familyname_std per century
+all.marriages %>% group_by(str_sub(all.marriages$year,1,2)) %>% summarise(intra.marriages=sum(wife_familyname_std==husband_familyname_std))
+ 
+@
+
+
+%
+
+<<centuries, echo=F,message=F>>=
+library(ggplot2)
+# Extract marriages taking place in 14xx and 15xx
+marriages.XV <- all.marriages[ !is.na(all.marriages$year) & all.marriages$year>=1400 & all.marriages$year < 1500,]
+marriages.XVI <- all.marriages[ !is.na(all.marriages$year) & all.marriages$year>=1500 & all.marriages$year < 1600,]
+marriages.XV.sn <- graph.data.frame(data.frame(marriages.XV$husband_familyname_std,marriages.XV$wife_familyname_std),directed=F)
+V(marriages.XV.sn)$eigen <-  unname(unlist(eigen_centrality(marriages.XV.sn)$vector))
+marriages.XVI.sn <- graph.data.frame(data.frame(marriages.XVI$husband_familyname_std,marriages.XVI$wife_familyname_std),directed=F)
+V(marriages.XVI.sn)$eigen <-  unname(unlist(eigen_centrality(marriages.XVI.sn)$vector))
+
+# Create a data frame with nodes common in marriages.XVI.sn and marriages.XV.sn and their corresponding eigen centrality
+
+common.nodes <- intersect( V(marriages.XVI.sn)$name, V(marriages.XV.sn)$name )
+common.nodes.eigen <- data.frame( Family=common.nodes, XV.eigen=V(marriages.XV.sn)[common.nodes]$eigen, XVI.eigen=V(marriages.XVI.sn)[common.nodes]$eigen )
+ggplot( common.nodes.eigen, aes(x=XV.eigen,y=XVI.eigen)) + geom_point()
+
+# fit a linear model to common.nodes.eigen$XVi.eigen ~ common.nodes.eigen$XV.eigen
+marriages.fit <- lm( XVI.eigen ~ XV.eigen, data=common.nodes.eigen )
+
+# plot the fit
+ggplot( common.nodes.eigen, aes(x=XV.eigen,y=XVI.eigen)) + geom_point() + geom_abline(intercept=marriages.fit$coefficients[1],slope=marriages.fit$coefficients[2])
+
+# Do the same for marriages without self-loops
+marriages.XV.no.selfloops <- marriages.XV[ marriages.XV$husband_familyname_std != marriages.XV$wife_familyname_std,]
+marriages.XVI.no.selfloops <- marriages.XVI[ marriages.XVI$husband_familyname_std != marriages.XVI$wife_familyname_std,]
+marriages.XV.sn.no.selfloops <- graph.data.frame(data.frame(marriages.XV.no.selfloops$husband_familyname_std,marriages.XV.no.selfloops$wife_familyname_std),directed=F)
+V(marriages.XV.sn.no.selfloops)$eigen <-  unname(unlist(eigen_centrality(marriages.XV.sn.no.selfloops)$vector))
+marriages.XVI.sn.no.selfloops <- graph.data.frame(data.frame(marriages.XVI.no.selfloops$husband_familyname_std,marriages.XVI.no.selfloops$wife_familyname_std),directed=F)
+V(marriages.XVI.sn.no.selfloops)$eigen <-  unname(unlist(eigen_centrality(marriages.XVI.sn.no.selfloops)$vector))
+
+# Create a data frame with nodes common in marriages.XVI.sn and marriages.XV.sn and their corresponding eigen centrality
+
+common.nodes.no.selfloops <- intersect( V(marriages.XVI.sn.no.selfloops)$name, V(marriages.XV.sn.no.selfloops)$name )
+common.nodes.eigen.no.selfloops <- data.frame( Family=common.nodes.no.selfloops, XV.eigen=V(marriages.XV.sn.no.selfloops)[common.nodes.no.selfloops]$eigen, XVI.eigen=V(marriages.XVI.sn.no.selfloops)[common.nodes.no.selfloops]$eigen )
+ggplot( common.nodes.eigen.no.selfloops, aes(x=XV.eigen,y=XVI.eigen)) + geom_point()
+
+marriages.no.selfloops.fit <- lm( XVI.eigen ~ XV.eigen, data=common.nodes.eigen.no.selfloops )
+
+# plot the fit
+
+ggplot( common.nodes.eigen.no.selfloops, aes(x=XV.eigen,y=XVI.eigen)) + geom_point() + geom_abline(intercept=marriages.no.selfloops.fit$coefficients[1],slope=marriages.no.selfloops.fit$coefficients[2])
+
+
+
+
 
 # merge m.eigen and all.m.eigen to get the rank of the families
 m.ranks <- merge( m.eigen, all.m.eigen, by="Family", suffixes=c(".no.selfloops",".all") )
