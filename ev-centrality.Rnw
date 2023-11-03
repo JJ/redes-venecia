@@ -96,21 +96,42 @@ This dataset was published by Puga and Treffler as support for their paper \cite
 
 From this dataset, those where the bride did not belong to a patrician family have been eliminated\footnote{There were many restrictions to this kind of marriage, but they occurred with regularity, at least until the so-called "Second Serrata" \cite{second:serrata}, during the XV century; in this case, however, we eliminate them because they are irrelevant to the main point of the paper}.
 
-This dataset has been chosen because it includes many intra-family marriages; a ranking of the families according to the number of marriages is shown in Table \ref{tab:top:ev} (left). . The dataset is normalized to include only the family bride and groom belong to.
-
-
 This dataset has been chosen because it includes a good number of intra-family marriages, as well as because it has been studied extensively by Puga and Treffler in their paper, providing a basis for the comparison of results.
-
+%
 <<intra.marriages, echo=F,message=F>>=
-# Compute the number of marriages where wife_familyname_std == husband_familyname_std per century
-all.marriages %>% group_by(str_sub(all.marriages$year,1,2)) %>% summarise(intra.marriages=sum(wife_familyname_std==husband_familyname_std))
- 
+library(dplyr)
+all.marriages %>% group_by(str_sub(all.marriages$year,1,2)) %>% summarise(intra.marriages=sum(wife_familyname_std==husband_familyname_std),total.marriages = n()) %>% mutate(percentage = 100 * intra.marriages/total.marriages) -> intra.marriages.table
+
+intra.marriages.table %>% rename(century.years="str_sub(all.marriages$year, 1, 2)") -> intra.marriages.table
+intra.marriages.table %>% mutate(century = as.roman(as.numeric(century.years)+1)) %>% select(-1) %>% relocate(century,.before=1) -> intra.marriages.table
+
+kable(intra.marriages.table,format="latex",digits=2,caption="Intra-family marriages per century \\protect\\label{tab:century:marriages}", col.names=c("Century","Intra-family marriages","Total marriages","Percentage")) %>% kable_styling(latex_options = c("striped", "hold_position"), full_width = F, position = "left")
+
+marriages.self <- marriages.raw[ marriages.raw$husband_familyname_std == marriages.raw$wife_familyname_std,]
+sorted.marriages.self <- marriages.self %>% count(wife_familyname_std, sort=T)
+intra.marriages <- unique(marriages.self$wife_familyname_std)
+
+top.intra.marriages <-  sorted.marriages.self %>% head(.,10)
+
+tabled.top.eigen <- data.frame(Family.Intra = top.intra.marriages$wife_familyname_std, Marriages=top.intra.marriages$n)
+kable(tabled.top.eigen,
+      col.names=c("Family", "#Intra-family matrimonies" ),
+      caption="Ranking of families according to number of intra-family matrimonies (left). \\protect\\label{tab:top:families}",
+      row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped"))
 @
 
+%
+The evolution of the absolute  and relative number of intra-family marriages per century is shown in Table \ref{tab:century:marriages}, together with those whose date is not available. These marriages are not evenly distributed per family; the top 10 families according to number of intra-family marriages is shown in Table \ref{tab:top:families}. This is an example where the number of self-loops is not excessive, although it is certainly significant, hovering around a few percentage points per century for an amount of \Sexpr{sum(intra.marriages.table$intra.marriages)} intra-family marriages (self-loops) over \Sexpr{sum(intra.marriages.table$total.marriages)} total.
 
 %
 
 <<centuries, echo=F,message=F>>=
+
+tabled.top.eigen <- data.frame(Family.Intra = top.intra.marriages$wife_familyname_std, Marriages=top.intra.marriages$n, Family = top.ev.eigen$Family, EV = top.ev.eigen$eigen, Family.Self=top.ev.all.eigen$Family, EV.self = top.ev.all.eigen$eigen)
+kable(tabled.top.eigen,
+      col.names=c("Family", "#Intra-family matrimonies", "Family", "EV","Family","EV + self-loops" ),
+      caption="Ranking of families according to number of intra-family matrimonies (left) and EV, with (right) or without (center) self-loops. \\protect\\label{tab:top:ev}",
+      row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped")) %>% column_spec(2, border_right=T) %>% column_spec(3, border_left = T ) %>% column_spec(4, border_right=T) %>% column_spec(5, border_left = T )
 library(ggplot2)
 # Extract marriages taking place in 14xx and 15xx
 marriages.XV <- all.marriages[ !is.na(all.marriages$year) & all.marriages$year>=1400 & all.marriages$year < 1500,]
@@ -184,17 +205,7 @@ library(tibble)
 library(ggplot2)
 library(ggthemes)
 
-marriages.self <- marriages.raw[ marriages.raw$husband_familyname_std == marriages.raw$wife_familyname_std,]
-sorted.marriages.self <- marriages.self %>% count(wife_familyname_std, sort=T)
-intra.marriages <- unique(marriages.self$wife_familyname_std)
 
-top.intra.marriages <-  sorted.marriages.self %>% head(.,10)
-
-tabled.top.eigen <- data.frame(Family.Intra = top.intra.marriages$wife_familyname_std, Marriages=top.intra.marriages$n, Family = top.ev.eigen$Family, EV = top.ev.eigen$eigen, Family.Self=top.ev.all.eigen$Family, EV.self = top.ev.all.eigen$eigen)
-kable(tabled.top.eigen,
-      col.names=c("Family", "#Intra-family matrimonies", "Family", "EV","Family","EV + self-loops" ),
-      caption="Ranking of families according to number of intra-family matrimonies (left) and EV, with (right) or without (center) self-loops. \\protect\\label{tab:top:ev}",
-      row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped")) %>% column_spec(2, border_right=T) %>% column_spec(3, border_left = T ) %>% column_spec(4, border_right=T) %>% column_spec(5, border_left = T )
 @
 
 This dataset has been transformed into a graph by eliminating self-loops (as usual), or leaving them, using undirected edges joining the two families of the partners in every marriage; the edge is weighted with the number of marriages between the families in the nodes; eigenvector centrality has then been computed for the two resulting graphs. A ranking of the top families according to their EV centrality is shown in Table \ref{tab:top:ev} (center and rightmost columns).
