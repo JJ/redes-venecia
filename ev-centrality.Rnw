@@ -139,9 +139,11 @@ m.ranks <- merge( m.eigen, all.m.eigen, by="Family", suffixes=c(".no.selfloops",
 
 This dataset has been transformed into a graph by eliminating self-loops (as usual), or leaving them, using undirected edges joining the two families of the partners in every marriage; the edge is weighted with the number of marriages between the families in the nodes; eigenvector centrality has then been computed for the two resulting graphs. A ranking of the top families according to their EV centrality is shown in Table \ref{tab:top:ev}.
 
-Looking at the leftmost and center group of columns, we can wee that there seems to be certain correlation between the number of intra-family marriages and the EV centrality, even if we do not include it in the computation. Six out of then families are the same, and the first three: Contarini, Morosini, Corner also appear in the same order. This might indicate either a common cause (size of the family, for instance) or a cause-effect. Including self-loops in the computation we see that there are small, but significant, variations: The Dolfins and Giustinians change their order in the ranking, plus the Loredan family is dropped and substituted by the Pisani family\footnote{The Pisani family is certainly more "central" than the Loredan, at least looking at the number of nobles in important offices}. We can also see that the difference between the first and second has doubled, and that, in general, the value of the normalized EV centrality has also decreased.
+Looking at Table \ref{tab:top:families} together with the left hand side of Table \ref{tab:top:ev}, we can wee that there seems to be certain correlation between the number of intra-family marriages and the EV centrality, even if we do not include it in the computation. Six out of then families are the same, and the first three: Contarini, Morosini and Corner also appear in the same order. This might indicate either a common cause for both rankings (size of the family, for instance) or a cause-effect, without discarding a combination of both: a family gets bigger since it is wealthy, and is wealthy due to its social capital; high EV centrality implies a lot of influence, and this begets wealth, that literally increases the fitness of the family making it big enough that intra-family matrimonies become possible and even common. That is, however, beside the main of this paper, although it should be noted that, in a way, self-loops are {\em factored in} in this specific case since intra-family marriages tend to appear more frequently in families with high EV centrality.
 
-<<charts, echo=F, fig.show="hold", out.width="50%",message=F, fig.cap="(Left) EV centrality considering self-loops (x axis) or not (y axis). The size of the dot and color signal the number of intra-family marriages. (Right) Number of intra-family marriages vs. percent increment of EV when self-loops are not computed. \\protect\\label{fig:plots}">>=
+Including self-loops in the computation we see that there are small, but significant, variations: The Dolfins and Giustinians change their order in the ranking, plus the Loredan family is dropped and substituted by the Pisani family\footnote{The Pisani family is certainly more "central" than the Loredan, at least looking at the number of nobles in important offices; \cite{colleganza} mentions them as one of the family with the greatest amount of shares in shipping contracts}. We can also see that the difference between the first and second has doubled, and that, in general, the value of the normalized EV centrality has also decreased; since the EV values are normalized, this simply indicates that the difference between Contarini and the rest has increased, a fact in which, of course, self-loops have had a determinating influence.
+
+<<charts, echo=F, fig.show="hold", fig.pos="h!tb", fig.height=4, message=F, fig.cap="EV centrality considering self-loops (x axis) or not (y axis). The size of the dot and color signal the number of intra-family marriages. \\protect\\label{fig:plots}">>=
 library(ggplot2)
 library(ggthemes)
 library(tidyr)
@@ -153,15 +155,26 @@ marriages.table$intra.marriages.rate <- marriages.table$n.y / marriages.table$n.
 
 marriages.summary <- data.frame(family=intra.marriages, EV.with.self=sapply( intra.marriages, function(x) V(all.marriages.sn)[[x]]$eigen ), EV.no.self=sapply( intra.marriages, function(x) V(marriages.sn)[[x]]$eigen ), intra.marriages=sapply( intra.marriages, function(x) sorted.marriages.self[sorted.marriages.self$wife_familyname_std ==x,]$n ))
 ggplot(marriages.summary, aes(x=EV.with.self,y=EV.no.self, color=intra.marriages, size=intra.marriages))+geom_point()+geom_abline(intercept=0,slope=1,linetype="dashed",color="red")+scale_x_log10()+scale_y_log10()
+@
+
+This is why in Figure \ref{fig:plots} we have analyzed the differences between the EV values with or without loops for every node;  it plots the values with self-loops ($x$ axis) vs. those without ($y$ axis) in a log scale, showing all values over the $x=y$ line; all values are increased. Looking at the colors and sizes, we can see that the smaller the size (number of marriages), the bigger the increase in value; that is, more intra-family marriages make the inclusion of self-loops decrease \emph{less} the EV centrality. However, this is due in this case to the fact that what is actually increased is the difference between the family with EV 1 (the Contarinis) and the rest, so we can look at this result from the other side: the presence of a family with a high value in the diagonal of the connection matrix (i.e. self-loops with a high weight) increases its EV centrality much more than that of the rest of the nodes/families.
+
+<<charts2, echo=F, fig.show="hold",message=F, fig.height=4, fig.cap="Number of intra-family marriages vs. percent increment of EV when self-loops are not computed. \\protect\\label{fig:plots2}">>=
 marriages.summary$diff <- (marriages.summary$EV.no.self - marriages.summary$EV.with.self)/marriages.summary$EV.no.self
 ggplot(marriages.summary, aes(x=intra.marriages,y=diff))+geom_point()+theme_fivethirtyeight()
+@
 
+Figure \ref{fig:plots2}, on the other hand, certainly shows that there is a relationship between the number of intra-family weddings and the change, and that this relationship is systematic. At any rate, what this chart reveals is that, as should be expected, the value of intra-family marriages/self-loops in the computation of EV centrality certainly gives us better insights on the dynamics of the social network.
+
+<<charts3, echo=F, fig.show="hold",message=F, fig.height=4,fig.cap="EV centrality rank reached by families with ($y$ axis) or withoug ($x$ axis) self loops. \\protect\\label{fig:plots3}">>=
 ggplot(m.ranks, aes(x=rank.no.selfloops,y=rank.all))+geom_point()+geom_abline(intercept=0,slope=1,linetype="dashed",color="red")
 @
 
-This is why in Figure \ref{fig:plots} we have analyzed the differences between the EV values with or without loops for every node. The left hand side of that Figure plots the values with self-loops vs. those without in a log scale, showing all values over the $x=y$ line; all values are increased. Looking at the colors and sizes, we can see that the smaller the size (number of marriages), the bigger the increase in value; that is, more intra-family marriages make the inclusion of self-loops decrease \emph{less} the EV centrality. However, this is due in this case to the fact that what is actually increased is the difference between the family with EV 1 (the Contarinis) and the rest, so we can look at this result from the other side: the presence of a family with a high value in the diagonal of the connection matrix increases its EV centrality much more than that of the rest of the nodes/families. The right hand side of Figure \ref{fig:plots} certainly shows that there is a relationship between the number of intra-family weddings and the change, and that this relationship is systematic. At any rate, what this chart reveals is that, as should be expected, the value of intra-family marriages/self-loops in the computation of EV centrality certainly gives us better insights on the dynamics of the social network.
+Finally, Figure \ref{fig:plots3} shows the relationship between the ranks of the families with and without self-loops. The red line is the $x=y$ line. It shows how changes in rank have a wider span in the mid-ranks, far away from the beginning and from the end. The "first" families (close to (1,1)) barely move a position up or down; hoever, beyond rank 150, there are more changes and they have a bigger impact, with some families moving down several positions, and less moving up a few positions. In general, including self-loops makes has a bigger impact in the mid-ranks, an interesting fact that proves the importance of taking it into account when family networks are researched.
 
-<<correlation, echo=F, fig.show="hold", out.width="50%",message=F, fig.cap="Correlation between the number of intra-family marriages and the difference between the EV centrality with and without self-loops. \\protect\\label{fig:correlation}">>=
+It might have, however, other positive and quantitative impacts in social and historical study. We will again refer to \cite{colleganza} as the baseline study; they show (in their Figure VIII) how EV centrality across a century is a good predictor for centrality in the next century, showing the stability and resilience of the patrician social network in the Republic of Venice. They mention that there is a "good correlation" in this case. We have reproduced this figure in our Figure \ref{fig:correlation}, showing the fit of the linear regression and the correlation coefficient.
+
+<<correlation, echo=F, fig.show="hold", message=F, fig.cap="Correlation between the EV centrality of Venetian families in the XV century ($x$) and XVI century ($y$). The line indicates the fitted linear model. \\protect\\label{fig:correlation}">>=
 
 marriages.XV <- all.marriages[ !is.na(all.marriages$year) & all.marriages$year>=1400 & all.marriages$year < 1500,]
 marriages.XVI <- all.marriages[ !is.na(all.marriages$year) & all.marriages$year>=1500 & all.marriages$year < 1600,]
@@ -174,13 +187,10 @@ V(marriages.XVI.sn)$eigen <-  unname(unlist(eigen_centrality(marriages.XVI.sn)$v
 
 common.nodes <- intersect( V(marriages.XVI.sn)$name, V(marriages.XV.sn)$name )
 common.nodes.eigen <- data.frame( Family=common.nodes, XV.eigen=V(marriages.XV.sn)[common.nodes]$eigen, XVI.eigen=V(marriages.XVI.sn)[common.nodes]$eigen )
-ggplot( common.nodes.eigen, aes(x=XV.eigen,y=XVI.eigen)) + geom_point()
+# ggplot( common.nodes.eigen, aes(x=XV.eigen,y=XVI.eigen)) + geom_point()
 
-# fit a linear model to common.nodes.eigen$XVi.eigen ~ common.nodes.eigen$XV.eigen
 marriages.fit <- lm( XVI.eigen ~ XV.eigen, data=common.nodes.eigen )
 
-# plot the fit
-ggplot( common.nodes.eigen, aes(x=XV.eigen,y=XVI.eigen)) + geom_point() + geom_abline(intercept=marriages.fit$coefficients[1],slope=marriages.fit$coefficients[2])
 
 # Do the same for marriages without self-loops
 marriages.XV.no.selfloops <- marriages.XV[ marriages.XV$husband_familyname_std != marriages.XV$wife_familyname_std,]
@@ -194,19 +204,21 @@ V(marriages.XVI.sn.no.selfloops)$eigen <-  unname(unlist(eigen_centrality(marria
 
 common.nodes.no.selfloops <- intersect( V(marriages.XVI.sn.no.selfloops)$name, V(marriages.XV.sn.no.selfloops)$name )
 common.nodes.eigen.no.selfloops <- data.frame( Family=common.nodes.no.selfloops, XV.eigen=V(marriages.XV.sn.no.selfloops)[common.nodes.no.selfloops]$eigen, XVI.eigen=V(marriages.XVI.sn.no.selfloops)[common.nodes.no.selfloops]$eigen )
-ggplot( common.nodes.eigen.no.selfloops, aes(x=XV.eigen,y=XVI.eigen)) + geom_point()
+# ggplot( common.nodes.eigen.no.selfloops, aes(x=XV.eigen,y=XVI.eigen)) + geom_point()
 
 marriages.no.selfloops.fit <- lm( XVI.eigen ~ XV.eigen, data=common.nodes.eigen.no.selfloops )
 
 # plot the fit
 
-ggplot( common.nodes.eigen.no.selfloops, aes(x=XV.eigen,y=XVI.eigen)) + geom_point() + geom_abline(intercept=marriages.no.selfloops.fit$coefficients[1],slope=marriages.no.selfloops.fit$coefficients[2])
+ggplot( common.nodes.eigen.no.selfloops, aes(x=XV.eigen,y=XVI.eigen)) + geom_point() + geom_abline(intercept=marriages.no.selfloops.fit$coefficients[1],slope=marriages.no.selfloops.fit$coefficients[2],color="red")
 @
 
-
+<<correlation2, echo=F, fig.show="hold", out.width="50%",message=F, fig.cap="Correlation between the number of intra-family marriages and the difference between the EV centrality with and without self-loops. \\protect\\label{fig:correlation2}">>=
+ggplot( common.nodes.eigen, aes(x=XV.eigen,y=XVI.eigen)) + geom_point() + geom_abline(intercept=marriages.fit$coefficients[1],slope=marriages.fit$coefficients[2])
+@
 \subsection{Freight traffic network}
 
-<<freight, echo=TRUE, eval=TRUE>>=
+<<freight, echo=F, messages=F>>=
 # Ditto for US freight traffic
 load("data/freight-traffic-agg.RData")
 all.freight <- freight.traffic.agg[ freight.traffic.agg$Year == 2021,]
