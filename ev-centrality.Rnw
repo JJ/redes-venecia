@@ -253,6 +253,14 @@ kable(tabled.top.f.eigen,
       row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped")) %>% column_spec(2, border_right=T) %>% column_spec(3, border_left = T ) 
 @
 
+We show the differences in the first positions in the ranking according to EV centrality in \ref{tab:top:ev:f}. As was the case for the Venice matrimonial network, the first positions do not change, the top 3 in this case. All others do, however, as does the quantitative difference between the first and the rest of the positions; using self-loops highlights the differences in EV centrality, and thus influence, between the first and the rest of the states, as well as the differences among themselves.
+
+<<freight.chart, echo=F, fig.show="hold",message=F, fig.pos="h!tb", fig.cap="Relationship between EV centrality with or without self-loops for the US freight network.\\protect\\label{fig:freight:chart}">>=
+freight.ev.df <- data.frame( State = V(freight.sn)$name, EV.self = V(all.freight.sn)$eigen, EV = V(freight.sn)$eigen)
+ggplot(freight.ev.df, aes(x=EV.self, y=EV)) + geom_point() + geom_abline(intercept=0, slope=1, color="red") + labs(x="EV centrality with self-loops", y="EV centrality without self-loops")+theme_bw()
+@
+
+The stark change in values is shown in Figure \ref{fig:freight:chart}, where we plot the EV centrality values with and without self-loops for all states (and the District of Columbia. Except for the two top values (Texad and California), when self-loops are considered the value of EV centrality drops below (roughly) 0.05, with changes whose value is obviously decreasing with the initial value (without self-loops).
 
 \section{Conclusions}
 
