@@ -46,6 +46,8 @@ The main issue and the one we are trying to over come in this paper, is that whe
 
 That is not the case for EV centrality, which does in fact use self-loops to compute the eigenvalues that are presented as the EV centrality measure. And these intra-links can, however, give us better insights on the dynamics of a social network, and should probably be taken into account. So far, however, there has been little analysis on what is the actual effect of considering these intra-links for computing the eigenvector centrality \cite{BONACICH2007555} in social networks. This paper will try, using well-chosen examples, what is that effect and how it could help to better understand social systems.
 
+The main research question that we ask, then, is if self-loops should be included, when available, in the computation of eigenvector centrality. As an accessory question, we try to investigate what would be the effect of doing so in EV centrality measurements, and how it affects the value and the ranking of nodes in the coresponding network.
+
 The rest of the paper is organized as follows: next we will be describing the state of the art, to proceed to describe the datasets and the experiments performed in Section \ref{sec:exp}. We will then discuss the results and conclude with or conclusion and future lines of work.
 
 \section{State of the art}
