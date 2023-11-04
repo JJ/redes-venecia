@@ -66,9 +66,11 @@ library(igraph)
 library(knitr)
 library(stringr)
 library(kableExtra)
-tablify <- function( graph, column ) {
-  m.table <- data.frame( Family=V(graph)$name, degree=vertex_attr(graph,column) )
-  names(m.table)[names(m.table) == "degree"] <- column
+
+# Create a table with a certain vertex attribute
+tablify <- function( graph, column, column.name ) {
+  m.table <- data.frame( V1=V(graph)$name, V2=vertex_attr(graph,column) )
+  names(m.table) <- c(column.name,column)
   return( m.table[ order(m.table[[column]],decreasing = T),] )
 }
 
@@ -79,7 +81,7 @@ all.marriages <- marriages.raw[ marriages.raw$wife_familyname_std != '',] # Elim
 # Use self-loops
 all.marriages.sn <- graph.data.frame(data.frame(all.marriages$husband_familyname_std,all.marriages$wife_familyname_std),directed=F)
 V(all.marriages.sn)$eigen <-  unname(unlist(eigen_centrality(all.marriages.sn)$vector))
-all.m.eigen <- tablify( all.marriages.sn, "eigen")
+all.m.eigen <- tablify( all.marriages.sn, "eigen", "Family")
 all.m.eigen$rank <- 1:nrow(all.m.eigen)
 top.ev.all.eigen <- all.m.eigen %>% head(.,10)
 
@@ -87,7 +89,7 @@ top.ev.all.eigen <- all.m.eigen %>% head(.,10)
 marriages <- all.marriages[ all.marriages$husband_familyname_std != all.marriages$wife_familyname_std,]
 marriages.sn <- graph.data.frame(data.frame(marriages$husband_familyname_std,marriages$wife_familyname_std),directed=F)
 V(marriages.sn)$eigen <-  unname(unlist(eigen_centrality(marriages.sn)$vector))
-m.eigen <- tablify( marriages.sn, "eigen")
+m.eigen <- tablify( marriages.sn, "eigen", "Family")
 m.eigen$rank <- 1:nrow(m.eigen)
 top.ev.eigen <- m.eigen %>% head(.,10)
 @
@@ -218,14 +220,16 @@ ggplot( common.nodes.eigen, aes(x=XV.eigen,y=XVI.eigen)) + geom_point() + geom_a
 @
 \subsection{Freight traffic network}
 
-<<freight, echo=F, messages=F>>=
+The freight traffic network is a directed network that includes as nodes different US states, and as edges the amount of freight traffic between them. The data is available from the US Bureau of Transportation Statistics on its page "Freight Flow by State" \footnote{\url{https://www.bts.gov/browse-statistical-products-and-data/state-transportation-statistics/freight-flows-state}}. The data is available for the years 20017-2021.
+
+<<freight, echo=F, messages=F, fig.pos="h!tb", fig.cap="US freight traffic network, with node size proportional to EV centrality.\\protect\\label{fig:usfreight}">>=
 # Ditto for US freight traffic
 load("data/freight-traffic-agg.RData")
 all.freight <- freight.traffic.agg[ freight.traffic.agg$Year == 2021,]
 edgelist <- data.frame(V1=all.freight$Origin.State,V2=all.freight$Dest.State,weight=all.freight$sum)
 all.freight.sn <- graph_from_data_frame(edgelist)
 V(all.freight.sn)$eigen <-  unname(unlist(eigen_centrality(all.freight.sn)$vector))
-all.f.eigen <- tablify( all.freight.sn, "eigen")
+all.f.eigen <- tablify( all.freight.sn, "eigen", "State")
 top.ev.all.f.eigen <- all.f.eigen %>% head(.,10)
 
 # Now without self-loops
@@ -233,9 +237,22 @@ freight <- all.freight[ all.freight$Origin.State != all.freight$Dest.State,]
 edgelist.noselfloops <- data.frame(V1=freight$Origin.State,V2=freight$Dest.State,weight=freight$sum)
 freight.sn <- graph_from_data_frame(edgelist.noselfloops)
 V(freight.sn)$eigen <-  unname(unlist(eigen_centrality(freight.sn)$vector))
-f.eigen <- tablify( freight.sn, "eigen")
+f.eigen <- tablify( freight.sn, "eigen", "State")
 top.ev.f.eigen <- f.eigen %>% head(.,10)
+
+plot(all.freight.sn, vertex.size=V(all.freight.sn)$eigen*15, edge.arrow.size=0.1, edge.curved=0.1, edge.color=rgb(0.8,0.8,0.9,0.5))
 @
+
+We will be doing some additional processing on this data. All types of traffic (import, export, domestic) will be added into a single traffic flow; this quantity will be used as a weight in the transportation network. Also, we will be use the data for the year 2021 only; the resulting processed data set is available from the GitHub repository for this paper \url{https://github.com/JJ/redes-venecia}. The resulting network is shown in Figure \ref{fig:usfreight}. This network is totally different from the one analyzed in the previous subsection: all states have internal traffic, so all of them have self loops, as the Figure shows. It is a directed network, since traffic between two states can be asymmetric. The network is very dense, with almost all states connected with all others. Finally, the network structure is quite different, with big differences between the most central states and the rest. Using self loops or not is bound to influence the vision we have of the centrality of the states.
+
+<<freight.rankings, echo=F, fig.show="hold",message=F>>=
+tabled.top.f.eigen <- data.frame(State = top.ev.f.eigen$State, EV = top.ev.f.eigen$eigen, State.Self=top.ev.all.f.eigen$State, EV.self = top.ev.all.f.eigen$eigen)
+kable(tabled.top.f.eigen,
+      col.names=c( "State", "EV","State","EV + self-loops" ),
+      caption="Ranking of states in the US freight network according to EV centrality values, with (right) or without (left) self-loops. \\protect\\label{tab:top:ev:f}",
+      row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped")) %>% column_spec(2, border_right=T) %>% column_spec(3, border_left = T ) 
+@
+
 
 \section{Conclusions}
 
