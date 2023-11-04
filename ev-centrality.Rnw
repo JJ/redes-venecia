@@ -168,7 +168,7 @@ ggplot(marriages.summary, aes(x=intra.marriages,y=diff))+geom_point()+theme_five
 
 Figure \ref{fig:plots2}, on the other hand, certainly shows that there is a relationship between the number of intra-family weddings and the change, and that this relationship is systematic. At any rate, what this chart reveals is that, as should be expected, the value of intra-family marriages/self-loops in the computation of EV centrality certainly gives us better insights on the dynamics of the social network.
 
-<<charts3, echo=F, fig.show="hold",message=F, fig.height=4,fig.cap="EV centrality rank reached by families with ($y$ axis) or withoug ($x$ axis) self loops. \\protect\\label{fig:plots3}">>=
+<<charts3, echo=F, fig.show="hold",message=F, fig.height=4,fig.cap="EV centrality rank reached by families with ($y$ axis) or without ($x$ axis) self loops. \\protect\\label{fig:plots3}">>=
 ggplot(m.ranks, aes(x=rank.no.selfloops,y=rank.all))+geom_point()+geom_abline(intercept=0,slope=1,linetype="dashed",color="red")
 @
 
@@ -267,6 +267,8 @@ intra.traffic <- all.freight[ all.freight$Origin.State == all.freight$Dest.State
 freight.diff.df <- data.frame( State = V(all.freight.sn)$name, diff = (V(freight.sn)$eigen - V(all.freight.sn)$eigen)/V(freight.sn)$eigen, intra.traffic = intra.traffic)
 ggplot(freight.diff.df, aes(x=intra.traffic, y=diff)) + geom_point() + labs(y="Difference in EV centrality", x="Intra-state traffic")+theme_bw()
 @
+
+Figure \ref{fig:freight:diff} shows the relationship between the decrement in EV centrality when self-loops are considered and the value of intra-state traffic. In general, the more intra-state traffic, the bigger the difference in EV centrality. This occurs in a scale that is totally different to that shown in Figure \ref{fig:plots2}, although it is remarkable to note that changes to in the same direction, that is, a decrement in EV centrality, and also in general a higher self-connection weight will imply less change in percentage. This clearly indicates a correlation between the two measures, but it is not clear if it is a causal relationship or not, and discussing it is beyond the point of the paper.
 
 \section{Conclusions}
 
