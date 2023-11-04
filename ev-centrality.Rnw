@@ -216,6 +216,22 @@ ggplot( common.nodes.eigen.no.selfloops, aes(x=XV.eigen,y=XVI.eigen)) + geom_poi
 
 ggplot( common.nodes.eigen, aes(x=XV.eigen,y=XVI.eigen)) + geom_point() + geom_abline(intercept=marriages.fit$coefficients[1],slope=marriages.fit$coefficients[2], color="red")
 @
+
+The influence of using the self-loops is clear, with the points representing families with the highest EV seeming {\em closer} to the fit; it should be noted that these are the families that include intra-marriages. But we need to examine numerically this difference.
+%
+<<table.fit, echo=F, messages=F>>=
+# assign residual standard error, multiple r-squared, adjusted r-squared, f-statistic, p-value of marriages.fit to data frame
+marriages.fit.df <- data.frame( RSE=summary(marriages.fit)$sigma, R2=summary(marriages.fit)$r.squared, adjR2=summary(marriages.fit)$adj.r.squared, Fstat=summary(marriages.fit)$fstatistic[1], intercept.t = summary(marriages.fit)$coefficients[5], slope.t = summary(marriages.fit)$coefficients[6] )
+marriages.fit.df <- rbind(marriages.fit.df,
+                          data.frame( RSE=summary(marriages.no.selfloops.fit)$sigma, R2=summary(marriages.no.selfloops.fit)$r.squared, adjR2=summary(marriages.no.selfloops.fit)$adj.r.squared, Fstat=summary(marriages.no.selfloops.fit)$fstatistic[1], intercept.t = summary(marriages.no.selfloops.fit)$coefficients[5], slope.t = summary(marriages.no.selfloops.fit)$coefficients[6] ))
+row.names(marriages.fit.df) <- c("With self-loops","Without self-loops")
+kable(marriages.fit.df, digits=3, caption="Summary of linear fit of EV centrality for families in the XIV and XV century.\\label{tab:marriagesfit}")
+@
+%
+This we do in Table \ref{tab:marriagesfit}, that shows the fit summary coefficients for the two data sets. The {\sf RSE} column shows the difference of residuals between the model and the data; the top row is smaller, showing a better fit for the EV centralities if self-loops are taken into account. This improvement is due mainly, looking at the two right-most columns, to the improvement in the fit of the intercept with 0 (the t value is better); the effect of this can be observed in Figure \ref{fig:correlation}, which shows how the red line that represents the model seems a bit more centered than the one on the left. The values of R-squared and its adjusted value, as well as the F-value, are slightly better for the model without self-loops; however, they are very similar and very hight in both cases, so this difference is not considered significant.
+
+At any rate, and to the extent that EV centrality in a century is a predictor for EV centrality in the next century, including self-loops in its computation makes it a better fit, even if the models represent data very well in both cases.
+
 \subsection{Freight traffic network}
 
 The freight traffic network is a directed network that includes as nodes different US states, and as edges the amount of freight traffic between them. The data is available from the US Bureau of Transportation Statistics on its page "Freight Flow by State" \footnote{\url{https://www.bts.gov/browse-statistical-products-and-data/state-transportation-statistics/freight-flows-state}}. The data is available for the years 20017-2021.
