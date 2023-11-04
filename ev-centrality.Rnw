@@ -262,6 +262,12 @@ ggplot(freight.ev.df, aes(x=EV.self, y=EV)) + geom_point() + geom_abline(interce
 
 The stark change in values is shown in Figure \ref{fig:freight:chart}, where we plot the EV centrality values with and without self-loops for all states (and the District of Columbia. Except for the two top values (Texad and California), when self-loops are considered the value of EV centrality drops below (roughly) 0.05, with changes whose value is obviously decreasing with the initial value (without self-loops).
 
+<<freight.diff, echo=F, fig.show="hold",message=F, fig.pos="h!tb", fig.cap="Change in EV centrality vs. value of intra-state traffic.\\protect\\label{fig:freight:diff}">>=
+intra.traffic <- all.freight[ all.freight$Origin.State == all.freight$Dest.State,]$sum
+freight.diff.df <- data.frame( State = V(all.freight.sn)$name, diff = (V(freight.sn)$eigen - V(all.freight.sn)$eigen)/V(freight.sn)$eigen, intra.traffic = intra.traffic)
+ggplot(freight.diff.df, aes(x=intra.traffic, y=diff)) + geom_point() + labs(y="Difference in EV centrality", x="Intra-state traffic")+theme_bw()
+@
+
 \section{Conclusions}
 
 We can conclude from this that, in general, the inclusion of self-loops in other centrality measures, such as page-rank or betweenness centrality, would help us understand better social networks where those measurements explain better its dynamics; however, this will need a modification of the algorithms used to compute them, which is left as a future line of work. In order to be comprehensive, too, it would be interesting to see the relationship between the slope of the model shown in Figure \ref{fig:charts} and the relationship between the number of self-loops for all actors involved. Finally, investigating other social networks with the same characteristics would help us generalize these results and thus recommend to \emph{never} eliminate self-loops in the analysis of social networks where they exist.
