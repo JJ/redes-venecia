@@ -176,7 +176,7 @@ Finally, Figure \ref{fig:plots3} shows the relationship between the ranks of the
 
 It might have, however, other positive and quantitative impacts in social and historical study. We will again refer to \cite{colleganza} as the baseline study; they show (in their Figure VIII) how EV centrality across a century is a good predictor for centrality in the next century, showing the stability and resilience of the patrician social network in the Republic of Venice. They mention that there is a "good correlation" in this case. We have reproduced this figure in our Figure \ref{fig:correlation}, showing the fit of the linear regression and the correlation coefficient.
 
-<<correlation, echo=F, fig.show="hold", message=F, fig.cap="Correlation between the EV centrality of Venetian families in the XV century ($x$) and XVI century ($y$). The line indicates the fitted linear model. \\protect\\label{fig:correlation}">>=
+<<correlation, echo=F, fig.show="hold", out.width="50%", message=F, fig.cap="Correlation between the EV centrality of Venetian families in the XV century ($x$) and XVI century ($y$). The line indicates the fitted linear model. Left-hand side chart does not include self-loops, right-hand side does. \\protect\\label{fig:correlation}">>=
 
 marriages.XV <- all.marriages[ !is.na(all.marriages$year) & all.marriages$year>=1400 & all.marriages$year < 1500,]
 marriages.XVI <- all.marriages[ !is.na(all.marriages$year) & all.marriages$year>=1500 & all.marriages$year < 1600,]
@@ -213,10 +213,8 @@ marriages.no.selfloops.fit <- lm( XVI.eigen ~ XV.eigen, data=common.nodes.eigen.
 # plot the fit
 
 ggplot( common.nodes.eigen.no.selfloops, aes(x=XV.eigen,y=XVI.eigen)) + geom_point() + geom_abline(intercept=marriages.no.selfloops.fit$coefficients[1],slope=marriages.no.selfloops.fit$coefficients[2],color="red")
-@
 
-<<correlation2, echo=F, fig.show="hold", out.width="50%",message=F, fig.cap="Correlation between the number of intra-family marriages and the difference between the EV centrality with and without self-loops. \\protect\\label{fig:correlation2}">>=
-ggplot( common.nodes.eigen, aes(x=XV.eigen,y=XVI.eigen)) + geom_point() + geom_abline(intercept=marriages.fit$coefficients[1],slope=marriages.fit$coefficients[2])
+ggplot( common.nodes.eigen, aes(x=XV.eigen,y=XVI.eigen)) + geom_point() + geom_abline(intercept=marriages.fit$coefficients[1],slope=marriages.fit$coefficients[2], color="red")
 @
 \subsection{Freight traffic network}
 
