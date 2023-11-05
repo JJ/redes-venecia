@@ -118,7 +118,7 @@ top.intra.marriages <-  sorted.marriages.self %>% head(.,10)
 tabled.top.eigen <- data.frame(Family.Intra = top.intra.marriages$wife_familyname_std, Marriages=top.intra.marriages$n)
 kable(tabled.top.eigen,
       col.names=c("Family", "#Intra-family marriages" ),
-      caption="Ranking of families according to number of intra-family marriages (left). \\protect\\label{tab:top:families}",
+      caption="Ranking of top ten families according to number of intra-family marriages (left). \\protect\\label{tab:top:families}",
       row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped"))
 @
 
@@ -132,14 +132,14 @@ The evolution of the absolute  and relative number of intra-family marriages per
 tabled.top.eigen <- data.frame(Family = top.ev.eigen$Family, EV = top.ev.eigen$eigen, Family.Self=top.ev.all.eigen$Family, EV.self = top.ev.all.eigen$eigen)
 kable(tabled.top.eigen,
       col.names=c( "Family", "EV","Family","EV + self-loops" ),
-      caption="Ranking of families according to EV centrality values, with (right) or without (center) self-loops. \\protect\\label{tab:top:ev}",
+      caption="Ranking of top ten families according to EV centrality values, with (right) or without (left) self-loops. \\protect\\label{tab:top:ev}",
       row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped")) %>% column_spec(2, border_right=T) %>% column_spec(3, border_left = T )
 
 m.ranks <- merge( m.eigen, all.m.eigen, by="Family", suffixes=c(".no.selfloops",".all") )
 
 @
 
-This dataset has been transformed into a graph by eliminating self-loops (as usual), or leaving them, using undirected edges joining the two families of the partners in every marriage; the edge is weighted with the number of marriages between the families in the nodes; eigenvector centrality has then been computed for the two resulting graphs. A ranking of the top families according to their EV centrality is shown in Table \ref{tab:top:ev}.
+This dataset has been transformed into two different graphs; eliminating self-loops in one and leaving them in the other. In both cases we use undirected edges joining the two families of the partners in every marriage; the edge is weighted with the number of marriages between the families in the nodes; eigenvector centrality has then been computed for the two resulting graphs. A ranking of the top families according to their EV centrality is shown in Table \ref{tab:top:ev}.
 
 Looking at Table \ref{tab:top:families} together with the left hand side of Table \ref{tab:top:ev}, we can wee that there seems to be certain correlation between the number of intra-family marriages and the EV centrality, even if we do not include it in the computation. Six out of then families are the same, and the first three: Contarini, Morosini and Corner also appear in the same order. This might indicate either a common cause for both rankings (size of the family, for instance) or a cause-effect, without discarding a combination of both: a family gets bigger since it is wealthy, and is wealthy due to its social capital; high EV centrality implies a lot of influence, and this begets wealth, that literally increases the fitness of the family making it big enough that intra-family marriages become possible and even common. That is, however, beside the main of this paper, although it should be noted that, in a way, self-loops are {\em factored in} in this specific case since intra-family marriages tend to appear more frequently in families with high EV centrality.
 
@@ -282,7 +282,7 @@ freight.diff.df <- data.frame( State = V(all.freight.sn)$name, diff = (V(freight
 ggplot(freight.diff.df, aes(x=intra.traffic, y=diff)) + geom_point() + labs(y="Difference in EV centrality", x="Intra-state traffic")+theme_bw()
 @
 
-Figure \ref{fig:freight:diff} shows the relationship between the decrement in EV centrality when self-loops are considered and the value of intra-state traffic. In general, the more intra-state traffic, the bigger the difference in EV centrality. This occurs in a scale that is totally different to that shown in Figure \ref{fig:plots2}, although it is remarkable to note that changes to in the same direction, that is, a decrement in EV centrality, and also in general a higher self-connection weight will imply less change in percentage. This clearly indicates a correlation between the two measures, but it is not clear if it is a causal relationship or not, and discussing it is beyond the point of the paper.
+Figure \ref{fig:freight:diff} shows the relationship between the decrease in (normalized) EV centrality when self-loops are considered and the value of intra-state traffic. In general, the more intra-state traffic, the bigger the difference in EV centrality. This occurs in a scale that is totally different to that shown in Figure \ref{fig:plots2}, although it is remarkable to note that changes to in the same direction, that is, a decrease in EV centrality, and also in general a higher self-connection weight will imply less change in percentage. This clearly indicates a correlation between the two measures, but it is not clear if it is a causal relationship or not, and discussing it is beyond the point of the paper.
 
 \section{Conclusions}
 
