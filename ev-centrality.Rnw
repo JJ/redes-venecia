@@ -163,7 +163,7 @@ To better highlight the impact of self-loops, in Figure \ref{fig:plots} we have 
 
 All dots are placed over the $x=y$ line, indicating that normalized EV values are lower without self-loops. Besides, looking at the colors and sizes, we can see that the smaller the size (number of marriages), the bigger the increase in value; that is, more intra-family marriages make the inclusion of self-loops decrease  EV centrality \emph{less}. However, this is due in this case to the fact that what is actually increased is the difference between the family with the higher EV (the Contarinis) and the rest, so we can look at this result from the other side: the presence of a family with a high value in the diagonal of the connection matrix (i.e. self-loops with a high weight) increases its EV centrality much more than that of the rest of the nodes/families.
 
-<<charts2, echo=F, fig.show="hold",message=F, fig.height=4, fig.cap="Number of intra-family marriages vs. percent increment of EV when self-loops are not computed. \\protect\\label{fig:plots2}">>=
+<<charts2, echo=F, fig.show="hold",message=F, fig.height=4, fig.cap="Percent increment in normalized EV centrality when including self loops. \\protect\\label{fig:plots2}">>=
 marriages.summary$diff <- (marriages.summary$EV.no.self - marriages.summary$EV.with.self)/marriages.summary$EV.no.self
 ggplot(marriages.summary, aes(x=intra.marriages,y=diff))+geom_point()+xlab("Number of intra-family marriages")+ylab("% change in normalized EV centrality value")+theme_tufte()
 @
@@ -238,7 +238,7 @@ At any rate, and to the extent that EV centrality in a century is a predictor fo
 
 The freight traffic network is a directed network that includes as nodes different US states, and as edges the amount of freight traffic between them. The data is available from the US Bureau of Transportation Statistics on its page "Freight Flow by State" \footnote{\url{https://www.bts.gov/browse-statistical-products-and-data/state-transportation-statistics/freight-flows-state}}. The data is available for the years 20017-2021.
 
-<<freight, echo=F, messages=F, fig.pos="h!tb",fig.cap="US freight traffic network, with node size proportional to EV centrality.\\protect\\label{fig:usfreight}">>=
+<<freight, echo=F, messages=F, fig.pos="h!tb",fig.cap="US freight traffic network, with node size proportional to EV centrality (with self loops). Weight value is not represented in this graph.\\protect\\label{fig:usfreight}">>=
 # Ditto for US freight traffic
 load("data/freight-traffic-agg.RData")
 all.freight <- freight.traffic.agg[ freight.traffic.agg$Year == 2021,]
