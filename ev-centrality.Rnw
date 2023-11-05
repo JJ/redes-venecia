@@ -22,7 +22,7 @@
 
 \institute{Department of Computer Engineering, Automatics and Robotics and CITIC University of Granada, Granada, Spain
 \email{jmerelo@ugr.es} \and
-Dipartimento di Economia, Ca' Foscari University of Venice, Venice, ITALY
+Dipartimento di Economia, Ca' Foscari University of Venice, Venice, ITALY \email{cmolinar@unive.it}
 }
 %
 \maketitle
