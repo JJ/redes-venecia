@@ -46,15 +46,15 @@ The main issue and the one we are trying to address in this paper, is that when 
 
 In the cases where self-loops do not have a clear interpretation (or at least a common interpretation with the rest of the connections) there are good reasons to work that way: betweenness centrality \cite{freeman1977set}, for instance, models how one node is needed to transmit information to other parts of the network; how often it transmits information to itself cannot easily be accommodated within this framework, and it can be argued that it could be simply ignored when computing the geodesics from which this measure is computed. That is not the case for EV centrality, which does in fact use self-loops to compute the eigenvalues that are presented as the EV centrality measure. And these intra-links can, however, give us better insights on the dynamics of a social network, and should probably be taken into account. So far, however, there has been little analysis on what is the actual effect of considering these intra-links for computing the eigenvector centrality \cite{BONACICH2007555} in social networks. This paper will try, using well-chosen examples, what is that effect and how it could help to better understand social systems.
 
-The main research question that we ask, then, is if self-loops should be included, when available, in the computation of eigenvector centrality. As an accessory question, we try to investigate what would be the effect of doing so in EV centrality measurements, and how it affects the value and the ranking of nodes in the coresponding network.
+The main research question that we ask, then, is if self-loops should be included, when available, in the computation of eigenvector centrality. As an accessory question, we try to investigate what would be the effect of doing so in EV centrality measurements, and how it affects the value and the ranking of nodes in the corresponding network.
 
 The rest of the paper is organized as follows: next we will be describing the state of the art, to proceed to describe the datasets and the experiments performed in Section \ref{sec:exp}. We will then discuss the results and conclude with our conclusions and future lines of work.
 
-\section{State of the art}
+\section{A brief literature survey}
 
 The main motivation behind this paper is to shed a bit of light on the use of self-loops in social network analysis, mainly because it has been used so rarely in the past. Some papers acknowledge its importance in the propagation of information in social networks \cite{9688320}, with self-loops representing simply re-posts of some content previously created by the same person; other papers, however \cite{computation11050103} dealing with the same subject, explicitly do not use them, thus missing a good amount of the dynamics created by these self loops. In other opinion formation papers \cite{salehi2014empathetic} self-loops represent the amount of attention a person pays to its own opinion as opposed to others. In general, even theoretical models of the spread of information in social networks \cite{CHIERICHETTI20112602} include self-loops.
 
-The main issue is that the application of self loops is mainly limited to models of the spread of information, and not to the analysis of the network itself. This why we have made it the main focus of this paper.
+In general we can say that while self-loops are sometimes acknowledged and used in social network \emph{models}, they are dropped when making centrality analysis of complex or social networks. This why we have made it the main focus of this paper.
 
 \section{Experiments}
 \label{sec:exp}
