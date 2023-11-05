@@ -16,7 +16,7 @@
 %
 \title{Self-loops in social networks: behavior of eigenvector centrality}
 
-\author{JJ Merelo\inst{1}\orcidID{0000-0002-1385-9741} and M. Cristina Molinari\inst{2}}
+\author{JJ Merelo\inst{1}\orcidID{0000-0002-1385-9741} and M. Cristina Molinari\inst{2}\orcidID{0000-0002-6380-6795}}
 %
 \authorrunning{Merelo, Molinari}
 
@@ -28,7 +28,7 @@ Dipartimento di Economia, Ca' Foscari University of Venice, Venice, ITALY
 \maketitle
 %
 \begin{abstract}
-Centrality measures are an essential tool in understanding complex networks, since they give researcher insights on the role the different nodes/actors play in them. Among them, eigenvector centrality is a principled approach to these measures, using a mathematical operation on the connection matrix. This connection  matrix includes connections from an actor to itself (the diagonal); however, as is the case with most centrality measures, this fact is seldom used in social studies to compute the standing or influence of one node over the rest. In this paper we will analyze the difference in EV centrality with or without these self connections or self-loops and how the change depends on the actual value of these self-loops. Finally, we will characterize in which cases it is effective to drop the self-loops, if any, and what kind of information will it give us on the nature and dynamics of the network.
+Centrality measures are an essential tool in understanding complex networks, since they give researcher insights on the role the different nodes/actors play in them. Among them, eigenvector centrality is a principled approach to these measures, using a mathematical operation on the connection matrix. This connection  matrix includes connections from an actor to itself (the diagonal); however, as it is the case with most centrality measures, this fact is seldom used in social studies to compute the standing or influence of one node over others. In this paper we will analyze the difference in EV centrality with or without these self connections or self-loops and how the change depends on the actual number of these self-loops or the weight of these self-connections. Finally, we will characterize in which cases, if any, it is effective to drop self-loops and what kind of information it will give us on the nature and dynamics of the network.
 
 \keywords{Complex networks  \and Social  networks \and Graph Theory \and Eigenvector centrality}
 \end{abstract}
@@ -36,7 +36,7 @@ Centrality measures are an essential tool in understanding complex networks, sin
 
 \section{Introduction}
 
-Eigenvector centrality \cite{doi:10.1080/0022250X.1972.9989806} measures how an actor in a network or graph influences other actor by computing the eigenvalues of the adjacency or connectivity matrix, that has as components the weight of the connection of every agent to all the others, including itself. It is a centrality measure because, along with other such measures (such as betweenness or degree centrality \cite{Rodrigues2019}), it is a micro-level assessment of the power or influence of a node within a network through the analysis of its connections. It has been used extensively in social network analysis \cite{gooddoge,DBLP:journals/corr/abs-1108-0261,merelo2007bce}; but also in other fields, such as biology \cite{horstmeyer2020predicting}, economics \cite{colleganza}, or even in the analysis of the spread of opinions in internet forums during the COVID-19 pandemic \cite{computation11050103}. In its widespread use it is not very different from other centrality measures; however, unlike them, it considers the whole network \cite{BONACICH2007555} taking into account weights (including negative ones) for the computation of the value for a single node; and, more importantly for the purposes of this paper, that includes the connections of a node to itself, or self-loops. 
+Eigenvector centrality \cite{doi:10.1080/0022250X.1972.9989806} measures how an actor in a network or graph influences other actor by computing the eigenvalues of the adjacency or connectivity matrix, that has as components the weight of the connection of every agent to all the others, including itself. It is a centrality measure because, along with other such measures (such as betweenness or degree centrality \cite{Rodrigues2019}), it is a micro-level assessment of the power or influence of a node within a network through the analysis of its connections. It has been used extensively in social network analysis \cite{gooddoge,DBLP:journals/corr/abs-1108-0261,merelo2007bce}; but also in other fields, such as biology \cite{horstmeyer2020predicting}, economics \cite{colleganza}, or even in the analysis of the spread of opinions in internet forums during the COVID-19 pandemic \cite{computation11050103}. In its widespread use it is not very different from other centrality measures; however, unlike them, it considers the whole network \cite{BONACICH2007555} taking into account weights (including negative ones) for the computation of the value for a single node; and, more importantly for the purposes of this paper, that includes the connections of a node to itself, or self-loops.
 
 As a matter of fact, many complex networks, including social networks, include links from one actor/agent to itself; we can find them in commuting networks \cite{he2020demarcating}, where self-loops would indicate trips that start and end in the same city, county or state; in family networks \cite{he2020demarcating}, with self-loops indicating marriage between members of the same (extended) family; opinion networks \cite{computation11050103}, where they would indicate interaction among members of the same group; sport teams transfer networks \cite{gursakal2020comparison}, indicating transfers between teams in the same country; when freight traffic networks \cite{iyengar2012power} are analyzed at a regional level, self-loops would represent shipments that start and end in different parts of the region; commercial networks \cite{colleganza} where self-loops indicate a contract between members of the same family, or even biological networks \cite{horstmeyer2020predicting}, where self-loops could indicate auto-trophic (members of a species feeding on other members) or auto-catalytic (reactive agents catalyzing reactions where they participate).
 
@@ -133,7 +133,7 @@ tabled.top.eigen <- data.frame(Family = top.ev.eigen$Family, EV = top.ev.eigen$e
 kable(tabled.top.eigen,
       col.names=c( "Family", "EV","Family","EV + self-loops" ),
       caption="Ranking of families according to EV centrality values, with (right) or without (center) self-loops. \\protect\\label{tab:top:ev}",
-      row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped")) %>% column_spec(2, border_right=T) %>% column_spec(3, border_left = T ) 
+      row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped")) %>% column_spec(2, border_right=T) %>% column_spec(3, border_left = T )
 
 m.ranks <- merge( m.eigen, all.m.eigen, by="Family", suffixes=c(".no.selfloops",".all") )
 
@@ -264,7 +264,7 @@ tabled.top.f.eigen <- data.frame(State = top.ev.f.eigen$State, EV = top.ev.f.eig
 kable(tabled.top.f.eigen,
       col.names=c( "State", "EV","State","EV + self-loops" ),
       caption="Ranking of states in the US freight network according to EV centrality values, with (right) or without (left) self-loops. \\protect\\label{tab:top:ev:f}",
-      row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped")) %>% column_spec(2, border_right=T) %>% column_spec(3, border_left = T ) 
+      row.names = F, booktabs = T) %>% kable_styling(latex_options = c("striped")) %>% column_spec(2, border_right=T) %>% column_spec(3, border_left = T )
 @
 
 We show the differences in the first positions in the ranking according to EV centrality in \ref{tab:top:ev:f}. As was the case for the Venice matrimonial network, the first positions do not change, the top 3 in this case. All others do, however, as does the quantitative difference between the first and the rest of the positions; using self-loops highlights the differences in EV centrality, and thus influence, between the first and the rest of the states, as well as the differences among themselves.
