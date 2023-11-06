@@ -7,10 +7,12 @@ output:
   html_document: default
 abstract: |
   La República de Venecia se benefició de una comprensión intuitiva del poder
-  de las redes para crear su imperio basado en el comercio marítimo. En este
+  de las redes para crear su imperio, inicialmente basado en el comercio marítimo. En este
   trabajo explicamos diferentes conclusiones que se han alcanzado estudiando
   diferentes conjuntos de datos de redes comerciales, y también redes matrimoniales.
-bibliography: venice.bib
+bibliography:
+  - venice.bib
+  - self-loops.bib
 ---
 
 > Esta página ha sido generada automáticamente a partir del
