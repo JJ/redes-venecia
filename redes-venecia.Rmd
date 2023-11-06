@@ -42,7 +42,7 @@ al poder. En la periferia de esas redes había muchas otras que se apoyaban entr
 sí, pero sobre todo soportaban el poder de la red social de los nobles que
 gobernaban la ciudad: una red de innovación tecnológica, redes urbanas
 [@psarra2018role] y redes de intercambio de información e inteligencia
-\cite{iordanou2019venice}, y las redes comerciales que siguieron teniendo
+[@iordanou2019venice], y las redes comerciales que siguieron teniendo
 importancia incluso después de la graduación a redes sociales.
 
 El poder de Venecia, mientras duró, atestigua el poder de las redes y
