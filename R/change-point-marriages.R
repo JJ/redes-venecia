@@ -32,7 +32,20 @@ marriage.decomposed %>% plot_anomalies(time_recomposed = TRUE, ncol = 3, alpha_d
 
 marriages %>% group_by(year) %>% summarise( families = length(unique( c(unique(husband_familyname_std,unique(wife_familyname_std)) ) ) )) -> married.families.by.year
 
-marriages %>% group_by(year) %>% summarise( norm.entropy = (unique( c(unique(husband_familyname_std,unique(wife_familyname_std)) ) ) )) -> married.families.by.year
+marriages %>% group_by(year) %>% summarise( entropy = Entropy(table(c(husband_familyname_std,wife_familyname_std))) ) -> family.entropy.by.year
 
-# merge married.families.by.year and marriages.by.year
-marriage.data.by.year <- merge(married.families.by.year,marriages.by.year,by="year")
+marriage.data.by.year <- merge(married.families.by.year,marriages.by.year, by="year")
+marriage.data.by.year <- merge(marriage.data.by.year,family.entropy.by.year, by="year")
+
+# draw entropy as point color using a color and families as point size
+ggplot(marriage.data.by.year, aes(x=year, y=n)) + geom_line() + theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle("Marriages by year") + geom_point(aes(color=entropy, size=families))+scale_color_gradientn(colors=c("black","blue","green","gray","red","gold"))
+
+
+cp.lanzante.entropy <- lanzante.test(family.entropy.by.year$entropy)
+change.year.entropy <- family.entropy.by.year[as.integer(cp.lanzante.entropy$estimate),]$year
+
+cp.lanzante.families <- lanzante.test(married.families.by.year$families)
+change.year.families <- married.families.by.year[as.integer(cp.lanzante.families$estimate),]$year
+
+married.families.before <- married.families.by.year[ married.families.by.year$year < change.year.families,]
+married.families.after <- married.families.by.year[ married.families.by.year$year >= change.year.families,]
