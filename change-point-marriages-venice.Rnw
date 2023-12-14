@@ -1,0 +1,79 @@
+\documentclass[histories,article,draft,pdftex,oneauthor]{mdpi}
+\usepackage{xcolor}
+% MDPI preface
+\firstpage{1}
+\makeatletter
+\setcounter{page}{\@firstpage}
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2023}
+\copyrightyear{2023}
+%\externaleditor{Academic Editor: Firstname Lastname}
+\datereceived{}
+%\daterevised{} % Only for the journal Acoustics
+\dateaccepted{}
+\datepublished{}
+%\datecorrected{} % Corrected papers include a "Corrected: XXX" date in the original paper.
+%\dateretracted{} % Corrected papers include a "Retracted: XXX" date in the original paper.
+\hreflink{https://doi.org/} % If needed use \linebreak
+%\doinum{}
+%------------------------------------------------------------------
+
+\Author{JJ Merelo $^{1}$}
+\AuthorNames{Juan-Julián Merelo-Guervós}
+\AuthorCitation{JJ Merelo}
+
+\address{$^{1}$ \quad Department of Computer Engineering, Automation and Robotics, University of Granada; jmerelo@ugr.es}
+\corres{Correspondence: jmerelo@ugr.es}
+
+\Title{Analyzing watershed events in the republic of Venice through statistical analysis of marriage time series}
+\TitleCitation{Change point analysis in the marriages of the Venetian nobility}
+
+\abstract{The Republic of Venice was one of the longest-lived states in}
+
+
+\begin{document}
+
+\section{Introduction}\label{introduction}
+
+Historical records reflect the day-to-day events of cities and states, but they also forcibly show whatever great trends affect the course of their history; a statistical analysis of the time series of these records can show us which watershed events occurred, and how they affected society \cite{blossfeld2014event}. An analysis of population, for instance, can show when a certain city of state reached its peak and try to relate it to certain specific event; an analysis of historical production of a certain raw material will show when it is reaching its peak but also when the introduction of technologies led to boosts in production.
+
+In this paper we are going to focus on the Republic of Venice.
+
+
+
+
+
+
+
+The rest of the paper is organized as follows. Next we will show the
+state of the art in studies of how doge election and related choices
+affected the stability of the Venetian republic. Then we will analyze
+these terms, and its evolution with time and check if there were some
+shifts in the tenure duration in the \protect\hyperlink{terms}{next
+section}. Finally, we will present our
+\protect\hyperlink{conclusions}{conclusions} and discuss its
+implications.
+
+\hypertarget{state-of-the-art}{%
+\section{State of the art}\label{state-of-the-art}}
+
+\hypertarget{conclusions}{%
+\section{Discussion and conclusions}\label{conclusions}}
+
+\dataavailability{
+This paper has been written using the literary programming system {\tt
+knitr}, and all analysis performed are embedded in its source code, which is
+\href{https://github.com/JJ/redes-venecia/blob/main/change-point-marriages-venice.Rnw}{available
+at GitHub} under a free license.
+}
+
+\funding{This paper has been supported in part by project and DemocratAI PID2020-115570GB-C22.}
+
+\section*{References}
+
+\bibliography{venice,history}
+
+\end{document}
