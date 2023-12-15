@@ -43,7 +43,7 @@ Historical records reflect the day-to-day events of cities and states, but they 
 
 We need to focus first in the history of specific states or nations, since otherwise it would be impossible to match statistically computed points of change to actual events. This polity has been repeatedly studied in computational humanities research papers, mainly due to the fact that it had for the bigger part of its history a centralized bureaucracy, with very extensive archives, and these archives have been conserved for its most part. This history starts in the late 7th century \cite{lane1973venice} and goes through many events that affected the history of the West: from the conquest of Constantinople in the 13th century, through the battle of Lepanto in 1571, to its eventual takeover ty the French state in 1797.
 
-More importantly from the point of view of this paper, its state was governed by a president of the republic, called {\em doge}, who was elected for life among outstanding citizens of the Republic; initially by  popular acclamation, then in the 12th century by a set of notable citizens \cite{maranini1927costituzione} to, after the so-called {\em Serrata} (or closure), representatives of a pre-established set of noble families \cite{serrata}. 
+More importantly from the point of view of this paper, its state was governed by a president of the republic, called {\em doge}, who was elected for life among outstanding citizens of the Republic; initially by  popular acclamation, then in the 12th century by a set of notable citizens \cite{maranini1927costituzione} to, after the so-called {\em Serrata} (or closure), representatives of a pre-established set of noble families \cite{serrata}. Marriages in the republic of Venice were arranged institutions \cite{cox1995single,cowan2016marriage}, where the bride's family had to pay a dowry to the groom \cite{10.2307/202860}; 
 
 
 
@@ -110,6 +110,6 @@ at GitHub} under a free license.
 
 \section*{References}
 
-\bibliography{venice,history}
+\bibliography{venice,history,marriage}
 
 \end{document}
