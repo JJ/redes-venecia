@@ -319,3 +319,6 @@ TSWLatexianTemp*
 
 # Other generated files
 *.html
+
+# Other whatever
+cache/
