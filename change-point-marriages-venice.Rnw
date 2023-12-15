@@ -29,8 +29,8 @@
 \address{$^{1}$ \quad Department of Computer Engineering, Automation and Robotics, University of Granada; jmerelo@ugr.es}
 \corres{Correspondence: jmerelo@ugr.es}
 
-\Title{Analyzing watershed events in the republic of Venice through statistical analysis of marriage time series}
-\TitleCitation{Change point analysis in the marriages of the Venetian nobility}
+\Title{Analyzing turning points in the history of the Republic of Venice through statistical analysis of marriage time series}
+\TitleCitation{Analyzing turning points in the history of the Republic of Venice}
 
 \abstract{The Republic of Venice was one of the longest-lived states in}
 
