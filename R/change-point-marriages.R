@@ -10,7 +10,8 @@ load("data/venice-marriages.Rda")
 marriages <- marriages.raw[ !is.na(marriages.raw$year),] # Eliminates those that are not noble
 marriages <- marriages[ marriages$year >= 1398,]
 marriages <- marriages[ marriages$year <= 1797,]
-marriages %>% group_by(year) %>% summarise(n = n()) -> marriages.by.year
+marriages %>% group_by(year) %>% summarise(n = n(),non.patrician.wife = sum( wife_familyname_std ==""), self.marriages = sum( wife_familyname_std == husband_familyname_std)) -> marriages.by.year
+
 
 ggplot(marriages.by.year, aes(x=year, y=n)) + geom_line() + theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle("Marriages by year")
 
@@ -22,6 +23,12 @@ change.year.2 <- marriages.by.year[as.integer(cp.estimate.2$estimate),]$year
 
 marriages.before <- marriages.by.year[ marriages.by.year$year < change.year,]
 marriages.after <- marriages.by.year[ marriages.by.year$year >= change.year,]
+
+cp.non.patrician <- lanzante.test(marriages.by.year$non.patrician.wife)
+change.year.non.patrician <- marriages.by.year[as.integer(cp.non.patrician$estimate),]$year
+
+np.marriages.before <- marriages.by.year[ marriages.by.year$year < change.year.non.patrician,]
+np.marriages.after <- marriages.by.year[ marriages.by.year$year >= change.year.non.patrician,]
 
 marriage.t <- tibble( date = as.Date(as.POSIXct(paste0(marriages.by.year$year, "-12-31"))), value = marriages.by.year$n)
 marriage.t <- marriage.t %>% tibbletime::as_tbl_time(index = date)
