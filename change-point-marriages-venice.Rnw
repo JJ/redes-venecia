@@ -1,4 +1,4 @@
-\documentclass[histories,article,draft,pdftex,oneauthor]{mdpi}
+\documentclass[histories,article,submit,pdftex,oneauthor]{mdpi}
 \usepackage{xcolor}
 \usepackage{graphicx}
 % MDPI preface
@@ -41,8 +41,9 @@
 
 Historical records reflect the day-to-day events of cities and states, but they also forcibly show whatever great trends affect the course of their history; a statistical analysis of the time series of these records can show us which watershed events occurred, and how they affected society \cite{blossfeld2014event}. An analysis of population, for instance, can show when a certain city of state reached its peak and try to relate it to certain specific event; an analysis of historical production of a certain raw material will show when it is reaching its peak but also when the introduction of technologies led to boosts in production.
 
-In this paper we are going to focus on the Republic of Venice.
+We need to focus first in the history of specific states or nations, since otherwise it would be impossible to match statistically computed points of change to actual events. This polity has been repeatedly studied in computational humanities research papers, mainly due to the fact that it had for the bigger part of its history a centralized bureaucracy, with very extensive archives, and these archives have been conserved for its most part. This history starts in the late 7th century \cite{lane1973venice} and goes through many events that affected the history of the West: from the conquest of Constantinople in the 13th century, through the battle of Lepanto in 1571, to its eventual takeover ty the French state in 1797.
 
+More importantly from the point of view of this paper, its state was governed by a president of the republic, called {\em doge}, who was elected for life among outstanding citizens of the Republic; initially by  popular acclamation, then in the 12th century by a set of notable citizens \cite{maranini1927costituzione} to, after the so-called {\em Serrata} (or closure), representatives of a pre-established set of noble families \cite{serrata}. 
 
 
 
@@ -66,7 +67,7 @@ implications.
 
 The dataset used was extracted from the Venetian Archivio dello Stato and released by Puga and Trefler for their paper \cite{colleganza}. Since marriages with a patrician man had to be registered at the Avvogaria dello Stato, it includes a very thorough registration of all marriages occurring since the late Middle Age up to a few decades after the fall of the Republic.
 
-<<setup,echo=FALSE,message=F>>=
+<<setup,echo=FALSE,message=F,fig.height=5, fig.pos="h!t">>=
 library(dplyr)
 library(trend)
 library(anomalize)
@@ -105,7 +106,7 @@ knitr}, and all analysis performed are embedded in its source code, which is
 at GitHub} under a free license.
 }
 
-\funding{This paper has been supported in part by project and DemocratAI PID2020-115570GB-C22.}
+\funding{This paper has been supported in part by project and DemocratAI PID2020-115570GB-C22. APC waiver has been provided by MDPI}
 
 \section*{References}
 
