@@ -47,20 +47,16 @@ More importantly from the point of view of this paper, its state was governed by
 
 
 In this paper, we will try and answer the following research questions:\begin{itemize}
-\item[RQ1] Is there a statistically significant change point in the Venetian matrimonial time series?
-\item[RQ2] Is there a statistically significant change of trend in the number of marriages?
-\item[RQ3] Can we match these change points to historical events?
-\item[Rq4] Can we validate these change points or change of trends with any other measure in the matrimonial time series?
+\item[{\bf RQ1}] Is there a statistically significant change point in the Venetian matrimonial time series?
+\item[{\bf RQ2}] Is there a statistically significant change of trend in the number of marriages?
+\item[{\bf RQ3}] Can we match these change points to historical events?
+\item[{\bf RQ4}] Can we validate these change points or change of trends with any other measure in the matrimonial time series?
 \end{itemize}
 
 
 
 The rest of the paper is organized as follows. Next we will show the
-state of the art in studies of how doge election and related choices
-affected the stability of the Venetian republic. Then we will analyze
-these terms, and its evolution with time and check if there were some
-shifts in the tenure duration in the \protect\hyperlink{terms}{next
-section}. Finally, we will present our
+state of the art applying change point analysis to historical data, as well as the literature on marital practices in the Republic of Venice. We will then present the dataset used in \protect\hyperlink{dataset}. We will perform change point and trend analysis on the time series, and try to answer the research questions. Finally, we will present our
 \protect\hyperlink{conclusions}{conclusions} and discuss its
 implications.
 
