@@ -62,6 +62,8 @@ implications.
 \hypertarget{state-of-the-art}{%
 \section{State of the art}\label{state-of-the-art}}
 
+Statistical techniques such as shift-point analysis have only recently been incorporated into the set of tools used in historical research. Recent papers, for instance, analyze how a natural event, Hurricane Harvey, created a shift in the number of crimes reported in the Houston area \cite{houston}. Change point analysis can detect underlying patterns; for instance \cite{YANG2021256} was able to find out that the reduction in mobility brought by the Covid pandemic occurred {\em before} any lockdown measures were taken
+
 \hypertarget{dataset}{%
 \section{Dataset used}\label{dataset}}
 
