@@ -90,7 +90,7 @@ This dataset has been filtered in two ways:\begin{itemize}
 
 The resulting time series has \Sexpr{length(marriages.by.year$n)} data points starting in \Sexpr{min(marriages.by.year$year)} and ending in \Sexpr{max(marriages.by.year$year)}. The total number of marriages is \Sexpr{sum(marriages.by.year$n)}. In some cases, the wife does not belong to that closed set of noble families, which is why the normalized noble family name for them is an empty string; the total number of such marriages \Sexpr{sum(marriages.by.year$non.patrician.wife)}. Additionally, there are \Sexpr{sum(marriages.by.year$self.marriages)} cases of intra-family marriages, where the wife and husband belonged to the same (extended) family. This time series is plotted in Figure \ref{fig:marriages}.
 
-<<marriages, echo=FALSE,message=F, fig.cap="Marriages in Venice from 1398 to 1797. The black line represents the total number of marriages; red line charts the marriages where the wife was not a patrician; finally, blue shows marriages within the same family.\\protect\\label{fig:marriages}">>=
+<<marriages, echo=FALSE,message=F, fig.height=5, fig.cap="Marriages in Venice from 1398 to 1797. The black line represents the total number of marriages; red line charts the marriages where the wife was not a patrician; finally, blue shows marriages within the same family.\\protect\\label{fig:marriages}">>=
 library(ggplot2)
 library(ggthemes)
 ggplot(marriages.by.year, aes(x=year, y=n)) + geom_line() + labs(x="Year", y="Number of marriages")+ geom_line(aes(y=non.patrician.wife), color="red") + geom_line(aes(y=self.marriages), color="blue") + theme_tufte()
