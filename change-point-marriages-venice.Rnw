@@ -67,7 +67,7 @@ Change point analysis has been extensively used in environmental, especially cli
 \hypertarget{dataset}{%
 \section{Dataset used}\label{dataset}}
 
-The dataset used was extracted from the Venetian Archivio dello Stato and released by Puga and Trefler for their paper \cite{colleganza}. Since marriages with a patrician man had to be registered at the Avvogaria dello Stato, it includes a very thorough registration of all marriages occurring since the late Middle Age up to a few decades after the fall of the Republic.
+The dataset used was extracted from the Venetian Archivio dello Stato and released by Puga and Trefler for their paper \cite{colleganza}. Since marriages with a patrician man had to be registered at the Avvogaria del Comun, the archive includes a very thorough registration of all marriages occurring since the late Middle Age up to a few decades after the fall of the Republic.
 
 <<setup,echo=FALSE,message=F,fig.height=5, fig.pos="h!t">>=
 library(dplyr)
