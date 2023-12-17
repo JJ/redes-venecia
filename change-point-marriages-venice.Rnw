@@ -97,6 +97,17 @@ library(ggthemes)
 ggplot(marriages.by.year, aes(x=year, y=n)) + geom_line() + labs(x="Year", y="Number of marriages")+ geom_line(aes(y=non.patrician.wife), color="red") + geom_line(aes(y=self.marriages), color="blue") + theme_tufte()
 @
 
+One way of validating these figures is cross-referencing them with figures published elsewhere. A limited number of years has been analyzed in \cite{cowan16:outside}, focusing on the presence of "outside" (i.e. non-patrician) wives. The data published in this book, Table 3.1, is plotted against our own data for the same period in Figure \ref{fig:cowan}.
+
+<<cowan, echo=FALSE,message=F, warning=F, fig.cap="Marriages in Venice from 1580 to 1595. The black line represents the total number of marriage contracts registered according to \\protect\\cite{cowan16:outsider}; red line corresponds to the number of marriages in \\protect\\cite{colleganza} for the same period.\\protect\\label{fig:cowan}">>=
+data.cowan <- read.csv("data/mmm-emv-table3.1.csv",sep=" ",header=TRUE)
+ggplot(data.cowan, aes(x=Year, y=Contracts)) + geom_line() + labs(x="Year", y="Number of marriages")+ geom_line(data=marriages.by.year, aes(x=year, y=n), color="red") + xlim(1580,1599)+ theme_tufte()
+@
+
+In general, the figures are in the same order of magnitude. The data used in this paper seems to have, also in general, more marriages than the data published in \cite{cowan16:outside}, and this might be mainly due to some marriages taking place in a different year than the contract; only in two occasions it is slightly higher (by one or two). Although it is not central to our paper, the amount of "outside" marriages is also similar in the same way, and at any rate in the same order of magnitude.
+
+From this comparison, we can conclude that our data is sufficiently good, and does not seem to have any major bias. The discrepancies detected should not be enough to invalidate the following analysis, at any rate. The data has been also validated by its use in several papers, the main of which is the one that published it \cite{colleganza}.
+
 \hypertarget{conclusions}{%
 \section{Discussion and conclusions}\label{conclusions}}
 
