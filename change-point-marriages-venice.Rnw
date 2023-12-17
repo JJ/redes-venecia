@@ -46,7 +46,12 @@ We need to focus first in the history of specific states or nations, since other
 More importantly from the point of view of this paper, its state was governed by a president of the republic, called {\em doge}, who was elected for life among outstanding citizens of the Republic; initially by  popular acclamation, then in the 12th century by a set of notable citizens \cite{maranini1927costituzione} to, after the so-called {\em Serrata} (or closure), representatives of a pre-established set of noble families \cite{serrata}. Marriages in the republic of Venice were arranged institutions \cite{cox1995single,cowan2016marriage}, where the bride's family had to pay a dowry to the groom \cite{10.2307/202860}; 
 
 
-
+In this paper, we will try and answer the following research questions:\begin{itemize}
+\item[RQ1] Is there a statistically significant change point in the Venetian matrimonial time series?
+\item[RQ2] Is there a statistically significant change of trend in the number of marriages?
+\item[RQ3] Can we match these change points to historical events?
+\item[Rq4] Can we validate these change points or change of trends with any other measure in the matrimonial time series?
+\end{itemize}
 
 
 
