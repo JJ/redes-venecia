@@ -43,8 +43,7 @@ Historical records reflect the day-to-day events of cities and states, but they 
 
 We need to focus first in the history of specific states or nations, since otherwise it would be impossible to match statistically computed points of change to actual events. This polity has been repeatedly studied in computational humanities research papers, mainly due to the fact that it had for the bigger part of its history a centralized bureaucracy, with very extensive archives, and these archives have been conserved for its most part. This history starts in the late 7th century \cite{lane1973venice} and goes through many events that affected the history of the West: from the conquest of Constantinople in the 13th century, through the battle of Lepanto in 1571, to its eventual takeover ty the French state in 1797.
 
-More importantly from the point of view of this paper, its state was governed by a president of the republic, called {\em doge}, who was elected for life among outstanding citizens of the Republic; initially by  popular acclamation, then in the 12th century by a set of notable citizens \cite{maranini1927costituzione} to, after the so-called {\em Serrata} (or closure), representatives of a pre-established set of noble families \cite{serrata}. Marriages in the republic of Venice were arranged institutions \cite{cox1995single,cowan2016marriage}, where the bride's family had to pay a dowry to the groom \cite{10.2307/202860}; 
-
+More importantly from the point of view of this paper, its state was governed by a president of the republic, called {\em doge}, who was elected for life among outstanding citizens of the Republic; initially by  popular acclamation, then in the 12th century by a set of notable citizens \cite{maranini1927costituzione} to, after the so-called {\em Serrata} (or closure), representatives of a pre-established set of noble families \cite{serrata}. Marriages in the republic of Venice were arranged institutions \cite{cox1995single,cowan2016marriage}, where the bride's family had to pay a dowry to the groom \cite{10.2307/202860}; noble families could only afford to marry off a single woman in their household, considering it rather an investment, one that could possibly pay off in the near or far future. So political, social and historical events would certainly have an effect in the social status and fortunes of all patrician families, as well as in their total amount: the nobility status conferred just a position, not guaranteed wealth. This is why examining shifts in the number of marriages (and other facts related to it) will give us insights on events of such an epochal importance as to change the whole social panorama of the Republic.
 
 In this paper, we will try and answer the following research questions:\begin{itemize}
 \item[{\bf RQ1}] Is there a statistically significant change point in the Venetian matrimonial time series?
@@ -53,7 +52,7 @@ In this paper, we will try and answer the following research questions:\begin{it
 \item[{\bf RQ4}] Can we validate these change points or change of trends with any other measure in the matrimonial time series?
 \end{itemize}
 
-
+And we will do so through the analysis of temporal series related to marriages in the Republic of Venice using robust statistical techniques such as change-point analysis and trend analysis. 
 
 The rest of the paper is organized as follows. Next we will show the
 state of the art applying change point analysis to historical data, as well as the literature on marital practices in the Republic of Venice. We will then present the dataset used in \protect\hyperlink{dataset}. We will perform change point and trend analysis on the time series, and try to answer the research questions. Finally, we will present our
@@ -104,7 +103,7 @@ data.cowan <- read.csv("data/mmm-emv-table3.1.csv",sep=" ",header=TRUE)
 ggplot(data.cowan, aes(x=Year, y=Contracts)) + geom_line() + labs(x="Year", y="Number of marriages")+ geom_line(data=marriages.by.year, aes(x=year, y=n), color="red") + xlim(1580,1599)+ theme_tufte()
 @
 
-In general, the figures are in the same order of magnitude. The data used in this paper seems to have, also in general, more marriages than the data published in \cite{cowan16:outside}, and this might be mainly due to some marriages taking place in a different year than the contract; only in two occasions it is slightly higher (by one or two). Although it is not central to our paper, the amount of "outside" marriages is also similar in the same way, and at any rate in the same order of magnitude.
+In general, the figures are in the same order of magnitude. The data used in this paper seems to have, also in general, more marriages than the data published in \cite{cowan16:outside}, and this might be mainly due to some marriages taking place in a different year than the contract; only in two occasions it is slightly higher (by one or two); given that the original data is nominal, with names of bride and groom, it is consistent that there are more in this dataset that in the paper quoted. Although it is not central to our paper, the amount of "outside" marriages is also similar in the same way, and at any rate in the same order of magnitude.
 
 From this comparison, we can conclude that our data is sufficiently good, and does not seem to have any major bias. The discrepancies detected should not be enough to invalidate the following analysis, at any rate. The data has been also validated by its use in several papers, the main of which is the one that published it \cite{colleganza}.
 
