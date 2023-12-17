@@ -100,7 +100,7 @@ ggplot(marriages.by.year, aes(x=year, y=n)) + geom_line() + labs(x="Year", y="Nu
 
 One way of validating these figures is cross-referencing them with figures published elsewhere. A limited number of years has been analyzed in \cite{cowan16:outside}, focusing on the presence of "outside" (i.e. non-patrician) wives. The data published in this book, Table 3.1, is plotted against our own data for the same period in Figure \ref{fig:cowan}.
 
-<<cowan, echo=FALSE,message=F, warning=F, fig.cap="Marriages in Venice from 1580 to 1595. The black line represents the total number of marriage contracts registered according to \\protect\\cite{cowan16:outsider}; red line corresponds to the number of marriages in \\protect\\cite{colleganza} for the same period.\\protect\\label{fig:cowan}">>=
+<<cowan, echo=FALSE,message=F, warning=F, fig.height=5, fig.cap="Marriages in Venice from 1580 to 1595. The black line represents the total number of marriage contracts registered according to \\protect\\cite{cowan16:outsider}; red line corresponds to the number of marriages in \\protect\\cite{colleganza} for the same period.\\protect\\label{fig:cowan}">>=
 data.cowan <- read.csv("data/mmm-emv-table3.1.csv",sep=" ",header=TRUE)
 ggplot(data.cowan, aes(x=Year, y=Contracts)) + geom_line() + labs(x="Year", y="Number of marriages")+ geom_line(data=marriages.by.year, aes(x=year, y=n), color="red") + xlim(1580,1599)+ theme_tufte()
 @
