@@ -72,8 +72,6 @@ The dataset used was extracted from the Venetian Archivio dello Stato and releas
 <<setup,echo=FALSE,message=F,fig.height=5, fig.pos="h!t">>=
 library(dplyr)
 library(trend)
-library(anomalize)
-library(tibble)
 library(DescTools)
 
 load("data/venice-marriages.Rda")
@@ -108,6 +106,43 @@ ggplot(data.cowan, aes(x=Year, y=Contracts)) + geom_line() + labs(x="Year", y="N
 In general, the figures are in the same order of magnitude. The data used in this paper seems to have, also in general, more marriages than the data published in \cite{cowan16:outside}, and this might be mainly due to some marriages taking place in a different year than the contract; only in two occasions it is slightly higher (by one or two); given that the original data is nominal, with names of bride and groom, it is consistent that there are more in this dataset that in the paper quoted. Although it is not central to our paper, the amount of "outside" marriages is also similar in the same way, and at any rate in the same order of magnitude.
 
 From this comparison, we can conclude that our data is sufficiently good, and does not seem to have any major bias. The discrepancies detected should not be enough to invalidate the following analysis, at any rate. The data has been also validated by its use in several papers, the main of which is the one that published it \cite{colleganza}.
+
+\hypertarget{peak}{%
+\section{Peak marriages in the Republic of Venice}\label{peak}}
+
+We will first try to find long-term trends, as well as local periodicities or anomalies in the previously explained time series using the R package \texttt{anomalize}. In the default configuration, it uses the STL method \cite{cleveland1990stl} for seasonal trend decomposition. We will also apply a method for anomaly detection, in order to check either the existence of anomalous events, or anomalous registration of events.
+
+<<anomalize, echo=FALSE,message=F, warning=F, fig.cap="Time series decomposition via the {\\protect\\tt anomalize} package; the default output of the function plotting the anomaly decomposition, which plots the original series along with its periodicity decomposition, and the underlying trend.">>=
+library(anomalize)
+library(tibble)
+marriage.t <- tibble( date = as.Date(as.POSIXct(paste0(marriages.by.year$year, "-12-31"))), value = marriages.by.year$n)
+marriage.t <- marriage.t %>% tibbletime::as_tbl_time(index = date)
+
+# marriage.t %>% time_decompose(value) -> marriage.decomposed
+marriage.t %>% time_decompose(value) %>% anomalize(remainder) %>% time_recompose() -> marriage.decomposed.stl
+plot_anomaly_decomposition(marriage.decomposed.stl)
+# marriage.decomposed %>% plot_anomalies(time_recomposed = TRUE, ncol = 3, alpha_dots = 0.5) + theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle("Marriages by year")
+@
+
+Figure \ref{fig:marriages:decomp:stl} shows the analysis of the time series using the default method, which is STL as indicated above, plotted using the {\tt plot\_anomaly\_decomposition} function. From top to bottom, it shows the original series, the seasonal component, which follows a period of five years, with three years above trend and two years below trend; the trend component with a peak around mid-16th century, and the remainder, which is the original series minus the sum of the previous two components. Any anomaly using this method would be shown as a circled red dot; in this case, there are no anomalies detected. The trend smoothing, which is computed automatically by this method, is 30 years.
+
+The trend peaks in 1552, with a value of \Sexpr{max(marriage.decomposed.stl$trend)} marriages. We show this trend chart by itself in Figure \ref{fig:marriages.trend}.
+%
+<<marriages.trend, echo=FALSE,message=F, fig.height=5, warning=F, fig.cap="Trend of marriages in Venice from 1398 to 1797.">>=
+ggplot(marriage.decomposed.stl, aes(x=date, y=trend)) + geom_line() + labs(x="Year", y="Number of marriages")+ theme_tufte()
+@
+%
+The trend is seen to rise sharply from the beginning of the 16th century, reaching the indicated peak, with another peaklet a decade later; from then on, the decrease is quite clear, with only a very small peaklet, which is indeed lower than even the initial value of the series, towards the late years of the Republic.
+
+Using this analysis, let us try to answer research question 2: is there a statistically significant change of trend in the number of marriages? There clearly is one by the mid-16th century. To validate this, we will use a different trend analysis method, this one generically called "Twitter" \cite{twitter}, which uses a different statistical method to estimate trend based on the median. Using the same function as before, this is shown in Figure \ref{fig:marriage.trend.twitter}
+%
+<<marriage.trend.twitter, echo=FALSE,message=F, warning=F, fig.cap="Trend of marriages in Venice from 1398 to 1797, using the Twitter method.">>=
+marriage.t %>% time_decompose(value,method="twitter") %>% anomalize(remainder) %>% time_recompose() -> marriage.decomposed.twitter
+plot_anomaly_decomposition(marriage.decomposed.twitter)
+@
+%
+In this case, the maximum is \Sexpr{max(marriage.decomposed.twitter$trend)}, clearly similar to the previous one; as a matter of fact, the year where the previous analysis found the trend peak, 1552, is the next-to-last year of the period with the highest trend value in this analysis, which goes from 1523 to 1553. The trend smoothing period is in this case 31 years, as opposed to the 30 years of the previous method, but the seasonality is again 5 years with the same patterns as before. This method, however, does show a single anomaly in the year 1562, which is the actual peak value of the time series, with 84 marriages. In neither analysis this is the actual peak, although in the previous one it would part of the seasonality component, whereas in this case it would be slightly beyond it. Both analysis, however, coincide in the existence of a peak in the mid-16th century, thus answering positively to research question RQ2.
+
 
 \hypertarget{conclusions}{%
 \section{Discussion and conclusions}\label{conclusions}}
