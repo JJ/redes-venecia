@@ -163,6 +163,7 @@ Change point detection, however, is a technique that works with long-term econom
 \hypertarget{change-point-detection}{%
 \section{Detecting change points in matrimonial time series}\label{change-point-detection}}
 
+In general, change point analysis will detect epochal changes in time series, based on different aspects of it. What we will be looking in this paper are changes in averages. A change point will occur when the differences between averages before and after the change point are maximized \cite{burg2022evaluation}. Several different algorithms can be used for this, with Lanzante's \cite{lanzante} and Pettitt's \cite{pettitt} being two of the most popular. All of them are included in the package {\tt trend} \cite{trend}, which we will be using in this paper.
 
 \hypertarget{conclusions}{%
 \section{Discussion and conclusions}\label{conclusions}}
@@ -178,6 +179,6 @@ at GitHub} under a free license.
 
 \section*{References}
 
-\bibliography{venice,history,marriage}
+\bibliography{venice,history,marriage,doges}
 
 \end{document}
