@@ -78,9 +78,6 @@ The dataset used was extracted from the Venetian Archivio dello Stato and releas
 
 <<setup,echo=FALSE,message=F,fig.height=5, fig.pos="h!t">>=
 library(dplyr)
-library(trend)
-library(DescTools)
-
 load("data/venice-marriages.Rda")
 
 marriages <- marriages.raw[ !is.na(marriages.raw$year),]
@@ -164,6 +161,28 @@ Change point detection, however, is a technique that works with long-term econom
 \section{Detecting change points in matrimonial time series}\label{change-point-detection}}
 
 In general, change point analysis will detect epochal changes in time series, based on different aspects of it. What we will be looking in this paper are changes in averages. A change point will occur when the differences between averages before and after the change point are maximized \cite{burg2022evaluation}. Several different algorithms can be used for this, with Lanzante's \cite{lanzante} and Pettitt's \cite{pettitt} being two of the most popular. All of them are included in the package {\tt trend} \cite{trend}, which we will be using in this paper.
+
+<<change.point:number, echo=F>>=
+library(trend)
+
+cp.estimate <- lanzante.test(marriages.by.year$n)
+change.year <- marriages.by.year[as.integer(cp.estimate$estimate),]$year
+
+cp.estimate.2 <- pettitt.test(marriages.by.year$n)
+change.year.2 <- marriages.by.year[as.integer(cp.estimate.2$estimate),]$year
+
+cp.estimate.3 <- snh.test(marriages.by.year$n)
+change.year.3 <- marriages.by.year[as.integer(cp.estimate.3$estimate),]$year
+
+marriages.before <- marriages.by.year[ marriages.by.year$year < change.year,]
+marriages.after <- marriages.by.year[ marriages.by.year$year >= change.year,]
+@
+
+We have thus used Lanzante's test to find a single change point in the sequence with the yearly number of marriages, and found that point to be at \Sexpr{change.year}. We can also use Pettitt's test, which finds a change point at \Sexpr{change.year.2}, thus validating the previous one. IN both cases the p-value is very small, indicating that the change point found is statistically significant. The average number of marriages before the change point is \Sexpr{mean(marriages.before$n)}; after the change point is \Sexpr{mean(marriages.after$n)}; after the change point there are, on average, 15 marriages less per year, indicating a significant change in the trend. This, again, answers positively research question 1. Research question 4 is also answered positively, since we are validating the change point by two different measures.
+
+<<change.point:entropy, echo=F>>=
+library(DescTools)
+@
 
 \hypertarget{conclusions}{%
 \section{Discussion and conclusions}\label{conclusions}}
