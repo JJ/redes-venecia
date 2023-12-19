@@ -180,16 +180,28 @@ marriages.after <- marriages.by.year[ marriages.by.year$year >= change.year,]
 
 We have thus used Lanzante's test to find a single change point in the sequence with the yearly number of marriages, and found that point to be at \Sexpr{change.year}. We can also use Pettitt's test, which finds a change point at \Sexpr{change.year.2}, thus validating the previous one. IN both cases the p-value is very small, indicating that the change point found is statistically significant. The average number of marriages before the change point is \Sexpr{mean(marriages.before$n)}; after the change point is \Sexpr{mean(marriages.after$n)}; after the change point there are, on average, 15 marriages less per year, indicating a significant change in the trend. This, again, answers positively research question 1. Research question 4 is also answered positively, since we are validating the change point by two different measures.
 
-<<change.point:entropy, echo=F, fig.cap="Family frequency entropy plotted for the matrimonial time series; the green line indicates the change point found previously">>=
+<<change.point:entropy, echo=F, fig.pos="h!t", fig.height=5, fig.cap="Family frequency entropy plotted for the matrimonial time series; the green line indicates the change point found previously">>=
 library(DescTools)
 marriages %>% group_by(year) %>% summarise( families = length(unique( c(unique(husband_familyname_std,unique(wife_familyname_std)) ) ) )) -> married.families.by.year
 
-marriages %>% group_by(year) %>% summarise( entropy = Entropy(table(c(husband_familyname_std,wife_familyname_std))) ) -> family.entropy.by.year
+marriages %>% group_by(year) %>% summarise( entropy = Entropy(table(c(husband_familyname_std,wife_familyname_std)))/log2(length(c(husband_familyname_std,wife_familyname_std))) ) -> family.entropy.by.year
 
 ggplot(family.entropy.by.year, aes(x=year, y=entropy)) + geom_line() + geom_point() + geom_vline(xintercept=change.year, color="red") + geom_vline(xintercept=change.year.2, color="blue") + geom_vline(xintercept=change.year.3, color="green") + labs(title="Entropy of families in marriages by year", x="Year", y="Entropy") + theme_bw()
 @
 
-It would be interesting to look at the data set from another point of view: the entropy of the sequence of marriages. We will be computing entropy over the frequencies of families appearing as bride or grooms in a specific year. Entropy is a measure of the amount of information, or surprise, in a group of data. If a single family appears, then the set is totally ordered and predictable, and that would yield the lowest entropy; many different families appearing only once would have the highest entropy; anything in between (less families appearing only once, more families with a random amount of appearances) will have any value in between. 
+It would be interesting to look at the data set from another point of view: the entropy of the sequence of marriages. We will be computing entropy over the frequencies of families appearing as bride or grooms in a specific year. Entropy is a measure of the amount of information, or surprise, in a group of data. If a single family appears, then the set is totally ordered and predictable, and that would yield the lowest entropy; many different families appearing only once would have the highest entropy; anything in between (less families appearing only once, more families with a random amount of appearances) will have any value in between. Since entropy will be influenced by the number of different marriages in a year, we will normalize this entropy, dividing by $log N$, where $N$ is 2 times the number of marriages in a year, that is, the number of persons appearing in marriages in a year. Normalized entropy will go from 0 to 1, in this case. This normalized entropy is charted in Figure \ref{fig:change.point:entropy}, with the already computed change point marked as a vertical line.
+
+We will try and answer RQ4 by measuring the change point in this specific series.%
+%
+<<change.point:entropy2, echo=F>>=
+cp.lanzante.entropy <- lanzante.test(family.entropy.by.year$entropy)
+change.year.entropy <- family.entropy.by.year[as.integer(cp.lanzante.entropy$estimate),]$year
+entropy.before <- family.entropy.by.year[ family.entropy.by.year$year < change.year.entropy,]
+entropy.after <- family.entropy.by.year[ family.entropy.by.year$year >= change.year.entropy,]
+@
+%
+We will be using only Lanzante's test, since the rest have yielded the same value before; this tests finds a change point at \Sexpr{change.year.entropy}, \Sexpr{change.year - change.year.entropy} years before the previous one computed. The average value of entropy before the change point is \Sexpr{mean(entropy.before$entropy)}; after the change point is \Sexpr{mean(entropy.after$entropy)}.
+This would answer the question with a qualified yes; they are close enough to be caused by the same event, or at least to have a cause-effect relationship, namely, changes in average entropy (in the {\em surprise}) of marriages will cause an eventual decrease in their number.
 
 \hypertarget{conclusions}{%
 \section{Discussion and conclusions}\label{conclusions}}
