@@ -219,6 +219,31 @@ We will work with the {\em percentage} of marriages that included a non-patricia
 
 Since we are looking at several variables at the same time, we should try and use a multivariate analysis of the change point. For that purpose, we are going to use the {\tt ecp} package \cite{ecp-package}, which includes several algorithms for non-parametric multiple change point analysis \cite{ecp-article}. As a bonus, its included algorithms are able to detect multiple change points in a time series.
 
+<<change.point:ecp, echo=F, message=F, cache=TRUE>>=
+library(ecp)
+
+z.marriages <- matrix(c(marriages.by.year$n, marriages.by.year$percent.non.patrician, family.entropy.by.year$entropy), ncol = 3)
+multiple.cp <- e.divisive(z.marriages)
+
+change.point.years <- c()
+for (i in 3:length(multiple.cp$order.found)) {
+  change.point.years <- c(change.point.years, marriages.by.year[multiple.cp$order.found[i],]$year-1)
+}
+@
+
+We are going to use the procedure {\tt e.divisive}. which implements a hierarchical divisive estimation procedure \cite{ecp-article}; it essentially applies iteratively a procedure to locate change points in the whole series, and the fragments created by the change point. 
+This procedure results in a total of \Sexpr{length(change.point.years)-2} change points, which are located at \Sexpr{paste(change.point.years, collapse=", ")}, sorted by importance. This multivariate analysis confirms the year \Sexpr{change.point.years[1]} as the year where the main change point takes place, but also finds a series of significant change points: \Sexpr{paste(change.point.years[2:length(change.point.years)], collapse=", ")}, which are interesting by and of themselves. We plot the whole series and change points in Figure \ref{fig:change.point.final}.
+
+<<change.point:final, echo=F, fig.cap="Change points in the time series of marriages in Venice", fig.align="center", fig.pos="htbp">>=
+marriages.by.year$entropy <- family.entropy.by.year$entropy
+chart <- ggplot(marriages.by.year, aes(x=year, y=n)) + geom_line() + theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle("Marriages by year") + geom_point(aes(color=entropy, size=percent.non.patrician))+scale_color_gradientn(colors=c("black","blue","green","gray","red","gold"))
+
+for (i in 1:length(change.point.years)) {
+  chart <- chart + geom_vline(xintercept=change.point.years[i], linetype="dashed", color="red", size=length(change.point.years)-i)
+}
+chart
+@
+
 \hypertarget{conclusions}{%
 \section{Discussion and conclusions}\label{conclusions}}
 
