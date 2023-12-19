@@ -50,14 +50,24 @@ marriage.decomposed %>% plot_anomalies(time_recomposed = TRUE, ncol = 3, alpha_d
 
 marriages %>% group_by(year) %>% summarise( families = length(unique( c(unique(husband_familyname_std,unique(wife_familyname_std)) ) ) )) -> married.families.by.year
 
-marriages %>% group_by(year) %>% summarise( entropy = Entropy(table(c(husband_familyname_std,wife_familyname_std))) ) -> family.entropy.by.year
+marriages %>% group_by(year) %>% summarise( entropy = Entropy(table(c(husband_familyname_std,wife_familyname_std)))/log2(length(c(husband_familyname_std,wife_familyname_std))) ) -> family.entropy.by.year
+
+cp.norm.entropy <- lanzante.test(family.entropy.by.year$entropy)
+change.year.norm.entropy <- family.entropy.by.year[as.integer(cp.norm.entropy$estimate),]$year
+
+ggplot(family.entropy.by.year, aes(x=year, y=entropy)) + geom_line() + theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle("Entropy by year")
 
 marriage.data.by.year <- merge(married.families.by.year,marriages.by.year, by="year")
 marriage.data.by.year <- merge(marriage.data.by.year,family.entropy.by.year, by="year")
 
 z.marriages <- matrix(c(marriage.data.by.year$n, marriage.data.by.year$non.patrician.wife, marriage.data.by.year$entropy), ncol = 3)
 library(ecp)
-multiple.cp <- e.divisive(z.marriages,K=3)
+multiple.cp <- e.divisive(z.marriages)
+
+# print the years of the change points contained in multiple.cp$ordered
+for (i in 1:length(multiple.cp$order.found)) {
+  print(marriage.data.by.year[multiple.cp$order.found[i],]$year)
+}
 
 # draw entropy as point color using a color and families as point size
 ggplot(marriage.data.by.year, aes(x=year, y=n)) + geom_line() + theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle("Marriages by year") + geom_point(aes(color=entropy, size=families))+scale_color_gradientn(colors=c("black","blue","green","gray","red","gold"))

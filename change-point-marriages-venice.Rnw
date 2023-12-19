@@ -109,7 +109,7 @@ ggplot(data.cowan, aes(x=Year, y=Contracts)) + geom_line() + labs(x="Year", y="N
 
 In general, the figures are in the same order of magnitude. The data used in this paper seems to have, also in general, more marriages than the data published in \cite{cowan16:outside}, and this might be mainly due to some marriages taking place in a different year than the contract; only in two occasions it is slightly higher (by one or two); given that the original data is nominal, with names of bride and groom, it is consistent that there are more in this dataset that in the paper quoted. Although it is not central to our paper, the amount of "outside" marriages is also similar in the same way, and at any rate in the same order of magnitude.  The discrepancies detected should not be enough to invalidate the following analysis, at any rate. The data has been also validated by its use in several papers, the main of which is the one that published it \cite{colleganza}.
 
-From this comparison, we can conclude that our data is sufficiently good, and does not seem to have any major bias; as a matter of fact, it is one of the datasets with the longest timespan and with the best documented sources, allowing us to have unique insights into the working of a late Medieval-early Modern society.
+From this comparison, we can conclude that our data is sufficiently good, and does not seem to have any major bias; as a matter of fact, it is one of the datasets with the longest time span and with the best documented sources, allowing us to have unique insights into the working of a late Medieval-early Modern society.
 
 \hypertarget{peak}{%
 \section{Peak marriages in the Republic of Venice}\label{peak}}
@@ -180,9 +180,16 @@ marriages.after <- marriages.by.year[ marriages.by.year$year >= change.year,]
 
 We have thus used Lanzante's test to find a single change point in the sequence with the yearly number of marriages, and found that point to be at \Sexpr{change.year}. We can also use Pettitt's test, which finds a change point at \Sexpr{change.year.2}, thus validating the previous one. IN both cases the p-value is very small, indicating that the change point found is statistically significant. The average number of marriages before the change point is \Sexpr{mean(marriages.before$n)}; after the change point is \Sexpr{mean(marriages.after$n)}; after the change point there are, on average, 15 marriages less per year, indicating a significant change in the trend. This, again, answers positively research question 1. Research question 4 is also answered positively, since we are validating the change point by two different measures.
 
-<<change.point:entropy, echo=F>>=
+<<change.point:entropy, echo=F, fig.cap="Family frequency entropy plotted for the matrimonial time series; the green line indicates the change point found previously">>=
 library(DescTools)
+marriages %>% group_by(year) %>% summarise( families = length(unique( c(unique(husband_familyname_std,unique(wife_familyname_std)) ) ) )) -> married.families.by.year
+
+marriages %>% group_by(year) %>% summarise( entropy = Entropy(table(c(husband_familyname_std,wife_familyname_std))) ) -> family.entropy.by.year
+
+ggplot(family.entropy.by.year, aes(x=year, y=entropy)) + geom_line() + geom_point() + geom_vline(xintercept=change.year, color="red") + geom_vline(xintercept=change.year.2, color="blue") + geom_vline(xintercept=change.year.3, color="green") + labs(title="Entropy of families in marriages by year", x="Year", y="Entropy") + theme_bw()
 @
+
+It would be interesting to look at the data set from another point of view: the entropy of the sequence of marriages. We will be computing entropy over the frequencies of families appearing as bride or grooms in a specific year. Entropy is a measure of the amount of information, or surprise, in a group of data. If a single family appears, then the set is totally ordered and predictable, and that would yield the lowest entropy; many different families appearing only once would have the highest entropy; anything in between (less families appearing only once, more families with a random amount of appearances) will have any value in between. 
 
 \hypertarget{conclusions}{%
 \section{Discussion and conclusions}\label{conclusions}}
