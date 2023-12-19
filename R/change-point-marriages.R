@@ -69,8 +69,7 @@ for (i in 1:length(multiple.cp$order.found)) {
   print(marriage.data.by.year[multiple.cp$order.found[i],]$year)
 }
 
-# draw entropy as point color using a color and families as point size
-ggplot(marriage.data.by.year, aes(x=year, y=n)) + geom_line() + theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle("Marriages by year") + geom_point(aes(color=entropy, size=families))+scale_color_gradientn(colors=c("black","blue","green","gray","red","gold"))
+ggplot(marriage.data.by.year, aes(x=year, y=n)) + geom_line() + theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle("Marriages by year") + geom_point(aes(color=entropy, size=non.patrician.wife))+scale_color_gradientn(colors=c("black","blue","green","gray","red","gold"))
 
 
 cp.lanzante.entropy <- lanzante.test(family.entropy.by.year$entropy)
