@@ -203,6 +203,20 @@ entropy.after <- family.entropy.by.year[ family.entropy.by.year$year >= change.y
 We will be using only Lanzante's test, since the rest have yielded the same value before; this tests finds a change point at \Sexpr{change.year.entropy}, \Sexpr{change.year - change.year.entropy} years before the previous one computed. The average value of entropy before the change point is \Sexpr{mean(entropy.before$entropy)}; after the change point is \Sexpr{mean(entropy.after$entropy)}.
 This would answer the question with a qualified yes; they are close enough to be caused by the same event, or at least to have a cause-effect relationship, namely, changes in average entropy (in the {\em surprise}) of marriages will cause an eventual decrease in their number.
 
+At any rate, entropy is a quantitative measurement, but it cannot be a cause of the change in regime. One quantity that is included in the data set is the number of marriages with non-patrician wives; after the so-called {\em third Serrata}, women had to undergo public examination by the Senate, so it might be an important source of entropy in the data set.
+%
+<<change.point:non.patrician, echo=F>>=
+marriages.by.year$percent.non.patrician <- marriages.by.year$non.patrician.wife/marriages.by.year$n
+cp.non.patrician.pc <- lanzante.test(marriages.by.year$percent.non.patrician)
+change.year.non.patrician.pc <- marriages.by.year[as.integer(cp.non.patrician.pc$estimate),]$year
+
+np.pc.marriages.before <- marriages.by.year[ marriages.by.year$year < change.year.non.patrician.pc,]
+np.pc.marriages.after <- marriages.by.year[ marriages.by.year$year >= change.year.non.patrician.pc,]
+
+@
+%
+We will work with the {\em percentage} of marriages that included a non-patrician wife, instead of the absolute number, which will give us a more precise estimation of its impact in the time series. In this case, the change point is detected at \Sexpr{change.year.non.patrician.pc}. The average percentage of marriages with non-patrician wives before the change point is \Sexpr{round(mean(np.pc.marriages.before$percent.non.patrician)*100,2)}\%; after the change point is \Sexpr{round(mean(np.pc.marriages.after$percent.non.patrician)*100,2)}\%. Again, this change point occurs \Sexpr{change.year.entropy - change.year.non.patrician.pc} years before the previous one; again, it is statistically significant, and as a matter of fact, it indicates a year where the number of marriages with non-patrician wifes doubled with respect to the previous value
+
 \hypertarget{conclusions}{%
 \section{Discussion and conclusions}\label{conclusions}}
 
