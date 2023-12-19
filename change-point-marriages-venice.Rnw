@@ -128,7 +128,7 @@ plot_anomaly_decomposition(marriage.decomposed.stl)
 # marriage.decomposed %>% plot_anomalies(time_recomposed = TRUE, ncol = 3, alpha_dots = 0.5) + theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle("Marriages by year")
 @
 
-Figure \ref{fig:marriages:decomp:stl} shows the analysis of the time series using the default method, which is STL as indicated above, plotted using the {\tt plot\_anomaly\_decomposition} function. From top to bottom, it shows the original series, the seasonal component, which follows a period of five years, with three years above trend and two years below trend; the trend component with a peak around mid-16th century, and the remainder, which is the original series minus the sum of the previous two components. Any anomaly using this method would be shown as a circled red dot; in this case, there are no anomalies detected. The trend smoothing, which is computed automatically by this method, is 30 years.
+Figure \ref{fig:anomalize} shows the analysis of the time series using the default method, which is STL as indicated above, plotted using the {\tt plot\_anomaly\_decomposition} function. From top to bottom, it shows the original series, the seasonal component, which follows a period of five years, with three years above trend and two years below trend; the trend component with a peak around mid-16th century, and the remainder, which is the original series minus the sum of the previous two components. Any anomaly using this method would be shown as a circled red dot; in this case, there are no anomalies detected. The trend smoothing, which is computed automatically by this method, is 30 years.
 
 The trend peaks in 1552, with a value of \Sexpr{max(marriage.decomposed.stl$trend)} marriages. We show this trend chart by itself in Figure \ref{fig:marriages.trend}.
 %
@@ -160,7 +160,7 @@ Change point detection, however, is a technique that works with long-term econom
 \hypertarget{change-point-detection}{%
 \section{Detecting change points in matrimonial time series}\label{change-point-detection}}
 
-In general, change point analysis will detect epochal changes in time series, based on different aspects of it. What we will be looking in this paper are changes in averages. A change point will occur when the differences between averages before and after the change point are maximized \cite{burg2022evaluation}. Several different algorithms can be used for this, with Lanzante's \cite{lanzante} and Pettitt's \cite{pettitt} being two of the most popular. All of them are included in the package {\tt trend} \cite{trend}, which we will be using in this paper.
+In general, change point analysis will detect epochal changes in time series, based on different aspects of it. What we will be looking in this paper are changes in averages. A change point will occur when the differences between averages before and after the change point are maximized \cite{burg2022evaluation}. Several different algorithms can be used for this, with \cite{lanzante} and \cite{pettitt1979non} being two of the most popular. All of them are included in the package {\tt trend} \cite{trend}, which we will be using in this paper.
 
 <<change.point:number, echo=F>>=
 library(trend)
