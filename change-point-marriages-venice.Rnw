@@ -237,7 +237,7 @@ We are going to use the procedure {\tt e.divisive}. which implements a hierarchi
 This procedure results in a total of \Sexpr{length(change.point.years)-2} change points, which are located at \Sexpr{paste(change.point.years, collapse=", ")}, sorted by importance. This multivariate analysis confirms the year \Sexpr{change.point.years[1]} as the year where the main change point takes place, but also finds a series of significant change points: \Sexpr{paste(change.point.years[2:length(change.point.years)], collapse=", ")}, which are interesting by and of themselves. We plot the whole series and change points in Figure \ref{fig:change.point:final}.
 
 \begin{landscape}
-<<change.point:final, echo=F, fig.width=18, fig.cap="Change points in the time series of marriages in Venice">>=
+<<change.point:final, echo=F, fig.width=18, fig.cap="Synthetic visualization of the matrimonial time series. Years are represented in the $x$ axis, while number of marriages holds the $y$ axis. The percent of marriags with non-patrician brides (percent.non.patrician) is represented as dot size; the yearly entropy is represented with a color scale. Besides, change points found by hierarchical divisive estimation are represented as vertical lines labeled with the year, with line-width and color related to their order in the hierarchy.">>=
 marriages.by.year$entropy <- family.entropy.by.year$entropy
 chart <- ggplot(marriages.by.year, aes(x=year, y=n)) + geom_line() + theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle("Marriages by year") + geom_point(aes(color=entropy, size=percent.non.patrician))+scale_color_gradientn(colors=c("black","blue","green","gray","red","gold"))
 
@@ -248,6 +248,12 @@ for (i in 1:number.of.points) {
 chart
 @
 \end{landscape}
+
+This visualization of the results enables appreciation of differences before and after the main change point, and between them. We can see, for instance, how the number of marriages essentially decreases after the change point, while before there were more ups and downs. There is bigger abundance of "big dots", representing a high percentage of non-patrician marriages, after the change point, and the color of those dots tends toward "warmer" colors such as red and orange, over all in the years with less marriages; years with more marriages tend towards green (entropy around 0.85), while before they were darker; years with many marriages tended to have, paradoxically enough, lower entropy.
+
+Let us not forget, however, the four research questions. We can answer positively RQ1: there is a statistically significant change point in the time series, and it is placed in \Sexpr{change.point.years[1]}, according to multivariate change point tests as well as univariate change point tests applied to the series of number of marriages; the other two series analyzed yield change points that are also statiscally significant, and close to it; if we want to declare a "confidence interval" we can say that there is a change period, rather than a point, between \Sexpr{change.year.non.patrician.pc} and \Sexpr{change.point.years[1]}. This change point shows clear changes of trends in the number of marriages, its entropy and the percentage of non-patrician marriages, answering RQ2, as we have already shown. The measures have been cross-validated using different measures for a single variable, and also using multivariate analysis, answering RQ4.
+
+We need to answer RQ3: can this change point be matched with some historical event? 
 
 \hypertarget{conclusions}{%
 \section{Discussion and conclusions}\label{conclusions}}
