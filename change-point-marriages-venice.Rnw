@@ -80,7 +80,7 @@ In the rest of the paper, we will try to apply statistical techniques to the ana
 
 The dataset used was extracted from the Venetian Archivio dello Stato and released by Puga and Trefler for their paper \cite{colleganza}. Since marriages with a patrician man had to be registered at the Avogadori di Comun, the archive includes a very thorough registration of all marriages occurring since the late Middle Age up to a few decades after the fall of the Republic.
 
-<<setup,echo=FALSE,message=F,fig.height=5, fig.pos="h!t">>=
+<<histories2.setup,echo=FALSE,message=F,fig.height=5, fig.pos="h!t">>=
 library(dplyr)
 load("data/venice-marriages.Rda")
 
@@ -96,17 +96,17 @@ This dataset has been filtered in these ways:\begin{itemize}
 \item The Republic of Venice ended in 1797, so all marriages in the dataset after that date have been dropped.
 \end{itemize}
 
-The resulting time series has \Sexpr{length(marriages.by.year$n)} data points starting in \Sexpr{min(marriages.by.year$year)} and ending in \Sexpr{max(marriages.by.year$year)}. The total number of marriages is \Sexpr{sum(marriages.by.year$n)}. In some cases, the wife does not belong to that closed set of noble families, which is why the normalized noble family name for them is an empty string; the total number of such marriages \Sexpr{sum(marriages.by.year$non.patrician.wife)}. Additionally, there are \Sexpr{sum(marriages.by.year$self.marriages)} cases of intra-family marriages, where the wife and husband belonged to the same (extended) family. This time series is plotted in Figure \ref{fig:marriages}.
+The resulting time series has \Sexpr{length(marriages.by.year$n)} data points starting in \Sexpr{min(marriages.by.year$year)} and ending in \Sexpr{max(marriages.by.year$year)}. The total number of marriages is \Sexpr{sum(marriages.by.year$n)}. In some cases, the wife does not belong to that closed set of noble families, which is why the normalized noble family name for them is an empty string; the total number of such marriages \Sexpr{sum(marriages.by.year$non.patrician.wife)}. Additionally, there are \Sexpr{sum(marriages.by.year$self.marriages)} cases of intra-family marriages, where the wife and husband belonged to the same (extended) family. This time series is plotted in Figure \ref{fig:histories2.marriages}.
 
-<<marriages, echo=FALSE,message=F, fig.height=5, fig.cap="Marriages in Venice from 1398 to 1797. The black line represents the total number of marriages; red line charts the marriages where the wife was not a patrician; finally, blue shows marriages within the same family\\protect\\footnote{In this paper, we will not be analyzing this variable, since it is very close to zero in a very long period; however, these have its importance within the structure of the network, but not in the appearance of change points in the series}.\\protect\\label{fig:marriages}">>=
+<<histories2.marriages, echo=FALSE,message=F, fig.height=5, fig.cap="Marriages in Venice from 1398 to 1797. The black line represents the total number of marriages; red line charts the marriages where the wife was not a patrician; finally, blue shows marriages within the same family\\protect\\footnote{In this paper, we will not be analyzing this variable, since it is very close to zero in a very long period; however, these have its importance within the structure of the network, but not in the appearance of change points in the series}.\\protect\\label{fig:marriages}">>=
 library(ggplot2)
 library(ggthemes)
 ggplot(marriages.by.year, aes(x=year, y=n)) + geom_line() + labs(x="Year", y="Number of marriages")+ geom_line(aes(y=non.patrician.wife), color="red") + geom_line(aes(y=self.marriages), color="blue") + theme_tufte()
 @
 
-One way of validating these figures is cross-referencing them with figures published elsewhere. A limited number of years has been analyzed in \cite{cowan16:outsider}, focusing on the presence of "outside" (i.e. non-patrician) wives. The data published in this book, Table 3.1, is plotted against the data used in this paper for the same period in Figure \ref{fig:cowan}; for reference, marriages including non-patricians have also been plotted in Figure \ref{fig:marriages} as a first spot check of their importance in the series.
+One way of validating these figures is cross-referencing them with figures published elsewhere. A limited number of years has been analyzed in \cite{cowan16:outsider}, focusing on the presence of "outside" (i.e. non-patrician) wives. The data published in this book, Table 3.1, is plotted against the data used in this paper for the same period in Figure \ref{fig:histories2.cowan}; for reference, marriages including non-patricians have also been plotted in Figure \ref{fig:histories2.marriages} as a first spot check of their importance in the series.
 
-<<cowan, echo=FALSE,message=F, warning=F, fig.height=5, fig.cap="Marriages in Venice from 1580 to 1595. The black line represents the total number of marriage contracts registered according to \\protect\\cite{cowan16:outsider}; red line corresponds to the number of marriages in \\protect\\cite{colleganza} for the same period.\\protect\\label{fig:cowan}">>=
+<<histories2.cowan, echo=FALSE,message=F, warning=F, fig.height=5, fig.cap="Marriages in Venice from 1580 to 1595. The black line represents the total number of marriage contracts registered according to \\protect\\cite{cowan16:outsider}; red line corresponds to the number of marriages in \\protect\\cite{colleganza} for the same period.">>=
 data.cowan <- read.csv("data/mmm-emv-table3.1.csv",sep=" ",header=TRUE)
 ggplot(data.cowan, aes(x=Year, y=Contracts)) + geom_line() + labs(x="Year", y="Number of marriages")+ geom_line(data=marriages.by.year, aes(x=year, y=n), color="red") + xlim(1580,1599)+ theme_tufte()
 @
@@ -120,7 +120,7 @@ From this comparison, we can conclude that our data is sufficiently good, and do
 
 We will first try to find long-term trends, as well as local periodicities or anomalies in the previously explained time series using the R package \texttt{anomalize}. In the default configuration, it uses the STL method \cite{cleveland1990stl} for seasonal trend decomposition. We will also apply a method for anomaly detection, in order to check either the existence of anomalous events, or anomalous registration of events.
 
-<<anomalize, echo=FALSE,message=F, warning=F, fig.pos="h!tb", fig.cap="Time series decomposition via the {\\protect\\tt anomalize} package; the default output of the function plotting the anomaly decomposition, which plots the original series along with its periodicity decomposition, and the underlying trend.">>=
+<<histories2.anomalize, echo=FALSE,message=F, warning=F, fig.pos="h!tb", fig.cap="Time series decomposition via the {\\protect\\tt anomalize} package; the default output of the function plotting the anomaly decomposition, which plots the original series along with its periodicity decomposition, and the underlying trend.">>=
 library(anomalize)
 library(tibble)
 marriage.t <- tibble( date = as.Date(as.POSIXct(paste0(marriages.by.year$year, "-12-31"))), value = marriages.by.year$n)
@@ -132,19 +132,19 @@ plot_anomaly_decomposition(marriage.decomposed.stl)
 # marriage.decomposed %>% plot_anomalies(time_recomposed = TRUE, ncol = 3, alpha_dots = 0.5) + theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle("Marriages by year")
 @
 
-Figure \ref{fig:anomalize} shows the analysis of the time series using the default method, which is STL as indicated above, plotted using the {\tt plot\_anomaly\_decomposition} function. From top to bottom, it shows the original series, the seasonal component, which follows a period of five years, with three years above trend and two years below trend; the trend component with a peak around mid-16th century, and the remainder, which is the original series minus the sum of the previous two components. Any anomaly using this method would be shown as a circled red dot; in this case, there are no anomalies detected. The trend smoothing, which is computed automatically by this method, is 30 years.
+Figure \ref{fig:histories2.anomalize} shows the analysis of the time series using the default method, which is STL as indicated above, plotted using the {\tt plot\_anomaly\_decomposition} function. From top to bottom, it shows the original series, the seasonal component, which follows a period of five years, with three years above trend and two years below trend; the trend component with a peak around mid-16th century, and the remainder, which is the original series minus the sum of the previous two components. Any anomaly using this method would be shown as a circled red dot; in this case, there are no anomalies detected. The trend smoothing, which is computed automatically by this method, is 30 years.
 
-The trend peaks in 1552, with a value of \Sexpr{max(marriage.decomposed.stl$trend)} marriages. We show this trend chart by itself in Figure \ref{fig:marriages.trend}.
+The trend peaks in 1552, with a value of \Sexpr{max(marriage.decomposed.stl$trend)} marriages. We show this trend chart by itself in Figure \ref{fig:histories2.marriages.trend}.
 %
-<<marriages.trend, echo=FALSE,message=F, fig.height=5, warning=F, fig.cap="Trend of marriages in Venice from 1398 to 1797.">>=
+<<histories2.marriages.trend, echo=FALSE,message=F, fig.height=5, warning=F, fig.cap="Trend of marriages in Venice from 1398 to 1797.">>=
 ggplot(marriage.decomposed.stl, aes(x=date, y=trend)) + geom_line() + labs(x="Year", y="Number of marriages")+ theme_tufte()
 @
 %
 The trend is seen to rise sharply from the beginning of the 16th century, reaching the indicated peak, with another peaklet a decade later; from then on, the decrease is quite clear, with only a very small peaklet, which is indeed lower than even the initial value of the series, towards the late years of the Republic.
 
-Using this analysis, let us try to answer research question 2: is there a statistically significant change of trend in the number of marriages? There clearly is one by the mid-16th century. To validate this, we will use a different trend analysis method, this one generically called "Twitter" \cite{twitter}, which uses a different statistical method to estimate trend based on the median. Using the same function as before, this is shown in Figure \ref{fig:marriage.trend.twitter}
+Using this analysis, let us try to answer research question 2: is there a statistically significant change of trend in the number of marriages? There clearly is one by the mid-16th century. To validate this, we will use a different trend analysis method, this one generically called "Twitter" \cite{twitter}, which uses a different statistical method to estimate trend based on the median. Using the same function as before, this is shown in Figure \ref{fig:histories2.marriage.trend.twitter}
 %
-<<marriage.trend.twitter, echo=FALSE,message=F, warning=F, fig.pos="h!tb", fig.cap="Trend of marriages in Venice from 1398 to 1797, using the Twitter method.">>=
+<<histories2.marriage.trend.twitter, echo=FALSE,message=F, warning=F, fig.pos="h!tb", fig.cap="Trend of marriages in Venice from 1398 to 1797, using the Twitter method.">>=
 marriage.t %>% time_decompose(value,method="twitter") %>% anomalize(remainder) %>% time_recompose() -> marriage.decomposed.twitter
 plot_anomaly_decomposition(marriage.decomposed.twitter)
 @
@@ -184,7 +184,7 @@ marriages.after <- marriages.by.year[ marriages.by.year$year >= change.year,]
 
 We have thus used Lanzante's test to find a single change point in the sequence with the yearly number of marriages, and found that point to be at \Sexpr{change.year}. We can also use Pettitt's test, which finds a change point at \Sexpr{change.year.2}, thus validating the previous one. IN both cases the p-value is very small, indicating that the change point found is statistically significant. The average number of marriages before the change point is \Sexpr{mean(marriages.before$n)}; after the change point is \Sexpr{mean(marriages.after$n)}; after the change point there are, on average, 15 marriages less per year, indicating a significant change in the trend. This, again, answers positively research question 1. Research question 4 is also answered positively, since we are validating the change point by two different measures.
 
-<<change.point:entropy, echo=F, fig.pos="h!t", fig.height=5, fig.cap="Family frequency entropy plotted for the matrimonial time series; the green line indicates the change point found previously">>=
+<<histories2.change.point:entropy, echo=F, fig.pos="h!t", fig.height=5, fig.cap="Family frequency entropy plotted for the matrimonial time series; the green line indicates the change point found previously">>=
 library(DescTools)
 marriages %>% group_by(year) %>% summarise( families = length(unique( c(unique(husband_familyname_std,unique(wife_familyname_std)) ) ) )) -> married.families.by.year
 
@@ -193,11 +193,11 @@ marriages %>% group_by(year) %>% summarise( entropy = Entropy(table(c(husband_fa
 ggplot(family.entropy.by.year, aes(x=year, y=entropy)) + geom_line() + geom_point() + geom_vline(xintercept=change.year, color="red") + geom_vline(xintercept=change.year.2, color="blue") + geom_vline(xintercept=change.year.3, color="green") + labs(title="Entropy of families in marriages by year", x="Year", y="Entropy") + theme_bw()
 @
 
-It would be interesting to look at the data set from another point of view: the entropy of the sequence of marriages. We will be computing entropy over the frequencies of families appearing as bride or grooms in a specific year. Entropy is a measure of the amount of information, or surprise, in a group of data. If a single family appears, then the set is totally ordered and predictable, and that would yield the lowest entropy; many different families appearing only once would have the highest entropy; anything in between (less families appearing only once, more families with a random amount of appearances) will have any value in between. Since entropy will be influenced by the number of different marriages in a year, we will normalize this entropy, dividing by $log N$, where $N$ is 2 times the number of marriages in a year, that is, the number of persons appearing in marriages in a year. Normalized entropy will go from 0 to 1, in this case. This normalized entropy is charted in Figure \ref{fig:change.point:entropy}, with the already computed change point marked as a vertical line.
+It would be interesting to look at the data set from another point of view: the entropy of the sequence of marriages. We will be computing entropy over the frequencies of families appearing as bride or grooms in a specific year. Entropy is a measure of the amount of information, or surprise, in a group of data. If a single family appears, then the set is totally ordered and predictable, and that would yield the lowest entropy; many different families appearing only once would have the highest entropy; anything in between (less families appearing only once, more families with a random amount of appearances) will have any value in between. Since entropy will be influenced by the number of different marriages in a year, we will normalize this entropy, dividing by $log N$, where $N$ is 2 times the number of marriages in a year, that is, the number of persons appearing in marriages in a year. Normalized entropy will go from 0 to 1, in this case. This normalized entropy is charted in Figure \ref{fig:histories2.change.point:entropy}, with the already computed change point marked as a vertical line.
 
 We will try and answer RQ4 by measuring the change point in this specific series.%
 %
-<<change.point:entropy2, echo=F>>=
+<<histories2.change.point:entropy2, echo=F>>=
 cp.lanzante.entropy <- lanzante.test(family.entropy.by.year$entropy)
 change.year.entropy <- family.entropy.by.year[as.integer(cp.lanzante.entropy$estimate),]$year
 entropy.before <- family.entropy.by.year[ family.entropy.by.year$year < change.year.entropy,]
@@ -209,7 +209,7 @@ This would answer the question with a qualified yes; they are close enough to be
 
 At any rate, entropy is a quantitative measurement, but it cannot be a cause of the change in regime. One quantity that is included in the data set is the number of marriages with non-patrician wives; after the so-called {\em third Serrata}, women had to undergo public examination by the Senate, so it might be an important source of entropy in the data set.
 %
-<<change.point:non.patrician, echo=F>>=
+<<histories2.change.point:non.patrician, echo=F>>=
 marriages.by.year$percent.non.patrician <- marriages.by.year$non.patrician.wife/marriages.by.year$n
 cp.non.patrician.pc <- lanzante.test(marriages.by.year$percent.non.patrician)
 change.year.non.patrician.pc <- marriages.by.year[as.integer(cp.non.patrician.pc$estimate),]$year
@@ -223,7 +223,7 @@ We will work with the {\em percentage} of marriages that included a non-patricia
 
 Since we are looking at several variables at the same time, we should try and use a multivariate analysis of the change point. For that purpose, we are going to use the {\tt ecp} package \cite{ecp-package}, which includes several algorithms for non-parametric multiple change point analysis \cite{ecp-article}. As a bonus, its included algorithms are able to detect multiple change points in a time series.
 
-<<change.point:ecp, echo=F, message=F, cache=TRUE>>=
+<<histories2.change.point:ecp, echo=F, message=F, cache=TRUE>>=
 library(ecp)
 
 z.marriages <- matrix(c(marriages.by.year$n, marriages.by.year$percent.non.patrician, family.entropy.by.year$entropy), ncol = 3)
@@ -236,10 +236,10 @@ for (i in 3:length(multiple.cp$order.found)) {
 @
 
 We are going to use the procedure {\tt e.divisive} which implements a hierarchical divisive estimation procedure \cite{ecp-article}; it essentially iteratively applies a procedure to locate change points in the whole series, and the fragments created by them. 
-This procedure results in a total of \Sexpr{length(change.point.years)-2} change points, which are located at \Sexpr{paste(change.point.years, collapse=", ")}, sorted by importance. This multivariate analysis confirms the year \Sexpr{change.point.years[1]} as the one where the main change point takes place, but also finds a series of other significant change points: \Sexpr{paste(change.point.years[2:length(change.point.years)], collapse=", ")}, which are interesting by and of themselves. We plot the whole time series and change points in Figure \ref{fig:change.point:final}.
+This procedure results in a total of \Sexpr{length(change.point.years)-2} change points, which are located at \Sexpr{paste(change.point.years, collapse=", ")}, sorted by importance. This multivariate analysis confirms the year \Sexpr{change.point.years[1]} as the one where the main change point takes place, but also finds a series of other significant change points: \Sexpr{paste(change.point.years[2:length(change.point.years)], collapse=", ")}, which are interesting by and of themselves. We plot the whole time series and change points in Figure \ref{fig:histories2.change.point:final}.
 
 \begin{landscape}
-<<change.point:final, echo=F, fig.width=21, fig.cap="Synthetic visualization of the matrimonial time series. Years are represented in the $x$ axis, while number of marriages holds the $y$ axis. The percent of marriages with non-patrician brides (percent.non.patrician) is represented as dot size; the yearly entropy is represented with a color scale. Besides, change points found by hierarchical divisive estimation are represented as vertical lines labeled with the year, with line-width and color related to their order in the hierarchy (grayer means higher value).">>=
+<<histories2.change.point:final, echo=F, fig.width=21, fig.cap="Synthetic visualization of the matrimonial time series. Years are represented in the $x$ axis, while number of marriages holds the $y$ axis. The percent of marriages with non-patrician brides (percent.non.patrician) is represented as dot size; the yearly entropy is represented with a color scale. Besides, change points found by hierarchical divisive estimation are represented as vertical lines labeled with the year, with line-width and color related to their order in the hierarchy (grayer means higher value).">>=
 marriages.by.year$entropy <- family.entropy.by.year$entropy
 chart <- ggplot(marriages.by.year, aes(x=year, y=n)) + geom_line() + theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle("Marriages by year") + geom_point(aes(color=entropy, size=percent.non.patrician))+scale_color_gradientn(colors=c("black","blue","green","gray","red","gold"))
 
@@ -257,7 +257,7 @@ Let us not forget, however, the four research questions. We can answer positivel
 
 We need to answer RQ3: can this change point be matched with some historical event? The years of this change period fully fall within what was called {\em war of Candia}, or fifth Ottoman-Venetian war \cite{mason1972war,lane1973venice}. This war started with skirmishes in 1638, to reach its full-blown phase in 1644. It lasted until 1669, with its last phase consisting mainly in naval battles and the siege of Candia itself, nowadays Heraklion. Although the Ottomans took heavy losses, Venice lost 30000 men, many of them nobles\footnote{According to \cite{raines2003cooptazione}, citing other authors, 280 Venetian nobles lost their live in that war, although that number might include local Cretan nobles; the same author mentions the dead of a similar amount in the prior years, during the plague that took place in 1630-31}. That will certainly account for the decrease in the number of marriages. But wars in general had another effect: \cite{raines2003cooptazione} mentions that new families were included into the nobility {\em per soldi}, that is, simply paying their seat in the {\em Maggior Consiglio}, 75 families in all, which account for the increase in entropy: their presence will add to the number of different families participating in marriages during those years. With the loss of Candia, its cash crop, cotton, and the decrease in commerce, there was a general relaxation of matrimonial laws together with the vanishing of the fortunes of the noble families. Marrying a non-patrician meant, for these impoverished noble families, an injection of cash and commercial relations that could allow the {\em casata} to survive a bit longer. This would answer RQ3, and highlight how statistical analysis of time series, coupled with historical analysis, allows us to go beyond qualitative speculations to enter into quantitative proofs of historical social and economical phenomena.
 
-<<summary.by.fragment, echo=F, fig.width=18>>=
+<<histories2.summary.by.fragment, echo=F, fig.width=18>>=
 library(knitr)
 marriages.by.year$fragment <- multiple.cp$cluster
 marriages.by.year.by.fragment <- aggregate(marriages.by.year[,c("n","entropy","percent.non.patrician")], by=list(fragment=marriages.by.year$fragment), FUN=mean)
@@ -286,7 +286,7 @@ summary.by.periods <- data.frame(Period=fragment.years.periods,
 kable(summary.by.periods, align="c",caption="Summary of values in the marriage time series by period.",col.names=c("Period","Marriages","Norm. Entropy","% non-patrician marriages"))
 @
 
-Table \ref{tab:summary.by.fragment} summarizes the values of the different quantities examined in the time series by period between change points found by the multivariate analysis. We can again try and answer the third research question: can we match these periods to historical events in the Republic of Venice? We will examine each in turn:\begin{itemize}
+Table \ref{tab:histories2.summary.by.fragment} summarizes the values of the different quantities examined in the time series by period between change points found by the multivariate analysis. We can again try and answer the third research question: can we match these periods to historical events in the Republic of Venice? We will examine each in turn:\begin{itemize}
 \item {\bf First period, 1399-1435}: this period has middle values of entropy, low number of marriages, and a medium number of non-patrician marriages. It ends a few years later than what Chojnacki called the {\em second serrata} \cite{sperling1999paradox}, which required every candidate to new member of the Consiglio to be presented by his father. Although this might seem like a minor requirement, this measure was accompanied by a series of sumptuary laws, but more importantly by a bureaucratization of all processes related to marriages, including dowry contracts.
 \item {\bf Second period, 1435-1525}. The introduction of the laws mentioned in the previous period caused an increment in the number of marriages, no change in entropy, but mainly resulted in a decrease of the marriages that included a non-noble partner.
 \item {\bf Third period, 1525-1593}: a period that starts with the {\em second serrata}, and ends with the already mentioned third Serrata. This second enactment of legislation implied that nobility started with birth, since marriages had to be approved by the Senate. Effectively, the main feature of this period is the lowest average percentage of non-patrician marriages, which was accompanied also by a low entropy: the restriction in the possibility of marriages entrenched and stabilized the existing families. The number of marriages reaches the peak, and in fact, as indicated in Section \ref{sec:trend}, the year with the highest number of marriages is found in this period.
