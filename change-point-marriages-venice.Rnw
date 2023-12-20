@@ -53,14 +53,14 @@ These nobles were moved by commercial as well as political interests \cite{sperl
 In this paper, we will try and answer the following research questions:\begin{itemize}
 \item[{\bf RQ1}] Is there a statistically significant change point in the Venetian matrimonial time series?
 \item[{\bf RQ2}] Is there a statistically significant change of trend in the number of marriages?
-\item[{\bf RQ3}] Can we match these change points to historical events?
+\item[{\bf RQ3}] Can we match these change points or change of trends to historical events?
 \item[{\bf RQ4}] Can we validate these change points or change of trends with any other measure in the matrimonial time series?
 \end{itemize}
 
-And we will do so through the analysis of temporal series related to marriages in the Republic of Venice using robust statistical techniques such as change-point analysis and trend analysis. 
+And we will do so through the analysis of publicly available temporal series related to marriages in the Republic of Venice using robust statistical techniques such as change-point and trend analysis.
 
 The rest of the paper is organized as follows. Next we will show the
-state of the art applying change point analysis to historical data, as well as the literature on marital practices in the Republic of Venice. We will then present the dataset used in \protect\hyperlink{dataset}. We will perform change point and trend analysis on the time series, and try to answer the research questions. Finally, we will present our
+state of the art applying change point analysis to historical data, as well as the literature on marital practices in the Republic of Venice. We will then present the \protect\hyperlink{dataset}{dataset  used in this paper}. Next we will perform change point and trend analysis on the time series, and try to answer the research questions in two parts: first  \protect\hyperlink{peak}{analyzing the trends} in the time series and then applying \protect\hyperlink{change-point-detection}{change point detection} algorithms. Finally, we will present our
 \protect\hyperlink{conclusions}{conclusions} and discuss its
 implications.
 
