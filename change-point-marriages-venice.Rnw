@@ -261,9 +261,14 @@ We need to answer RQ3: can this change point be matched with some historical eve
 library(knitr)
 marriages.by.year$fragment <- multiple.cp$cluster
 marriages.by.year.by.fragment <- aggregate(marriages.by.year[,c("n","entropy","percent.non.patrician")], by=list(fragment=marriages.by.year$fragment), FUN=mean)
+marriages.by.year.by.fragment.sd <- aggregate(marriages.by.year[,c("n","entropy","percent.non.patrician")], by=list(fragment=marriages.by.year$fragment), FUN=sd)
 
 marriages.by.year.by.fragment$percentage.non.patrician <- round(marriages.by.year.by.fragment$percent.non.patrician*100,2)
-marriages.by.year.by.fragment$percent.non.patrician <- NULL
+
+marriages.by.year.by.fragment.sd$percentage.non.patrician <- round(marriages.by.year.by.fragment.sd$percent.non.patrician*100,2)
+
+marriages.by.year.fragments <- merge(marriages.by.year.by.fragment, marriages.by.year.by.fragment.sd, by="fragment", suffixes=c(".mean",".sd"))
+
 
 fragment.years <- c(1399, sort(change.point.years), 1797)
 
@@ -271,12 +276,17 @@ fragment.years.periods <- c()
 for (i in 2:length(fragment.years)-1) {
   fragment.years.periods <- c(fragment.years.periods, paste(fragment.years[i], fragment.years[i+1], sep="-"))
 }
-rownames(marriages.by.year.by.fragment) <- fragment.years.periods
-marriages.by.year.by.fragment$fragment <- NULL
-kable(marriages.by.year.by.fragment, caption="Summary of values in the marriage time series by period.",col.names=c("Avg. Marriages","Norm. Entropy","% non-patrician marriages"), digits=2 )
+
+summary.by.periods <- data.frame(Period=fragment.years.periods,
+                                 Marriages=paste0( round(marriages.by.year.fragments$n.mean,2), "±", round(marriages.by.year.fragments$n.sd,2)),
+                                 Entropy=paste0( round(marriages.by.year.fragments$entropy.mean,2), "±", round(marriages.by.year.fragments$entropy.sd,2)),
+                                 Non.Patrician.Marriages.Perc=paste0( round(marriages.by.year.fragments$percent.non.patrician.mean*100,2), "±", round(marriages.by.year.fragments$percent.non.patrician.sd*100,2)) 
+)
+                                 
+kable(summary.by.periods, align="c",caption="Summary of values in the marriage time series by period.",col.names=c("Period","Marriages","Norm. Entropy","% non-patrician marriages"))
 @
 
-Table \ref{tab:summary.by.fragment} summarizes the values of the time series by period between change points found by the multivariate analysis. We can again try and answer the third research question: can we match these periods to historical events in the Republic of Venice? We will examine each in turn:\begin{itemize}
+Table \ref{tab:summary.by.fragment} summarizes the values of the different quantities examined in the time series by period between change points found by the multivariate analysis. We can again try and answer the third research question: can we match these periods to historical events in the Republic of Venice? We will examine each in turn:\begin{itemize}
 \item {\bf First period, 1399-1435}: this period has middle values of entropy, low number of marriages, and a medium number of non-patrician marriages. It ends a few years later than what Chojnacki called the {\em second serrata} \cite{sperling1999paradox}, which required every candidate to new member of the Consiglio to be presented by his father. Although this might seem like a minor requirement, this measure was accompanied by a series of sumptuary laws, but more importantly by a bureaucratization of all processes related to marriages, including dowry contracts.
 \item {\bf Second period, 1435-1525}. The introduction of the laws mentioned in the previous period caused an increment in the number of marriages, no change in entropy, but mainly resulted in a decrease of the marriages that included a non-noble partner.
 \item {\bf Third period, 1525-1593}: a period that starts with the {\em second serrata}, and ends with the already mentioned third Serrata. This second enactment of legislation implied that nobility started with birth, since marriages had to be approved by the Senate. Effectively, the main feature of this period is the lowest average percentage of non-patrician marriages, which was accompanied also by a low entropy: the restriction in the possibility of marriages entrenched and stabilized the existing families. The number of marriages reaches the peak, and in fact, as indicated in Section \ref{sec:trend}, the year with the highest number of marriages is found in this period.
