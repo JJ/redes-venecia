@@ -63,7 +63,7 @@ We will be using two datasets to perform the experiments. The first one is the V
 
 \subsection{Analyzing the Venetian matrimonial dataset}
 
-<<setup, echo=F,message=F>>=
+<<ev.wivace.setup, echo=F,message=F>>=
 library(igraph)
 library(knitr)
 library(stringr)
@@ -100,7 +100,7 @@ This dataset was published by Puga and Treffler as support for their paper \cite
 
 This dataset has been chosen because it includes a good number of intra-family marriages, as well as because it has been studied extensively by Puga and Treffler in their paper, providing a basis for the comparison of results.
 %
-<<intra.marriages, echo=F,message=F>>=
+<<ev.wivace.intra.marriages, echo=F,message=F>>=
 library(dplyr)
 all.marriages %>% group_by(str_sub(all.marriages$year,1,2)) %>% summarise(intra.marriages=sum(wife_familyname_std==husband_familyname_std),total.marriages = n()) %>% mutate(percentage = 100 * intra.marriages/total.marriages) -> intra.marriages.table
 
@@ -127,7 +127,7 @@ The absolute  and relative number of intra-family marriages in each century is s
 
 %
 
-<<centuries, echo=F,message=F>>=
+<<ev.wivace.centuries, echo=F,message=F>>=
 
 tabled.top.eigen <- data.frame(Family = top.ev.eigen$Family, EV = top.ev.eigen$eigen, Family.Self=top.ev.all.eigen$Family, EV.self = top.ev.all.eigen$eigen)
 kable(tabled.top.eigen,
@@ -145,7 +145,7 @@ Looking at Table \ref{tab:top:families} together with the left hand side of Tabl
 
 Including self-loops in the computation we see that there are small, but significant, variations: The Dolfins and Giustinians change their order in the ranking, plus the Loredan family is dropped and substituted by the Pisani family\footnote{The Pisani family is certainly more "central" than the Loredan, at least looking at the number of nobles in important offices; \cite{colleganza} mentions them as one of the family with the greatest amount of shares in shipping contracts.}. It can also be seen that the difference between the first and second family in the ranking has doubled, and that, in general, the value of the normalized EV centrality has also decreased; since the EV values are normalized, this simply indicates that the difference between Contarini and the other families has increased, a fact in which, of course, self-loops have had a decisive influence.
 
-<<charts, echo=F, fig.show="hold", fig.pos="h!tb", fig.height=4, message=F, fig.cap="EV centrality considering self-loops (x axis) or not (y axis). The size of the dot and color signal the number of intra-family marriages. \\protect\\label{fig:plots}">>=
+<<ev.wivace.charts, echo=F, fig.show="hold", fig.pos="h!tb", fig.height=4, message=F, fig.cap="EV centrality considering self-loops (x axis) or not (y axis). The size of the dot and color signal the number of intra-family marriages. \\protect\\label{fig:plots}">>=
 library(ggplot2)
 library(ggthemes)
 library(tidyr)
@@ -163,14 +163,14 @@ To better highlight the impact of self-loops, in Figure \ref{fig:plots} we have 
 
 All dots are placed over the $x=y$ line, indicating that normalized EV values are lower without self-loops. Besides, looking at the colors and sizes, we can see that the smaller the size (number of marriages), the bigger the increase in value; that is, more intra-family marriages make the inclusion of self-loops decrease  EV centrality \emph{less}. However, this is due in this case to the fact that what is actually increased is the difference between the family with the higher EV (the Contarinis) and the rest, so we can look at this result from the other side: the presence of a family with a high value in the diagonal of the connection matrix (i.e. self-loops with a high weight) increases its EV centrality much more than that of the rest of the nodes/families.
 
-<<charts2, echo=F, fig.show="hold",message=F, fig.height=4, fig.cap="Percent increment in normalized EV centrality when including self loops. \\protect\\label{fig:plots2}">>=
+<<ev.wivace.charts2, echo=F, fig.show="hold",message=F, fig.height=4, fig.cap="Percent increment in normalized EV centrality when including self loops. \\protect\\label{fig:plots2}">>=
 marriages.summary$diff <- (marriages.summary$EV.no.self - marriages.summary$EV.with.self)/marriages.summary$EV.no.self
 ggplot(marriages.summary, aes(x=intra.marriages,y=diff))+geom_point()+xlab("Number of intra-family marriages")+ylab("% change in normalized EV centrality value")+theme_tufte()
 @
 
 To investigate how the number of intra-family marriages impact on the EV centrality, in Figure \ref{fig:plots2}, we plot the number of intra-family weddings and the change in EV centrality. As this chart reveals, as expected, the value of intra-family marriages/self-loops in the computation of EV centrality certainly gives us better insights on the dynamics of the social network.
 
-<<charts3, echo=F, fig.show="hold",message=F, fig.height=4,fig.cap="EV centrality rank reached by families with ($y$ axis) or without ($x$ axis) self loops. \\protect\\label{fig:plots3}">>=
+<<ev.wivace.charts3, echo=F, fig.show="hold",message=F, fig.height=4,fig.cap="EV centrality rank reached by families with ($y$ axis) or without ($x$ axis) self loops. \\protect\\label{fig:plots3}">>=
 ggplot(m.ranks, aes(x=rank.no.selfloops,y=rank.all))+geom_point()+geom_abline(intercept=0,slope=1,linetype="dashed",color="red")+xlab("Family ranking without self-loops")+ylab("Family ranking with self-loops")+theme_tufte()
 @
 
@@ -178,7 +178,7 @@ Finally, Figure \ref{fig:plots3} shows the relationship between the family ranki
 
 The inclusion of self-loops, however, could have other positive and quantitative impacts in social and historical study. We will again refer to \cite{colleganza} as the baseline study; they show (in their Figure VIII) how EV centrality across a century is a good predictor for the same measure in the next century, showing the stability and resilience of the patrician social network in the Republic of Venice. They mention that there is a "good correlation" in this case. We have re-rendered the data for this figure in our Figure \ref{fig:correlation} (left panel), showing also as a red line a linear fit to the data.
 
-<<correlation, echo=F, fig.show="hold", out.width="50%", message=F, fig.cap="Correlation between the EV centrality of Venetian families in the XV century ($x$) and XVI century ($y$). The line indicates the fitted linear model. Left-hand side chart does not include self-loops, right-hand side does. \\protect\\label{fig:correlation}">>=
+<<ev.wivace.correlation, echo=F, fig.show="hold", out.width="50%", message=F, fig.cap="Correlation between the EV centrality of Venetian families in the XV century ($x$) and XVI century ($y$). The line indicates the fitted linear model. Left-hand side chart does not include self-loops, right-hand side does. \\protect\\label{fig:correlation}">>=
 
 marriages.XV <- all.marriages[ !is.na(all.marriages$year) & all.marriages$year>=1400 & all.marriages$year < 1500,]
 marriages.XVI <- all.marriages[ !is.na(all.marriages$year) & all.marriages$year>=1500 & all.marriages$year < 1600,]
@@ -221,7 +221,7 @@ ggplot( common.nodes.eigen, aes(x=XV.eigen,y=XVI.eigen)) + geom_point() + geom_a
 
 The influence of using self-loops (shown in the right-hand side panel) is clear, with points representing families with the highest EV seeming {\em closer} to the fit; it should be noted that these are the families that have a high-number of intra-family marriages. To quantify numerically the difference
 %
-<<table.fit, echo=F, messages=F>>=
+<<ev.wivace.table.fit, echo=F, messages=F>>=
 # assign residual standard error, multiple r-squared, adjusted r-squared, f-statistic, p-value of marriages.fit to data frame
 marriages.fit.df <- data.frame( RSE=summary(marriages.fit)$sigma, R2=summary(marriages.fit)$r.squared, adjR2=summary(marriages.fit)$adj.r.squared, Fstat=summary(marriages.fit)$fstatistic[1], intercept.t = summary(marriages.fit)$coefficients[5], slope.t = summary(marriages.fit)$coefficients[6] )
 marriages.fit.df <- rbind(marriages.fit.df,
@@ -238,7 +238,7 @@ At any rate, and to the extent that EV centrality in a century is a predictor fo
 
 The freight traffic network is a directed network that includes as nodes different US states, and as edges the amount of freight traffic between them. The data is available from the US Bureau of Transportation Statistics on its page "Freight Flow by State" \footnote{\url{https://www.bts.gov/browse-statistical-products-and-data/state-transportation-statistics/freight-flows-state}}. The data is available for the years 2017-2021.
 
-<<freight, echo=F, messages=F, fig.pos="h!tb",fig.cap="US freight traffic network. Weight value is not represented in this graph.\\protect\\label{fig:usfreight}">>=
+<<ev.wivace.freight, echo=F, messages=F, fig.pos="h!tb",fig.cap="US freight traffic network. Weight value is not represented in this graph.\\protect\\label{fig:usfreight}">>=
 # Ditto for US freight traffic
 load("data/freight-traffic-agg.RData")
 all.freight <- freight.traffic.agg[ freight.traffic.agg$Year == 2021,]
@@ -261,7 +261,7 @@ plot(all.freight.sn, vertex.size=5,vertex.color=rgb(1,1,0,0.4), edge.arrow.size=
 
 We will be doing some additional processing on this data. All types of traffic (import, export, domestic) will be added into a single traffic flow; this quantity will be used as a weight in the transportation network. Also, we will  use the data for the year 2021 only; the resulting processed data set is available from the GitHub repository for this paper \url{https://github.com/JJ/redes-venecia}. The resulting network is shown in Figure \ref{fig:usfreight}. This network is totally different from the one analyzed in the previous subsection: all states have internal traffic, so all of them have self-loops, as the Figure shows. It is a directed network, since traffic between two states can be asymmetric. The network is very dense, with almost all states connected with all others. Finally, the network structure is quite different, with big differences between the most central states and the rest. Using self loops or not is bound to influence the vision we have of the centrality of the states.
 
-<<freight.rankings, echo=F, fig.show="hold",message=F>>=
+<<ev.wivace.freight.rankings, echo=F, fig.show="hold",message=F>>=
 tabled.top.f.eigen <- data.frame(State = top.ev.f.eigen$State, EV = top.ev.f.eigen$eigen, State.Self=top.ev.all.f.eigen$State, EV.self = top.ev.all.f.eigen$eigen)
 kable(tabled.top.f.eigen,
       col.names=c( "State", "EV","State","EV + self-loops" ),
@@ -271,14 +271,14 @@ kable(tabled.top.f.eigen,
 
 In Table \ref{tab:top:ev:f} We show the differences in the first positions in the ranking according to EV centrality. As was the case for the Venice matrimonial network, the top 3 positions of the top ten states do not change. All others (except for, curiously, Ohio) do, however, as does the quantitative difference between the first and the rest of the positions; using self-loops highlights the differences in EV centrality, and thus influence, between the first and the rest of the states, as well as the differences among themselves; that is, the measured difference in influence as measured by EV centrality is much bigger when self-loops are considered.
 
-<<freight.chart, echo=F, fig.show="hold",message=F, fig.height=4, fig.pos="h!tb", fig.cap="Relationship between EV centrality with or without self-loops for the US freight network.\\protect\\label{fig:freight:chart}">>=
+<<ev.wivace.freight.chart, echo=F, fig.show="hold",message=F, fig.height=4, fig.pos="h!tb", fig.cap="Relationship between EV centrality with or without self-loops for the US freight network.\\protect\\label{fig:freight:chart}">>=
 freight.ev.df <- data.frame( State = V(freight.sn)$name, EV.self = V(all.freight.sn)$eigen, EV = V(freight.sn)$eigen)
 ggplot(freight.ev.df, aes(x=EV.self, y=EV)) + geom_point() + geom_abline(intercept=0, slope=1, color="red") + labs(x="EV centrality with self-loops", y="EV centrality without self-loops")+theme_bw()
 @
 
 The stark change in EV centrality values is shown in Figure \ref{fig:freight:chart}, where we plot the EV centrality values with and without self-loops for all states (and the District of Columbia. Except for the two top values (Texas and California), when self-loops are considered the value of EV centrality drops below (roughly) 0.05, with changes whose value is obviously decreasing with the initial value (without self-loops).
 
-<<freight.diff, echo=F, fig.show="hold",message=F, fig.pos="h!tb",fig.height=4,  fig.cap="Change in EV centrality vs. value of intra-state traffic.\\protect\\label{fig:freight:diff}">>=
+<<ev.wivace.freight.diff, echo=F, fig.show="hold",message=F, fig.pos="h!tb",fig.height=4,  fig.cap="Change in EV centrality vs. value of intra-state traffic.\\protect\\label{fig:freight:diff}">>=
 intra.traffic <- all.freight[ all.freight$Origin.State == all.freight$Dest.State,]$sum
 freight.diff.df <- data.frame( State = V(all.freight.sn)$name, diff = (V(freight.sn)$eigen - V(all.freight.sn)$eigen)/V(freight.sn)$eigen, intra.traffic = intra.traffic)
 ggplot(freight.diff.df, aes(x=intra.traffic, y=diff)) + geom_point() + labs(y="Difference in EV centrality", x="Intra-state traffic")+theme_bw()
@@ -296,7 +296,7 @@ At any rate, the fact that we have observed very similar phenomena in two very d
 
 A immediate future line of work would of course try to test combinations of networks, possibly including synthetic ones, with different combinations of the above mentioned properties to actually characterize when and if the inclusion of self-loops is essential, merely interesting, or simply irrelevant. It can be argued that whenever they appear in a dataset they should be used, but to the extent that the physical interpretation of self-loops and how their data is collected is fundamentally different from external connections, including them or not is clearly an issue that should be researched and clarified in a case by case basis.
 
-This probably indicates the need for inclusion of self-loops in other centrality measures, such as page-rank or betweenness centrality, would help us understand better social networks where those measurements explain better its dynamics; however, this will need a modification of the algorithms used to compute them, which is left as a future line of work. In order to be comprehensive, too, it would be interesting to see the relationship between the slope of the model shown in Figure \ref{fig:charts} and the relationship between the number of self-loops for all actors involved. Finally, investigating other social networks with the same characteristics would help us generalize these results and thus recommend to \emph{never} eliminate self-loops in the analysis of social networks where they exist.
+This probably indicates the need for inclusion of self-loops in other centrality measures, such as page-rank or betweenness centrality, would help us understand better social networks where those measurements explain better its dynamics; however, this will need a modification of the algorithms used to compute them, which is left as a future line of work. In order to be comprehensive, too, it would be interesting to see the relationship between the slope of the model shown in Figure \ref{fig:ev.wivace.charts} and the relationship between the number of self-loops for all actors involved. Finally, investigating other social networks with the same characteristics would help us generalize these results and thus recommend to \emph{never} eliminate self-loops in the analysis of social networks where they exist.
 
 The most important line of work, however, is to check against some external measurement (number and importance of positions reached by a family, for instance, in line with \cite{Telek2017MarryingTR}) which version of the EV centrality would be a better match, thus proving that self-loops/diagonal values in the connection matrix go beyond mere mathematical artifacts to have a precise and grounded interpretation; once that is proved, it would pave the way to an extension of the employment of self-loops in some way in other centrality values such as betweenness centrality.
 
