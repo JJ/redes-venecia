@@ -309,6 +309,6 @@ Competitividad (Spanish Ministry of Competitivity and Economy) under project
 PID2020-115570GB-C22 (DemocratAI::UGR).
 
 \bibliographystyle{splncs04}
-\bibliography{venice,self-loops,geneura}
+\bibliography{venice,self-loops,geneura,marriage}
 
 \end{document}
