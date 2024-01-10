@@ -107,7 +107,7 @@ all.marriages %>% group_by(str_sub(all.marriages$year,1,2)) %>% summarise(intra.
 intra.marriages.table %>% rename(century.years="str_sub(all.marriages$year, 1, 2)") -> intra.marriages.table
 intra.marriages.table %>% mutate(century = as.roman(as.numeric(century.years)+1)) %>% select(-1) %>% relocate(century,.before=1) -> intra.marriages.table
 
-kable(intra.marriages.table,format="latex",digits=2,caption="Intra-family marriages per century \\protect\\label{tab:century:marriages}", col.names=c("Century","Intra-family marriages","Total marriages","Percentage")) %>% kable_styling(latex_options = c("striped", "hold_position"), full_width = F, position = "left")
+kable(intra.marriages.table,format="latex",digits=2,caption="Intra-family marriages per century \\protect\\label{tab:century:marriages}", col.names=c("Century","Intra-family marriages","Total marriages","Percentage")) %>% kable_styling(latex_options = c("striped", "hold_position"), full_width = F)
 
 marriages.self <- marriages.raw[ marriages.raw$husband_familyname_std == marriages.raw$wife_familyname_std,]
 sorted.marriages.self <- marriages.self %>% count(wife_familyname_std, sort=T)
