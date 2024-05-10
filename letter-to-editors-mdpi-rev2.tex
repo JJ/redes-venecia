@@ -1,0 +1,77 @@
+% LaTeX rebuttal letter example. 
+% 
+% Copyright 2019 Friedemann Zenke, zenkelab.org
+%
+% Based on examples by Dirk Eddelbuettel, Fran and others from 
+% https://tex.stackexchange.com/questions/2317/latex-style-or-macro-for-detailed-response-to-referee-report
+% 
+% Licensed under cc by-sa 3.0 with attribution required.
+
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage}
+\usepackage{xcolor}
+
+% import Eq and Section references from the main manuscript where needed
+% \usepackage{xr}
+% \externaldocument{manuscript}
+
+% package needed for optional arguments
+\usepackage{xifthen}
+% define counters for reviewers and their points
+\newcounter{reviewer}
+\setcounter{reviewer}{0}
+\newcounter{point}[reviewer]
+\setcounter{point}{0}
+
+% This refines the format of how the reviewer/point reference will appear.
+\renewcommand{\thepoint}{P\,\thereviewer.\arabic{point}} 
+
+% command declarations for reviewer points and our responses
+\newcommand{\reviewersection}{\stepcounter{reviewer} \bigskip \hrule
+                  \section*{Reviewer \thereviewer}}
+
+\newenvironment{point}
+   {\refstepcounter{point} \bigskip \noindent {\textbf{Reviewer~Point~\thepoint} } ---\ }
+   {\par }
+
+\newcommand{\shortpoint}[1]{\refstepcounter{point}  \bigskip \noindent 
+	{\textbf{Reviewer~Point~\thepoint} } ---~#1\par }
+
+\newenvironment{reply}
+   {\medskip \noindent \begin{sf}\textbf{Reply}:\  }
+   {\medskip \end{sf}}
+
+\newcommand{\shortreply}[2][]{\medskip \noindent \begin{sf}\textbf{Reply}:\  #2
+	\ifthenelse{\equal{#1}{}}{}{ \hfill \footnotesize (#1)}%
+	\medskip \end{sf}}
+
+    \newcommand{\rev}[1]{{\color{purple} #1}}
+
+\begin{document}
+
+
+\section*{Response to the reviewers}
+
+We would like to thank the reviewer for the attention that our work has
+received, and their very detailed review. We will address their concerns next
+
+\reviewersection
+
+\subsection{Minor points}
+
+\begin{point}
+  p. 1, lines 32-36 – the doge is not the President of the republic. His rank is Prince, but he is also “first among equals”. I would reformulate as follows: “its state was governed by a representative figure, with a rank of prince, called doge, elected for life, initially by popular acclamation, then from the 12th century by all male nobles, members of the Great Council, the sovereign body of the Republic Maranini (1927); Ruggiero (1979)”.
+	\label{pt:m:1}
+      \end{point}
+
+      \begin{reply}
+Fixed as suggested. Thanks for the suggestion
+\end{reply}
+
+
+
+
+\bibliographystyle{unsrt}
+\bibliography{marriage}
+\end{document}
