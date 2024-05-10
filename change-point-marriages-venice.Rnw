@@ -101,23 +101,23 @@ marriages <- marriages[ marriages$year <= 1797,]
 marriages %>% group_by(year) %>% summarise(n = n(),non.patrician.wife = sum( wife_familyname_std ==""), self.marriages = sum( wife_familyname_std == husband_familyname_std)) -> marriages.by.year
 @
 
+<<histories2.marriages, echo=FALSE,message=F, fig.pos="h!tbp", fig.height=4, fig.cap="Marriages in Venice from 1398 to 1797. The black line represents the total number of marriages; red line charts the marriages where the wife was not a patrician; finally, blue shows marriages within the same family.\\protect\\label{fig:marriages}">>=
+library(ggplot2)
+library(ggthemes)
+ggplot(marriages.by.year, aes(x=year, y=n)) + geom_line() + labs(x="Year", y="Number of marriages")+ geom_line(aes(y=non.patrician.wife), color="red") + geom_line(aes(y=self.marriages), color="blue") + theme_tufte()
+@
+
 This dataset has been filtered in these ways:\begin{itemize}
 \item Only those marriages that had a date have been considered; the rest have been dropped.
 \item There were only a few marriages before 1398, probably due to registration problems, so they have been dropped.
 \item The Republic of Venice ended in 1797, so all marriages in the dataset after that date have been dropped.
 \end{itemize}
 
-The resulting time series has \Sexpr{length(marriages.by.year$n)} data points starting in \Sexpr{min(marriages.by.year$year)} and ending in \Sexpr{max(marriages.by.year$year)}. The total number of marriages is \Sexpr{sum(marriages.by.year$n)}. In some cases, the wife does not belong to that closed set of noble families, which is why the normalized noble family name for them is an empty string; the total number of such marriages \Sexpr{sum(marriages.by.year$non.patrician.wife)}. Additionally, there are \Sexpr{sum(marriages.by.year$self.marriages)} cases of intra-family marriages, where the wife and husband belonged to the same (extended) family. This time series is plotted in Figure \ref{fig:histories2.marriages}.
-
-<<histories2.marriages, echo=FALSE,message=F, fig.height=5, fig.cap="Marriages in Venice from 1398 to 1797. The black line represents the total number of marriages; red line charts the marriages where the wife was not a patrician; finally, blue shows marriages within the same family\\protect\\footnote{In this paper, we will not be analyzing this variable, since it is very close to zero in a very long period; however, these have its importance within the structure of the network, but not in the appearance of change points in the series}.\\protect\\label{fig:marriages}">>=
-library(ggplot2)
-library(ggthemes)
-ggplot(marriages.by.year, aes(x=year, y=n)) + geom_line() + labs(x="Year", y="Number of marriages")+ geom_line(aes(y=non.patrician.wife), color="red") + geom_line(aes(y=self.marriages), color="blue") + theme_tufte()
-@
+The resulting time series has \Sexpr{length(marriages.by.year$n)} data points starting in \Sexpr{min(marriages.by.year$year)} and ending in \Sexpr{max(marriages.by.year$year)}. The total number of marriages is \Sexpr{sum(marriages.by.year$n)}. In some cases, the wife does not belong to that closed set of noble families, which is why the normalized noble family name for them is an empty string; the total number of such marriages \Sexpr{sum(marriages.by.year$non.patrician.wife)}. Additionally, there are \Sexpr{sum(marriages.by.year$self.marriages)} cases of intra-family marriages, where the wife and husband belonged to the same (extended) family. This time series is plotted in Figure \ref{fig:histories2.marriages}, split in three lines: the total number of marriages, the number of marriages with non-patrician wives, and the number of marriages within the same family \footnote{In this paper, we will not be analyzing this variable, since it is very close to zero in a very long period; however, these have its importance within the structure of the network, but not in the appearance of change points in the series\rev{It should be pointed out that the Venetian concept of \emph{casata} of family could include many different branches (\emph{rami}), separate enough to inter-marry \cite{raines2013rameau}.}}.
 
 One way of validating these figures is cross-referencing them with other datasets published elsewhere. A limited number of years has been analyzed in \cite{cowan16:outsider}, focusing on the presence of "outside" (i.e. non-patrician) wives. The data published in this book, Table 3.1, is plotted against the data used in this paper for the same period in Figure \ref{fig:histories2.cowan}; for reference, marriages including non-patricians have also been plotted in Figure \ref{fig:histories2.marriages} as a first spot check of their importance in the series.
 
-<<histories2.cowan, echo=FALSE,message=F, warning=F, fig.height=5, fig.cap="Marriages in Venice from 1580 to 1595. The black line represents the total number of marriage contracts registered according to \\protect\\cite{cowan16:outsider}; red line corresponds to the number of marriages in \\protect\\cite{colleganza} for the same period.">>=
+<<histories2.cowan, echo=FALSE,message=F, warning=F, fig.pos="h!tbp", fig.height=5, fig.cap="Marriages in Venice from 1580 to 1595. The black line represents the total number of marriage contracts registered according to \\protect\\cite{cowan16:outsider}; red line corresponds to the number of marriages in \\protect\\cite{colleganza} for the same period.">>=
 data.cowan <- read.csv("data/mmm-emv-table3.1.csv",sep=" ",header=TRUE)
 ggplot(data.cowan, aes(x=Year, y=Contracts)) + geom_line() + labs(x="Year", y="Number of marriages")+ geom_line(data=marriages.by.year, aes(x=year, y=n), color="red") + xlim(1580,1599)+ theme_tufte()
 @
