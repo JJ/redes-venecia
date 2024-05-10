@@ -1,0 +1,90 @@
+% LaTeX rebuttal letter example. 
+% 
+% Copyright 2019 Friedemann Zenke, zenkelab.org
+%
+% Based on examples by Dirk Eddelbuettel, Fran and others from 
+% https://tex.stackexchange.com/questions/2317/latex-style-or-macro-for-detailed-response-to-referee-report
+% 
+% Licensed under cc by-sa 3.0 with attribution required.
+
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage}
+\usepackage{xcolor}
+
+% import Eq and Section references from the main manuscript where needed
+% \usepackage{xr}
+% \externaldocument{manuscript}
+
+% package needed for optional arguments
+\usepackage{xifthen}
+% define counters for reviewers and their points
+\newcounter{reviewer}
+\setcounter{reviewer}{0}
+\newcounter{point}[reviewer]
+\setcounter{point}{0}
+
+% This refines the format of how the reviewer/point reference will appear.
+\renewcommand{\thepoint}{P\,\thereviewer.\arabic{point}} 
+
+% command declarations for reviewer points and our responses
+\newcommand{\reviewersection}{\stepcounter{reviewer} \bigskip \hrule
+                  \section*{Reviewer \thereviewer}}
+
+\newenvironment{point}
+   {\refstepcounter{point} \bigskip \noindent {\textbf{Reviewer~Point~\thepoint} } ---\ }
+   {\par }
+
+\newcommand{\shortpoint}[1]{\refstepcounter{point}  \bigskip \noindent 
+	{\textbf{Reviewer~Point~\thepoint} } ---~#1\par }
+
+\newenvironment{reply}
+   {\medskip \noindent \begin{sf}\textbf{Reply}:\  }
+   {\medskip \end{sf}}
+
+\newcommand{\shortreply}[2][]{\medskip \noindent \begin{sf}\textbf{Reply}:\  #2
+	\ifthenelse{\equal{#1}{}}{}{ \hfill \footnotesize (#1)}%
+	\medskip \end{sf}}
+
+    \newcommand{\rev}[1]{{\color{purple} #1}}
+
+\begin{document}
+
+
+\section*{Response to the reviewers}
+
+We would like to thank the reviewer for the attention that our work has received. We will address their concerns next
+
+\reviewersection
+
+\begin{point}
+  Patricia Brown's book, The Venetian Bride, must be read and included in this paper's discussion.
+	\label{pt:1:1}
+      \end{point}
+
+      \begin{reply}
+The paper has been included in the bibliography. It is indeed central to the
+main point of our paper, which is an analysis of the time series of
+marriages. Certainly, how these marriages took place, were arranged and marriage
+strategies, as discussed in Dr. Brown's book focusing on specific families and
+lineages, should have been discussed. It now includes this text:
+
+\rev{As \cite{brown2021venetian} states:
+\begin{quote}
+... Brides were the creation of male agency and mediation.
+\end{quote}
+And
+\begin{quote}
+Marriages were, as always, favoured ways to create new alliances and cement old ones.
+\end{quote}
+}
+
+And, later on, as a footnote:
+
+\rev{As mentioned in \cite{brown2021venetian}, dowry payments involved elaborate installment plans that included cash as well as, sometimes, payment in kind}
+
+        \end{reply}
+
+\bibliographystyle{unsrt}
+\bibliography{marriage}
+\end{document}
