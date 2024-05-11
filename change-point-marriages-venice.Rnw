@@ -32,7 +32,8 @@
 \address{$^{1}$ \quad Department of Computer Engineering, Automation and Robotics, University of Granada; jmerelo@ugr.es}
 \corres{Correspondence: jmerelo@ugr.es}
 
-\Title{Finding turning points in the history of the Republic of Venice through statistical analysis of the time series of noble marriages}
+\Title{\rev{Detecting pivotal moments by using change point analysis of noble marriages during the time of the Republic of Venice}}
+%\Title{Finding turning points in the history of the Republic of Venice through statistical analysis of the time series of noble marriages}
 \TitleCitation{Finding turning points in the history of the Republic of Venice}
 
 \abstract{The Republic of Venice was one of the longest-lived states in modern history, and its stability and survival has been studied through many different angles, and one of them is to try and find pivotal moments in its history that explain it, or its eventual demise. In this paper, through the rigorous statistical analysis of the dataset of marriages by nobles in the Republic, we will try to define a methodology for the detection of these events through mono and multivariate change point analysis, and validate that methodology through cross-validation of different procedures, as well as matching the results to historical events. Our analysis shows that these change points occur with statistical significance and that they match political and historical events. These results can be built upon for a better understanding of the historical causes of the success and failure of the Republic of Venice and, by extension, other states.}
@@ -246,7 +247,7 @@ for (i in 3:length(multiple.cp$order.found)) {
 }
 @
 
-We are going to use the procedure {\tt e.divisive} which implements a hierarchical divisive estimation procedure \cite{ecp-article}; it essentially iteratively applies a procedure to locate change points in the whole series, and the fragments created by them. 
+We are going to use the procedure {\tt e.divisive} which implements a hierarchical divisive estimation procedure \cite{ecp-article}; it essentially iteratively applies a procedure to locate change points in the whole series, and the fragments created by them.
 This procedure results in a total of \Sexpr{length(change.point.years)-2} change points, which are located at \Sexpr{paste(change.point.years, collapse=", ")}, sorted by importance. This multivariate analysis confirms the year \Sexpr{change.point.years[1]} as the one where the main change point takes place, but also finds a series of other significant change points: \Sexpr{paste(change.point.years[2:length(change.point.years)], collapse=", ")}, which are interesting by and of themselves. We plot the whole time series and change points in Figure \ref{fig:histories2.change.point:final}.
 
 \begin{landscape}
@@ -256,7 +257,7 @@ chart <- ggplot(marriages.by.year, aes(x=year, y=n)) + geom_line() + theme_minim
 
 number.of.points = length(change.point.years)
 for (i in 1:number.of.points) {
-  chart <- chart + geom_vline(xintercept=change.point.years[i], linetype="dashed", alpha=0.5, color=rgb(i/number.of.points,0.1,0.1), linewidth=2*(number.of.points+3-i)/number.of.points) + annotate("text", x=change.point.years[i], y=10, label=change.point.years[i], angle=90, vjust=1, hjust=1) 
+  chart <- chart + geom_vline(xintercept=change.point.years[i], linetype="dashed", alpha=0.5, color=rgb(i/number.of.points,0.1,0.1), linewidth=2*(number.of.points+3-i)/number.of.points) + annotate("text", x=change.point.years[i], y=10, label=change.point.years[i], angle=90, vjust=1, hjust=1)
 }
 chart
 @
@@ -291,9 +292,9 @@ for (i in 2:length(fragment.years)-1) {
 summary.by.periods <- data.frame(Period=fragment.years.periods,
                                  Marriages=paste0( round(marriages.by.year.fragments$n.mean,2), "±", round(marriages.by.year.fragments$n.sd,2)),
                                  Entropy=paste0( round(marriages.by.year.fragments$entropy.mean,2), "±", round(marriages.by.year.fragments$entropy.sd,2)),
-                                 Non.Patrician.Marriages.Perc=paste0( round(marriages.by.year.fragments$percent.non.patrician.mean*100,2), "±", round(marriages.by.year.fragments$percent.non.patrician.sd*100,2)) 
+                                 Non.Patrician.Marriages.Perc=paste0( round(marriages.by.year.fragments$percent.non.patrician.mean*100,2), "±", round(marriages.by.year.fragments$percent.non.patrician.sd*100,2))
 )
-                                 
+
 kable(summary.by.periods, align="c",caption="Summary of values in the marriage time series by period.",col.names=c("Period","Marriages","Norm. Entropy","% non-patrician marriages"))
 @
 
@@ -334,6 +335,6 @@ at GitHub} under a free license.
 
 \section*{References}
 
-\bibliography{venice,history,marriage,doges}
+\bibliography{venice,history,marriage,doges,change-point}
 
 \end{document}
