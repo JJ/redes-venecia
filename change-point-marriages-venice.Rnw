@@ -299,7 +299,7 @@ kable(summary.by.periods, align="c",caption="Summary of values in the marriage t
 @
 
 Table \ref{tab:histories2.summary.by.fragment} summarizes the values of the different quantities examined in the time series by period between change points found by the multivariate analysis. We can again try and answer the third research question: can we match these periods to historical events in the Republic of Venice? We will examine each in turn:\begin{itemize}
-\item {\bf First period, 1399-1435}:\rev{This change point is the least important of all points detected. T}his period has middle values of entropy, low number of marriages, and a medium number of non-patrician marriages. It ends a few years later than what Chojnacki called the {\em second serrata} \cite{sperling1999paradox}, which required every candidate to new member of the Consiglio to be presented by his father. Although this might seem like a minor requirement, this measure was accompanied by a series of sumptuary laws \rev{which limited the amount of dowries, for instance;} but, more importantly, by a bureaucratization of all processes related to marriages, including dowry contracts.
+\item {\bf First period, 1399-1435}:\rev{This change point is the least important of all points detected. T}his period has middle values of entropy, low number of marriages, and a medium number of non-patrician marriages. It ends a few years later than what Chojnacki called the {\em second serrata} \cite{sperling1999paradox,second:serrata}, which required every candidate to new member of the Consiglio to be presented by his father, \rev{as well as clarified the requirements on women able to marry in order to enable transmission of the nobility status from father to son}. Although this might seem like a minor requirement, this measure was accompanied by a series of sumptuary laws \rev{which limited the amount that could be given as dowry, for instance;} but, more importantly, by a bureaucratization of all processes related to marriages, including dowry contracts.
 \item {\bf Second period, 1435-1525}. The introduction of the laws mentioned in the previous period caused an increment in the number of marriages, no change in entropy, but mainly resulted in a decrease of the marriages that included a non-noble partner.
 \item {\bf Third period, 1525-1593}: a period that starts with the {\em second serrata} and ends with the already mentioned third Serrata. This second enactment of legislation implied that nobility started with birth, since marriages had to be approved by the Senate. Effectively, the main feature of this period is the lowest average percentage of non-patrician marriages, which was accompanied also by a low entropy: the restriction in the possibility of marriages entrenched and stabilized the existing families. The number of marriages reaches the peak, and in fact, as indicated in Section \ref{sec:trend}, the year with the highest number of marriages is found in this period.
 \item {\bf Fourth period, 1593-1655}: the period starts with the second weakest change point in the series. The number of marriages decreases, entropy increases slightly, and the number of non-patrician marriages increases. This is a case where it is not clear what historical event might have caused the change point. The loss of Cyprus and several plagues occurred some 20 years before. It might be the conjunction of demographic and economic factors that caused this shift.
@@ -307,7 +307,24 @@ Table \ref{tab:histories2.summary.by.fragment} summarizes the values of the diff
 \item {\bf Fifth period, from 1684 to the end of the Republic}: the number of marriages reach its lowest value, entropy and percentage of non-patrician marriages are highest. The republic never recovered.
 \end{itemize}
 
-This list gives the longest answer to  research question 3, whether shift points match historical events. In two cases, shifts were provoked by changes in legislation; the others were caused by external events (mainly conflicts) but supported by legislation (the fact that citizens could become nobles by paying a fee, for instance). Technological and other changes are in the background, but, by themselves, cannot cause a shift in a time series of social data such as this one. There is a single shift point, of lesser importance, that cannot be easily explained, but it is probably due to the fact that it signals a transition from a period of growth (until the peak of marriages) and a period of stagnation and finally decline.
+\begin{table}[ht]
+\caption{\rev{Summary of changes in number of marriages, entropy and percentage of non-patrician marriages for every change point considered}}
+\label{tab:histories2.summary}
+\begin{tabular}{|l|c|c|c|}
+\hline
+Change year & Number of marriages & Entropy & \% Non-patrician marriages\\
+\hline
+1435 & Low $\rightarrow$ Medium & No change & Medium $\downarrow$ \\
+1525 & Medium $\rightarrow$ High & Medium $\rightarrow$ Low & Medium $\rightarrow$ Low \\
+1592 & High $\rightarrow$ Medium & Low $\rightarrow$ Medium & Low $\rightarrow$ Medium \\
+1654 & Medium $\rightarrow$ Low & Medium $\rightarrow$ High & Medium $\rightarrow$ High \\
+1684 & Low $\downarrow$ & No change & High $\uparrow$ \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\rev{The changes in every year identified as a change point are shown in Table \ref{tab:histories2.summary}}. This list gives the longest answer to  research question 3, whether shift points match historical events. In two cases, shifts were provoked by changes in legislation; the others were caused by external events (mainly conflicts) but supported by legislation (the fact that citizens could become nobles by paying a fee, for instance). Technological and other changes are in the background, but, by themselves, cannot cause a shift in a time series of social data such as this one. There is a single shift point, of lesser importance, that cannot be easily explained, but it is probably due to the fact that it signals a transition from a period of growth (until the peak of marriages) and a period of stagnation and finally decline.
 
 In general, it can be stated that external events affect mainly the {\em number} of marriages, while legislation affects the {\em diversity} of the marriages: how many different families are involved in them in a given year, and how many of them are non-patrician.
 
