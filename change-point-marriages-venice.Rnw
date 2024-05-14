@@ -341,7 +341,9 @@ ggplot(self.marriages.df,aes(x=period,y=average)) +
 
 \subsection{Fourth period, 1593-1655}
 
-The period starts with the second weakest change point in the series. The number of marriages decreases, entropy increases slightly, and the number of non-patrician marriages increases. This is a case where it is not clear what historical event might have caused the change point. The loss of Cyprus and several plagues occurred some 20 years before. It might be the conjunction of demographic and economic factors that caused this shift.
+The period starts with the second weakest change point in the series, \rev{ending, however, with the most important change point, which in fact divides the time series in two}. The number of marriages decreases, entropy increases slightly, and the number of non-patrician marriages increases.
+
+\rev{The decrease in the number of marriages is due to the demographic reasons that have been commented before: population, and within it, the number of nobles, is past its peak and is in continuous decline. According to \cite{raines2013rameau} family branches start to have more importance, being more autonomous in decisions such as marrying one of their male descendants or making them pursue other economic interests, or marrying off one of their female descendants, paying a dowry, or save by sending them off mainly to convents.}
 
 
 \subsection{Fifth period, 1655-1684}
