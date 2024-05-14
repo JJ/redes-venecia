@@ -349,7 +349,11 @@ The period starts with the second weakest change point in the series, \rev{endin
 
 \subsection{Fifth period, 1655-1684}
 
-The onset of this period is caused by the biggest change point detected in the series, which has already been explained. Entropy increases together with the number of non-patrician marriages, while the total number of marriages decreases. The war of Candia takes its course during this period, as well as the first War of Morea, started in 1684. Although it acquired some territories, it cost between 10 and 15 thousand persons to the republic, giving way to its last period.
+\rev{After the major change point that marks the beginning of the terminal decline in the Republic, the number of marriages continues descending; however, entropy and the number of non-patrician marriages increase, as shown in Table \ref{tab:histories2.summary}.}
+
+The onset of this period is caused by the biggest change point detected in the series, which has already been explained. Entropy increases together with the number of non-patrician marriages, while the total number of marriages decreases. The war of Candia takes its course during this period, as well as the first War of Morea, started in 1684. Although it acquired some territories, it cost between 10 and 15 thousand persons to the republic, giving way to its last, \rev{terminal} period.
+
+\rev{As shown again in \cite{raines2013rameau}, the census starts to include (the term generally used for this is {\em aggregate}) new families into the Golden Book of Venetian nobility. Even families of foreign origin \cite{gelder2013gaining} were accepted, provided they paid 100000 ducats and their aggregation accepted by a vote in the Maggior Consiglio. Many new families were added\footnote{\cite{davis1962decline} mentions "127 families added in his Table 1 that summarizes noble and general demographics, and the census in 1696 shows a population that is almost 40\% higher than in the previous entry in 1633} and {\em traditional} families kept declining, creating that diversity in marriages that explains the high entropy. Since aggregation was not immediate, but needed a slow process of search of social status, \cite{raines2006strategie,gelder2013gaining}, that explains also the increase in the number of marriages to non-noble brides: families aspiring to be aggregated managed, through dowries and tactical marrying, to establish good raport with existing noble families, bound to later vote in favor of their aggregation. }
 
 \subsection{Sixth period, from 1684 to the end of the Republic}
 
