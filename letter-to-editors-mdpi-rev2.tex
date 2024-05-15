@@ -11,6 +11,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{fullpage}
 \usepackage{xcolor}
+\usepackage{xr}
+\externaldocument{change-point-marriages-venice}
 
 % import Eq and Section references from the main manuscript where needed
 % \usepackage{xr}
@@ -164,6 +166,17 @@ it. We will include other changes suggested in the rest of the section.
   obscure decision taken thirty years earlier. What we will try, then is,
   following your advice, to reconsider or qualify the presented historical
   events along the lines of the following suggestions you have made.
+
+  Besides, we should emphasize the fact that we analyze concurrently three time
+  series extracted from the same dataset. Although the number of marriages by
+  itself might not include enough information, using diversity in marriage
+  choices (entropy) as well as the number of marriages to non-nobles, two time
+  series that include much more information about marriage customs (and thus,
+  from the state at large) allows us to find statistically significant turning
+  points that do correspond to events of historical importance. This allows us
+  to establish not only a result (the computed turning point) but also a
+  methodology (use several time series that include information that might have
+  a significance outside the events reflected by the time series itself).
 \end{reply}
 
 \begin{point}
@@ -178,7 +191,7 @@ it. We will include other changes suggested in the rest of the section.
   here. First, include the importance of the turning point as revealed by the
   statistical analysis, and then address your specific concerns. We have also
   included a table summarizing the changes observed at the pivotal years; this
-  is now Table 3. We have also changed from an environment that has an itemized
+  is now Table \ref{tab:histories2.summary}. We have also changed from an environment that has an itemized
   list to subsections, since the description of every period was starting to
   have an extension that was better served by dividing into paragraphs.
 
@@ -389,10 +402,10 @@ that should be mentioned.
   This is a very interesting suggestion. A peak in the number of branches would
   boost the possibility of intra-family marriages. We have plotted the average
   and standard deviation of the number of these marriages in (new) Figure
-  8. We observe precisely this peak, within an overall low number of
-  self-marriages, but which anyway is statistically different from the previous
-  period. We have included text explaining this in the text, and thank you again
-  for the suggestion.
+  \ref{fig:histories2.self.marriages}. We observe precisely this peak, within an
+  overall low number of self-marriages, but which anyway is statistically
+  different from the previous period. We have included text explaining this in
+  the text, and thank you again for the suggestion.
 \end{reply}
 
 \begin{point}
@@ -507,7 +520,7 @@ families which brings new blood into the Venetian nobility during the Cretan War
 \end{point}
 
 \begin{reply}
-  For starters, we have added a new Table (Table 4) that summarizes the kind of
+  For starters, we have added a new Table (Table \ref{tab:histories2.events}) that summarizes the kind of
   historical events that may have caused the change points. As it transpires
   from your objections, most change points can be explained by legislative
   changes that affect directly the definition of the patrician class and its
