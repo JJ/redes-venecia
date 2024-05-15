@@ -1,0 +1,158 @@
+% LaTeX rebuttal letter example. 
+% 
+% Copyright 2019 Friedemann Zenke, zenkelab.org
+%
+% Based on examples by Dirk Eddelbuettel, Fran and others from 
+% https://tex.stackexchange.com/questions/2317/latex-style-or-macro-for-detailed-response-to-referee-report
+% 
+% Licensed under cc by-sa 3.0 with attribution required.
+
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage}
+
+% import Eq and Section references from the main manuscript where needed
+% \usepackage{xr}
+% \externaldocument{manuscript}
+
+% package needed for optional arguments
+\usepackage{xifthen}
+% define counters for reviewers and their points
+\newcounter{reviewer}
+\setcounter{reviewer}{4}
+\newcounter{point}[reviewer]
+\setcounter{point}{0}
+
+% This refines the format of how the reviewer/point reference will appear.
+\renewcommand{\thepoint}{P\,\thereviewer.\arabic{point}} 
+
+% command declarations for reviewer points and our responses
+\newcommand{\reviewersection}{\stepcounter{reviewer} \bigskip \hrule
+                  \section*{Reviewer \thereviewer}}
+
+\newenvironment{point}
+   {\refstepcounter{point} \bigskip \noindent {\textbf{Reviewer~Point~\thepoint} } ---\ }
+   {\par }
+
+\newcommand{\shortpoint}[1]{\refstepcounter{point}  \bigskip \noindent 
+	{\textbf{Reviewer~Point~\thepoint} } ---~#1\par }
+
+\newenvironment{reply}
+   {\medskip \noindent \begin{sf}\textbf{Reply}:\  }
+   {\medskip \end{sf}}
+
+\newcommand{\shortreply}[2][]{\medskip \noindent \begin{sf}\textbf{Reply}:\  #2
+	\ifthenelse{\equal{#1}{}}{}{ \hfill \footnotesize (#1)}%
+	\medskip \end{sf}}
+
+\begin{document}
+
+
+\section*{Response to the reviewers}
+
+We would like to thank the editor and reviewers for the attention that our work has received. We will address their concerns next.
+
+\begin{point}
+This article applies a range of statistical techniques to the distribution
+of aristocratic marriages in the Republic of Venice 1398–1797 with the aim
+of discovering ‘turning points’ (‘change points’ in the statistical literature,
+related to the ‘critical junctures’ of the political science literature). This
+is a nice problem to tackle, and the article is acceptably written, but I am
+concerned that there is no clear, motivating historical question or questions.
+\end{point}
+
+\begin{reply}
+
+  Thanks a lot for the summary, and the suggestion for alternate terms. It is
+  indeed a nice problem, we can even say it is a Venice problem (allow the pun)
+  since there has been for a long time a historial discussion on social mobility
+  and, the definition of the noble/ruling class in it, and what were the effects
+  of different legislative changes approved by different governing bodies
+  (Maggior Consiglio, Consiglio dei X, Senate). The work by Chojnacki
+  \cite{10.2307/202860,second:serrata,chojnacki00} and Raines
+  \cite{raines2013rameau,raines2003cooptazione} has repeatedly provided data
+  from several sources, from the legislative to data in legal registries or
+  descriptions and letters. So far, however, an analysis of one of the
+  institutions of that class, marriage, had not been performed using hard
+  statistical tools.
+
+  There is also another historical question that this paper could contribute to
+  solve, or at least add more mathematically precise results that could be taken
+  into account. When did the Republic of Venice reach a point when its demise
+  was inevitable? A secondary question is if we can answer that question from a
+  partial, if important, set of data: a time series of noble matrimonies. We
+  have managed to answer first the latter (it is representative, maybe more so
+  than other data, since marriage is a crucible in the lifecycle of the most
+  important agent in Venetian society and politics: the {\em casata} or extended
+  family), and then to the former, finding the second half of the 17th century,
+  with the confluence of the loss of Crete and the start of the invasion of the
+  Morea, to be such a point of no return. Of course, that is not a cause, but a
+  critical juncture where different trends converged, and that is revealed by
+  the mathematical analysis.
+\end{reply}
+
+Above all I am unconvinced by the methodology of the search for change
+points, or of the discovered change points’ significance, either statistically
+or historically.
+2. Generally, with a data set, one should begin with an examination of ap-
+propriate statistical visualizations by eye. In this case, I would ask the reader
+to begin with Figure 3a (where I number Figure 3’s four panels (a)–(d), top–
+bottom). Clearly there are overall trends, and these are quite reasonably
+discovered in Fig.3c, once the seasonal element so obviously present in Fig.1
+has been removed in Fig.3b. The residuals are shown in Fig.3d, and are not
+stationary (although they may be multiplicatively so, and I think I don’t
+think this is significant – rather the residuals are probably to be regarded
+as structureless ‘noise’ impeding further analysis). Much the same is seen
+in Fig.5. This is all fine, and leads to the conclusion obvious to the naked
+eye: that there was a peak in the mid-16C (p6/178).
+3. The point about number of marriages varying with total population,
+which also has a 16C peak, is made on p7 but not properly explored. I
+wonder if the peak would disappear if instead the plot was of marriages
+divided by total population?
+4. Change point analysis (CPA) is the attempt to seek moments at which
+the statistical distribution changes, with distinct ‘before’ and ‘after’ regimes.
+This makes less sense when, as here, the sense is more of continuous trends
+rather than distinct regimes. A ‘change of trend’ (i.e. in the gradient of the
+data) is not the best way to see this – it imputes a linear slope up, then a
+change to a linear slope down; and this is not usually how maxima appear
+(unless there were a sharp event causing the change. We don’t see this here).
+15. The crux of the author’s CPA method is in p8/231, and it is simply
+to look at differences in averages. I find 1654 unconvincing as a putative
+change point in the light of this. One can see how the methods arrive at it:
+it is the year at which the averages before and after differ most. Yet this
+really is not a correct or useful way to describe these data; that there is a
+CP in 1654 it is not a meaningful conclusion.
+6. Looking at the entropy (perhaps better introduced for non-experts as
+‘diversity’ of marriage families, p13/377) is a nice idea. But again, look at
+Fig.6. What is happening here? Are there sudden moments of change? If
+one simply looks at a point separating different averages, then 1645 may
+be reasonable. But this is clearly not a moment of sudden change in Fig.6.
+Rather I suspect that the smoothed trend has just one moment of, if not a
+sudden change, a steep gradient, in the early part of the 16C. It seems to
+me that the most interesting period that is emerging here is the early 16C,
+with marriages approaching a peak, but from a declining number of families.
+Does that connect with historical scholarship?
+7. We then move on to allow multiple change points, and the separation of
+the Republic into periods. I don’t think the CPs are convincing (just look
+at Fig.7), and to make them so there would require much more integration
+of the statistics with the historical scholarship.
+8. So in the end I’m unconvinced by the claim of ‘rigorous’ (p13/384) sta-
+tistical analysis. Precise in its computations, certainly, but without enough
+integrative thought or ‘letting the data speak’.
+9. There is a small number of typos, misprints or faults of usage which I
+will not list.
+10. The references to historical scholarship on the Republic of Venice are
+generally good, but (as per above) I don’t feel there is enough integration of
+this with the data analysis and its meaning. It might be worth citing Wawro
+and Katznelson’s recent work advocating Bayesian CPA for historical social
+science.
+
+\begin{point}
+	\label{pt:1:1}
+      \end{point}
+
+      \begin{reply}
+        \end{reply}
+
+
+\end{document}
