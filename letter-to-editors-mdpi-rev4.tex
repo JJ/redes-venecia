@@ -10,6 +10,9 @@
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{fullpage}
+\usepackage{xcolor}
+\usepackage{xr}
+\externaldocument{change-point-marriages-venice}
 
 % import Eq and Section references from the main manuscript where needed
 % \usepackage{xr}
@@ -44,6 +47,8 @@
 \newcommand{\shortreply}[2][]{\medskip \noindent \begin{sf}\textbf{Reply}:\  #2
 	\ifthenelse{\equal{#1}{}}{}{ \hfill \footnotesize (#1)}%
 	\medskip \end{sf}}
+
+\newcommand{\rev}[1]{{\color{purple} #1}}
 
 \begin{document}
 
@@ -103,7 +108,7 @@ or historically.
 
 \begin{reply}
 The statistical significance of the points detected by the different methods has
-been statistically established, and now shown in new Table 1. Not only are they
+been statistically established, and now shown in new Table \ref{tab:change.point:number}. Not only are they
 significant for all three methods (Lanzante, Pettitt and SMH), but also their
 p-value is essentially 0 (actually, $10^{-37}$).
 
@@ -254,5 +259,5 @@ science.
         \end{reply}
 
 \bibliographystyle{unsrt}
-\bibliography{marriage,venice}
+\bibliography{marriage,venice,change-point}
 \end{document}
