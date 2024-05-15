@@ -233,16 +233,52 @@ that yield results that are mathematically (and historycally) close will help us
 reach a conclusion.
 \end{reply}
 
-6. Looking at the entropy (perhaps better introduced for non-experts as
+\begin{point}
+Looking at the entropy (perhaps better introduced for non-experts as
 ‘diversity’ of marriage families, p13/377) is a nice idea. But again, look at
 Fig.6. What is happening here? Are there sudden moments of change? If
 one simply looks at a point separating different averages, then 1645 may
 be reasonable. But this is clearly not a moment of sudden change in Fig.6.
+\end{point}
+
+\begin{reply}
+  After noting that that specific figure has moved now due to the introduction
+  of a new one (see above), we should note that for the statistical changepoint
+  detection tools we are using, a changepoint is not a point where the trend
+  changes (that has already been analyzed in the section on peak marriages in
+  the Republic of Venice), but a point where the differences in some quantity,
+  in this case the average, is maximized. In this, intuition might fail, because
+  it is not so easy from a chart to compute the average for a big number of
+  points.
+
+  We have inserted a new figure, \ref{fig:histories2.change.point:entropy2}
+  which not only plots the averages before and after the change point, but also
+  shows different change points found by other methods in different (but coming
+  from the same data set) time series.
+\end{reply}
+
+\begin{point}
 Rather I suspect that the smoothed trend has just one moment of, if not a
 sudden change, a steep gradient, in the early part of the 16C. It seems to
 me that the most interesting period that is emerging here is the early 16C,
 with marriages approaching a peak, but from a declining number of families.
 Does that connect with historical scholarship?
+\end{point}
+
+\begin{reply}
+  That is a very sharp observation indeed. In a preliminary analysis made using
+  Bayesian methods that is indeed the general area where the main changepoint is
+  found\footnote{The second one is in ``our'' general area, and at any rate, the
+    likelihood of the changepoints found is not good, so we will probably not
+    include it in this new version of the paper}. As you can see in the
+  landscape figure that tries to show the time series used, as well as the
+  change points detected, the {\em second} most important changepoint is in that
+  area. And it does connect with historical scholarship, since it matches what
+  was called the {\em second Serrata} \cite{second:serrata}. This historical
+  fact and its relationship with the changes evidenced by this changepoint is
+  explained now in the new Subsection 5.3.
+\end{reply}
+
 7. We then move on to allow multiple change points, and the separation of
 the Republic into periods. I don’t think the CPs are convincing (just look
 at Fig.7), and to make them so there would require much more integration
