@@ -124,9 +124,8 @@ points affecting the statistically detected ones. Please check new subsections
 5.1 to 5.5 (and conclusion in section 5.7).
 \end{reply}
 
-  
-2. Generally, with a data set, one should begin with an examination of ap-
-propriate statistical visualizations by eye. In this case, I would ask the reader
+\begin{point}
+Generally, with a data set, one should begin with an examination of appropriate statistical visualizations by eye. In this case, I would ask the reader
 to begin with Figure 3a (where I number Figure 3’s four panels (a)–(d), top–
 bottom). Clearly there are overall trends, and these are quite reasonably
 discovered in Fig.3c, once the seasonal element so obviously present in Fig.1
@@ -136,11 +135,54 @@ think this is significant – rather the residuals are probably to be regarded
 as structureless ‘noise’ impeding further analysis). Much the same is seen
 in Fig.5. This is all fine, and leads to the conclusion obvious to the naked
 eye: that there was a peak in the mid-16C (p6/178).
-3. The point about number of marriages varying with total population,
+\end{point}
+
+\begin{reply}
+  That is roughly correct. Our intention with applying trend analysis was,
+  besides finding obvious periods (which would be related to matrimonial custom)
+  to reveal whether the peak seen in plain sight was actually the real one. This
+  allowed us to reach a conclusion on the actual peak, which can then be
+  explained (and applied in the analysis of different periods).
+
+  Besides, the change point brought by a change of trend was so obvious that we
+  couldn't help but include it in this statistical analysis, together with the
+  analysis of other change points
+\end{reply}  
+
+\begin{point}
+The point about number of marriages varying with total population,
 which also has a 16C peak, is made on p7 but not properly explored. I
 wonder if the peak would disappear if instead the plot was of marriages
 divided by total population?
-4. Change point analysis (CPA) is the attempt to seek moments at which
+\end{point}
+
+\begin{reply}
+  It certainly could. That way we could differentiate what are {\em internal}
+  changes in the number of marriages (which could correspond to {\em internal}
+  causes related to social changes) to changes in {\em how many} nobles actually
+  married among the total. The issue is that we do not have that data;
+  a complete time series of population is not available, although a new
+  reference added \cite{raines2013rameau,davis1962decline} do a rather good job
+  of publishing certain data points in the number of nobles as well as the total
+  population of the city.
+
+  In absence of that, however, we can still perform a valid analysis, that needs
+  forcefully to be combined with a historical analysis and a trend analysis on
+  the number of marriages, their diversity (measured by entropy), as well as the
+  number of marriages to non-nobles, a data point which certainly points more to
+  {\em internal} noble marriage dynamics than to any kind of external
+  influence. To this we have added in this new version the number of
+  intra-family marriages (new Figure 8), another piece of data that can reveal
+  real causes of the peak.
+
+  At any rate, how marriages vary with total population is now analyzed in the
+  historial context in the new description of every period in subsections of
+  Section 5.
+\end{reply}
+
+
+\begin{point}
+Change point analysis (CPA) is the attempt to seek moments at which
 the statistical distribution changes, with distinct ‘before’ and ‘after’ regimes.
 This makes less sense when, as here, the sense is more of continuous trends
 rather than distinct regimes. A ‘change of trend’ (i.e. in the gradient of the
@@ -153,6 +195,21 @@ change point in the light of this. One can see how the methods arrive at it:
 it is the year at which the averages before and after differ most. Yet this
 really is not a correct or useful way to describe these data; that there is a
 CP in 1654 it is not a meaningful conclusion.
+\end{point}
+
+\begin{reply}
+In order to reach that conclusion, we have used three established methods of
+change point analysis on series of number of marriages, Lanzante's method on the
+entropy series (which has been computed from the dataset independently), and
+finally a non-parametric multi-change point analysis method included in the {\sf
+  ecp} package, which considers all three variables at the same time. The main
+change point reached by {\em all} methods is in the same period, between 1645
+and 1654, with a high degree of statistical coincidence. That is not a
+conclusion, neither we pretend it to be. It is a result that will help us
+establish the main point of our paper, which are the historical facts that led
+to this pivotal moment, or maybe we should say epoch.
+\end{reply}
+
 6. Looking at the entropy (perhaps better introduced for non-experts as
 ‘diversity’ of marriage families, p13/377) is a nice idea. But again, look at
 Fig.6. What is happening here? Are there sudden moments of change? If
