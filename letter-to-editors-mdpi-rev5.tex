@@ -58,6 +58,117 @@
 We would like to thank the editor and reviewers for the attention that our work
 has received. We will address their concerns next.
 
+\begin{point}
+  Dear authors, the paper is indeed a significant contribution to the
+  large-scale analysis of marriage trends, one of the elements that emerge from
+  archival sources and potentially a historically significant marker. The
+  reading of the dataset, that you have correctly filtered and purged of
+  irrelevant, or at least not homogeneous, elements seems to me
+  convincing. Especially the methodology used to find the change points and the
+  application of entropy to the evolution of the dataset.
+\end{point}
+
+\begin{reply}
+  Thanks. In this new version of the paper, an additional changepoint analysis
+  method has been tested on the entropy time series. Although it yields a change
+  point that is not exactly the same as the ones we had found, it occurs in the
+  context of the same general events (late 17th century) that have been
+  identified as the most important one in this marriage series.
+\end{reply}
+
+\begin{point}
+However, it seems to me methodologically a bit weak that you have not tried to
+introduce as a variable the calculation of the global population, which has also
+been done for Venice (several studies have discussed it and simulated it) and
+which perhaps would have been correct to include. Particularly if you are
+talking about a drastic decrease, as well as an increasing trend, up to the
+years "1570," a normalization on the assumed numbers of the whole population
+seems to me to be due. For there could be an increase in patrician marriages
+that in fact confirms a general upward trend in the population (as indeed it
+seems to me until almost the end of the sixteenth century) and instead a descent
+due to an overall reduction in the size of the population. In this comparison
+any element of discontinuity, e.g., matrimony increases but population
+decreases, would gain even more significance, hence the methodological need to
+try to create a graph with normalization of marriages based on population
+quantity.
+\end{point}
+
+\begin{reply}
+  The reviewer is correct in pointing out that general demography will have an
+  influence in a time series that is, first and foremost, about
+  population. There is an issue here that is impossible to surmount: there is
+  simply not a dataset with the same granularity than the one we have for
+  marriages. This is simply not a lack of published datasets, it is simply that,
+  since registers were associated to citizenship, the {\em popolani} or popular
+  classes did not have any kind of registers, so there is no such thing as a
+  year (or even ten-year) time series of Venice population. Some authors,
+  however, have either estimated or taken total population from some sources
+  \cite{davis1962decline} (although at irregular intervals spanning sometimes
+  more than 50 years) or computed, in this case using legal registries, the
+  total noble population \cite{raines2013rameau}.
+
+  This brings us to the second point. When trying to find the structural changes
+  that have cause a changepoint in the number of marriages (and other measures
+  related to it) it is essential to identify if this is due to a change in the
+  total population (and nobles as a part of it), in the noble population (which
+  might have increased or shrunk with respect to the total population) or in the
+  number of nobles that actually marry from all the available population. And it
+  is important to find out the distinction, because in the two first cases we
+  could be talking about a far-reaching cause that will affect the history of
+  Venice for the rest of its history, while in the last case it would be a
+  change in social mores whose impact, most probably, would be reduced to the
+  noble class itself, its definition and its insertion into the population.
+
+  There are different ways to approach this; one of the reviewers has suggested
+  using Bayesian changepoint analysis, which would be able to find which models
+  of change would statistically best explain the situation after the
+  changepoint. This is a valid approach, but it is beyond the scope of our
+  skills or, for that matter, a journal focused on history. Another reviewer has
+  suggested to delve into the historical events, be it legal, natural, or
+  artificial, and has even suggested some events that might explain the peak in
+  marriages as well as the different changepoints found by the statistical
+  analysis. We have taken the last route, which offers a less steep onramp for
+  historians with some statistical knowledge; that way, we have greatly expanded
+  section 5 trying to explain, via historical pivotal events, changes in the
+  number of marriages as well as in the composition of those marriages. Besides
+  the textual additions, we have added Table 4 that lists probable causes of
+  changes, including demographic when they have been found to be so.
+\end{reply}
+
+\begin{point}
+  On the other hand, as far as trying to align with already established
+  historical knowledge to understand the nature of change points, I find that
+  ignoring the two great plagues of 1570(circa) and 1630 (circa) is a bit of a
+  major oversight. Undoubtedly wars affect the "availability" of male
+  population, but the plagues, which reduced, in the two cases, the overall
+  population by at least one-third, seem to me to be very important to
+  consider. In particular, I would like to point out that if there was a very
+  high infant mortality rate (due to the plague) right around 1575-1577 and then
+  1630, this causes a reduction in the generation of births in those years and
+  that strongly affects the availability of marriage-age population at that time
+  in history and for the next 25 years (one generation). This is to say that
+  although the attempt at historical analysis is there, I think this element
+  needs to find a place to be discussed. Perhaps it can be summarized in a
+  paragraph that I would put in the "detecting change points" section and then
+  reemphasize on p. 13 in the "periods."
+\end{point}
+
+\begin{reply}
+As indicated above, historical causes, including plagues, are now discussed not
+only in Section 4, which was devoted to explain the peak in population, but also
+in the different periods. The 1556 plague was, for instance, already mentioned
+in that section. The 1570 plague is now mentioned in the third period (that ends
+in 1593), and the 1630 plague
+is now mentioned in a footnote citing \cite{raines2003cooptazione}.
+
+A different plague, that of gonorrhea, was mentioned by \cite{davis1962decline}
+as the cause of the decline in {\em fertility} of (mainly) the noble class
+(certainly a consequence of {\em uomi} not being so {\em nobili}, if you allow
+the pun). As indicated above, this is a historically proved event that is, in
+this version, identified as a cause of the structural shift revealed by the 1593
+changepoint.
+\end{reply}
+
 
 \bibliographystyle{unsrt}
 \bibliography{marriage,venice,change-point,history}
