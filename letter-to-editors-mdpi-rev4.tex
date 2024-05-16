@@ -79,7 +79,10 @@ concerned that there is no clear, motivating historical question or questions.
   from several sources, from the legislative to data in legal registries or
   descriptions and letters. So far, however, an analysis of one of the
   institutions of that class, marriage, had not been performed using hard
-  statistical tools.
+  statistical tools. This was not the main point of the paper, whose focus was
+  on the state at large, but the analysis of turning points attached to the
+  statistical changepoints has yielded interesting conclusions in that
+  direction.
 
   There is also another historical question that this paper could contribute to
   solve, or at least add more mathematically precise results that could be taken
@@ -107,6 +110,36 @@ or historically.
 \end{point}
 
 \begin{reply}
+
+First, we should distinguish between two different broad methodologies for
+analysis of changes in time series, including historical time series. Analysis
+of {\em trends} tends to focus on changes in slope; however, changepoint
+analysis focuses on changes in statistical measures such as average, median or
+even standard deviation that reflect underlying structural changes
+\cite{sharma2016trend}. We have included a sentence in the paper's
+  Introduction to clarify this distinction.
+
+Both are valid methodologies, and to a certain point, complementary. If there is
+an advantage of trend analysis is that in many cases the points where trend
+changes can be appreciated in plain sight, while the structural changes revealed
+by changepoint are much more subtle and often hidden by periodic variations or
+simply noise. However, from our point of view, since the changepoints show the
+level at which a certain measure has been taken after the structural change,
+they can be much more interesting to establish causal relationships. In the case
+at hand, we can easily appreciate when the slope of the number of marriages
+changed from ``ascending'' to ``descending'' and it can be easily
+interpreted. But other changes, such as a steeper slope, while easily
+identifiable, would be more difficult to interpret. On the other hand, if the
+two segments have a maximal differentiation in the (average) number of marriages, for
+instance, it is easier to look for specific causes that might have caused that
+change.  It is quite clear that those structural changes will be accompanied by
+changes in trend, for instance, from a flat to a steep descending slope that
+will arrive at another flat regime, but from the historical point of view a
+changepoint that will be laying at the middle of the slope and divide in
+segments with ``high'' and ``low'' number of marriages is easier to interpret
+than the two points of change at the beginning and end of the slope and the
+three segments it divides the series into.
+
 The statistical significance of the points detected by the different methods has
 been statistically established, and now shown in new Table \ref{tab:change.point:number}. Not only are they
 significant for all three methods (Lanzante, Pettitt and SMH), but also their
